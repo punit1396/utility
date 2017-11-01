@@ -1,2 +1,2 @@
-# utility
-Utility projects
+# utilities
+Utility projects.
