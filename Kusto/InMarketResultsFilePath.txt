@@ -1,0 +1,753 @@
+*************************************************** Error details of ClientRequestID: 04b11d3b-5876-4bcf-816b-7681c85496cb-2017-11-11 04:15:15Z-Ibz***************************************************
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'Failed to issue stop data change tracking on device.'. (RCM-JobsFailed-SourceAgent-20748) 
+Possible Causes: The data change tracking module failed to stop tracking. 
+Recommended Action: Check if the disk is still attached. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150060} {WorkflowName = A2ADisableProtectionOnPrimaryWorkflow} {WorkflowId = da432ef7-1f9d-4ac2-8d49-51f687a7e763_3d2e671c-ec8f-4003-8360-1387abc98f4c_A2A_DisableProtectionOnPrimary_bed66ec8-9976-5442-8934-52692c786a89_replica} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'Failed to issue stop data change tracking on device.'. (RCM-JobsFailed-SourceAgent-20748) 
+Possible Causes: The data change tracking module failed to stop tracking. 
+Recommended Action: Check if the disk is still attached. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Service extension workflow for disable protection has failed.
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'Failed to issue stop data change tracking on device.'. (RCM-JobsFailed-SourceAgent-20748) 
+Possible Causes: The data change tracking module failed to stop tracking. 
+Recommended Action: Check if the disk is still attached. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150060} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = da432ef7-1f9d-4ac2-8d49-51f687a7e763} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'Failed to issue stop data change tracking on device.'. (RCM-JobsFailed-SourceAgent-20748) 
+Possible Causes: The data change tracking module failed to stop tracking. 
+Recommended Action: Check if the disk is still attached. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 539} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = da432ef7-1f9d-4ac2-8d49-51f687a7e763} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137} 
+
+
+
+*************************************************** Error details of ClientRequestID: ef6e9092-8f4d-4f9f-9412-d5b25ade10f2-2017-11-07 10:04:54Z-Ibz***************************************************
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (SourceAgentStopFilter) was stopped.'. (RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat) 
+Possible Causes: The agent on LOEPMBEP01 has not picked up the job for execution. The last heartbeat from agent was received at 11/6/2017 9:54:28 AM. 
+Recommended Action: Please ensure the agent on LOEPMBEP01 is running and firewall rules are configured to allow communication with Azure Site recovery service. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150060} {WorkflowName = A2ADisableProtectionOnPrimaryWorkflow} {WorkflowId = 6dd97dd0-e982-4b87-8555-4c4d2e1ea19e_36608b02-9c7d-4ca6-a77c-1b7db0a177a3_A2A_DisableProtectionOnPrimary_bd4045b5-a90d-5380-96ab-108d636a958f_replica} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (SourceAgentStopFilter) was stopped.'. (RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat) 
+Possible Causes: The agent on LOEPMBEP01 has not picked up the job for execution. The last heartbeat from agent was received at 11/6/2017 9:54:28 AM. 
+Recommended Action: Please ensure the agent on LOEPMBEP01 is running and firewall rules are configured to allow communication with Azure Site recovery service. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Service extension workflow for disable protection has failed.
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (SourceAgentStopFilter) was stopped.'. (RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat) 
+Possible Causes: The agent on LOEPMBEP01 has not picked up the job for execution. The last heartbeat from agent was received at 11/6/2017 9:54:28 AM. 
+Recommended Action: Please ensure the agent on LOEPMBEP01 is running and firewall rules are configured to allow communication with Azure Site recovery service. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150060} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = 6dd97dd0-e982-4b87-8555-4c4d2e1ea19e} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (SourceAgentStopFilter) was stopped.'. (RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat) 
+Possible Causes: The agent on LOEPMBEP01 has not picked up the job for execution. The last heartbeat from agent was received at 11/6/2017 9:54:28 AM. 
+Recommended Action: Please ensure the agent on LOEPMBEP01 is running and firewall rules are configured to allow communication with Azure Site recovery service. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 539} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = 6dd97dd0-e982-4b87-8555-4c4d2e1ea19e} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137} 
+
+Azure VM is not in desired state. Power state: deallocated. Desired state: running.
+
+Exception: 
+Type: SrsServiceException 
+Error Message: Azure virtual machine with Id (/subscriptions/3152b5cc-183e-479e-8868-0416d81c642c/resourceGroups/lo-epm-rg-pr/providers/Microsoft.Compute/virtualMachines/LOEPMBEP01) is with power status 'deallocated'. Disable replication requires action within the VM which thus requires VM to be in 'running' power status. 
+Possible Causes: Azure VM is not in desired state. 
+Recommended Action: 
+      Ensure that the VM's power status is 'running'.
+      You can check the power status in 'VM > Settings > Properties > Status' in Azure portal.
+
+      If the source VM is deleted or not reachable, use 'Remove' option in Azure portal or Delete API or 'Remove-AzureRmSiteRecoveryReplicationProtectedItem' cmdlet with '-Force' option. If the problem persists, contact support.
+     
+Inner Exception: 
+
+Stack Trace: 
+   at SRSReplicationProviders.A2A.Utilities.HandleVmNotInDesiredPowerStateFailure(Scenario scenario, String vmArmId, String actualValue, String desiredValue) in S:\2522\3510\src\Online\RecSrv\SRS\Service\ReplicationProvider\ServiceExtensions\A2AExtension\Utilities.cs:line 1391
+   at SRSReplicationProviders.A2A.Utilities.CheckForV2VMProvisioningAndPowerStates(VirtualMachineResponse vm, Scenario scenario) in S:\2522\3510\src\Online\RecSrv\SRS\Service\ReplicationProvider\ServiceExtensions\A2AExtension\Utilities.cs:line 1324
+   at SrsReplicationProviders.A2AExtension.ValidateScenarioInput(Scenario scenario, String fabricId, String containerId, String protectionUnitId, String remoteFabricId, Object workflowDataInput, String workflowInputBlob, ITenantDataServiceExtension tenantDataWrapper) in S:\2522\3510\src\Online\RecSrv\SRS\Service\ReplicationProvider\ServiceExtensions\A2AExtension\A2AExtension.cs:line 2413
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationProviderDraJobsHelper.ValidateScenarioInput(IProtectionProviderSrsServiceExtension serviceExtension, DraHelper helper, Scenario scenario, String fabricId, String containerId, String protectionUnitId, String remoteFabricId, Object workflowDataInput, String workflowInputBlob, ITenantDataServiceExtension tenantDataWrapper) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlersHelper\ReplicationProviderDraJobsHelper.cs:line 1023
+   at SRSTEEImplementation.DRTaskHandlers.DisableProtectionPreflightChecksTask.StartDrTask(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\ProtectionManagementTasks\DisableProtectionPreflightChecksTask.cs:line 110
+   at SRSTEEImplementation.DRTaskHandlers.DRTaskBase.StartTask(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DRTaskBase.cs:line 155.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150144} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = 6dd97dd0-e982-4b87-8555-4c4d2e1ea19e} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: Azure virtual machine with Id (/subscriptions/3152b5cc-183e-479e-8868-0416d81c642c/resourceGroups/lo-epm-rg-pr/providers/Microsoft.Compute/virtualMachines/LOEPMBEP01) is with power status 'deallocated'. Disable replication requires action within the VM which thus requires VM to be in 'running' power status. 
+Possible Causes: Azure VM is not in desired state. 
+Recommended Action: 
+      Ensure that the VM's power status is 'running'.
+      You can check the power status in 'VM > Settings > Properties > Status' in Azure portal.
+
+      If the source VM is deleted or not reachable, use 'Remove' option in Azure portal or Delete API or 'Remove-AzureRmSiteRecoveryReplicationProtectedItem' cmdlet with '-Force' option. If the problem persists, contact support.
+     
+Inner Exception: 
+
+Stack Trace: 
+   at SRSReplicationProviders.A2A.Utilities.HandleVmNotInDesiredPowerStateFailure(Scenario scenario, String vmArmId, String actualValue, String desiredValue) in S:\2522\3510\src\Online\RecSrv\SRS\Service\ReplicationProvider\ServiceExtensions\A2AExtension\Utilities.cs:line 1391
+   at SRSReplicationProviders.A2A.Utilities.CheckForV2VMProvisioningAndPowerStates(VirtualMachineResponse vm, Scenario scenario) in S:\2522\3510\src\Online\RecSrv\SRS\Service\ReplicationProvider\ServiceExtensions\A2AExtension\Utilities.cs:line 1324
+   at SrsReplicationProviders.A2AExtension.ValidateScenarioInput(Scenario scenario, String fabricId, String containerId, String protectionUnitId, String remoteFabricId, Object workflowDataInput, String workflowInputBlob, ITenantDataServiceExtension tenantDataWrapper) in S:\2522\3510\src\Online\RecSrv\SRS\Service\ReplicationProvider\ServiceExtensions\A2AExtension\A2AExtension.cs:line 2413
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationProviderDraJobsHelper.ValidateScenarioInput(IProtectionProviderSrsServiceExtension serviceExtension, DraHelper helper, Scenario scenario, String fabricId, String containerId, String protectionUnitId, String remoteFabricId, Object workflowDataInput, String workflowInputBlob, ITenantDataServiceExtension tenantDataWrapper) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlersHelper\ReplicationProviderDraJobsHelper.cs:line 1023
+   at SRSTEEImplementation.DRTaskHandlers.DisableProtectionPreflightChecksTask.StartDrTask(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\ProtectionManagementTasks\DisableProtectionPreflightChecksTask.cs:line 110
+   at SRSTEEImplementation.DRTaskHandlers.DRTaskBase.StartTask(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DRTaskBase.cs:line 155} 
+
+Azure virtual machine: /subscriptions/3152b5cc-183e-479e-8868-0416d81c642c/resourcegroups/lo-epm-rg-pr/providers/microsoft.compute/virtualmachines/loepmbep01 is not available.
+
+Exception: 
+Type: SrsServiceException 
+Error Message: Azure VM with ID '(/subscriptions/3152b5cc-183e-479e-8868-0416d81c642c/resourcegroups/lo-epm-rg-pr/providers/microsoft.compute/virtualmachines/loepmbep01)' couldn't be found. 
+Possible Causes: Azure VM is either deleted or not reachable. 
+Recommended Action: 
+      1. Ensure that the VM exists. You can check the VMs in Azure portal.
+      2. If the source VM is deleted or not reachable, use 'Remove' option in Azure portal or Delete API or 'Remove-AzureRmSiteRecoveryReplicationProtectedItem' cmdlet with '-Force' option.
+
+      If the problem persists, contact support.
+     
+Inner Exception: 
+
+Stack Trace: 
+   at SrsReplicationProviders.A2AExtension.ValidateScenarioInput(Scenario scenario, String fabricId, String containerId, String protectionUnitId, String remoteFabricId, Object workflowDataInput, String workflowInputBlob, ITenantDataServiceExtension tenantDataWrapper) in S:\2522\3510\src\Online\RecSrv\SRS\Service\ReplicationProvider\ServiceExtensions\A2AExtension\A2AExtension.cs:line 2400
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationProviderDraJobsHelper.ValidateScenarioInput(IProtectionProviderSrsServiceExtension serviceExtension, DraHelper helper, Scenario scenario, String fabricId, String containerId, String protectionUnitId, String remoteFabricId, Object workflowDataInput, String workflowInputBlob, ITenantDataServiceExtension tenantDataWrapper) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlersHelper\ReplicationProviderDraJobsHelper.cs:line 1023
+   at SRSTEEImplementation.DRTaskHandlers.DisableProtectionPreflightChecksTask.StartDrTask(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\ProtectionManagementTasks\DisableProtectionPreflightChecksTask.cs:line 110
+   at SRSTEEImplementation.DRTaskHandlers.DRTaskBase.StartTask(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DRTaskBase.cs:line 155.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150099} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = 6dd97dd0-e982-4b87-8555-4c4d2e1ea19e} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: Azure VM with ID '(/subscriptions/3152b5cc-183e-479e-8868-0416d81c642c/resourcegroups/lo-epm-rg-pr/providers/microsoft.compute/virtualmachines/loepmbep01)' couldn't be found. 
+Possible Causes: Azure VM is either deleted or not reachable. 
+Recommended Action: 
+      1. Ensure that the VM exists. You can check the VMs in Azure portal.
+      2. If the source VM is deleted or not reachable, use 'Remove' option in Azure portal or Delete API or 'Remove-AzureRmSiteRecoveryReplicationProtectedItem' cmdlet with '-Force' option.
+
+      If the problem persists, contact support.
+     
+Inner Exception: 
+
+Stack Trace: 
+   at SrsReplicationProviders.A2AExtension.ValidateScenarioInput(Scenario scenario, String fabricId, String containerId, String protectionUnitId, String remoteFabricId, Object workflowDataInput, String workflowInputBlob, ITenantDataServiceExtension tenantDataWrapper) in S:\2522\3510\src\Online\RecSrv\SRS\Service\ReplicationProvider\ServiceExtensions\A2AExtension\A2AExtension.cs:line 2400
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationProviderDraJobsHelper.ValidateScenarioInput(IProtectionProviderSrsServiceExtension serviceExtension, DraHelper helper, Scenario scenario, String fabricId, String containerId, String protectionUnitId, String remoteFabricId, Object workflowDataInput, String workflowInputBlob, ITenantDataServiceExtension tenantDataWrapper) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlersHelper\ReplicationProviderDraJobsHelper.cs:line 1023
+   at SRSTEEImplementation.DRTaskHandlers.DisableProtectionPreflightChecksTask.StartDrTask(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\ProtectionManagementTasks\DisableProtectionPreflightChecksTask.cs:line 110
+   at SRSTEEImplementation.DRTaskHandlers.DRTaskBase.StartTask(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DRTaskBase.cs:line 155} 
+
+
+
+*************************************************** Error details of ClientRequestID: 4342c4ba-8e66-4256-b787-6c26a12940f1-2017-11-08 10:43:08Z-Ibz***************************************************
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (SourceAgentStopFilter) was stopped.'. (RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat) 
+Possible Causes: The agent on LOEPMFEP02 has not picked up the job for execution. The last heartbeat from agent was received at 11/7/2017 4:40:30 PM. 
+Recommended Action: Please ensure the agent on LOEPMFEP02 is running and firewall rules are configured to allow communication with Azure Site recovery service. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150060} {WorkflowName = A2ADisableProtectionOnPrimaryWorkflow} {WorkflowId = 03ce492a-a7fd-4960-b72c-b33333e8206a_27b85860-dbaa-41d7-a847-594fb4c42c01_A2A_DisableProtectionOnPrimary_e4fa9742-68c7-5e10-b0fd-6fb5854fc334_replica} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (SourceAgentStopFilter) was stopped.'. (RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat) 
+Possible Causes: The agent on LOEPMFEP02 has not picked up the job for execution. The last heartbeat from agent was received at 11/7/2017 4:40:30 PM. 
+Recommended Action: Please ensure the agent on LOEPMFEP02 is running and firewall rules are configured to allow communication with Azure Site recovery service. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Service extension workflow for disable protection has failed.
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (SourceAgentStopFilter) was stopped.'. (RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat) 
+Possible Causes: The agent on LOEPMFEP02 has not picked up the job for execution. The last heartbeat from agent was received at 11/7/2017 4:40:30 PM. 
+Recommended Action: Please ensure the agent on LOEPMFEP02 is running and firewall rules are configured to allow communication with Azure Site recovery service. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150060} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = 03ce492a-a7fd-4960-b72c-b33333e8206a} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (SourceAgentStopFilter) was stopped.'. (RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat) 
+Possible Causes: The agent on LOEPMFEP02 has not picked up the job for execution. The last heartbeat from agent was received at 11/7/2017 4:40:30 PM. 
+Recommended Action: Please ensure the agent on LOEPMFEP02 is running and firewall rules are configured to allow communication with Azure Site recovery service. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 539} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = 03ce492a-a7fd-4960-b72c-b33333e8206a} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137} 
+
+
+
+*************************************************** Error details of ClientRequestID: 473f3016-ed80-476f-b5bb-1cc4d6083011-2017-11-08 00:28:37Z-Ibz***************************************************
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (SourceAgentStopFilter) was stopped.'. (RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat) 
+Possible Causes: The agent on FTCAZAPP01 has not picked up the job for execution. The last heartbeat from agent was received at 11/7/2017 8:14:25 PM. 
+Recommended Action: Please ensure the agent on FTCAZAPP01 is running and firewall rules are configured to allow communication with Azure Site recovery service. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150060} {WorkflowName = A2ADisableProtectionOnPrimaryWorkflow} {WorkflowId = db96b591-d65b-461f-8d5a-4e0953165404_a3c2f00a-ea01-46cb-aa3d-386bc327df29_A2A_DisableProtectionOnPrimary_b70985c7-ca1d-51e1-8506-88f98894fe38} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (SourceAgentStopFilter) was stopped.'. (RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat) 
+Possible Causes: The agent on FTCAZAPP01 has not picked up the job for execution. The last heartbeat from agent was received at 11/7/2017 8:14:25 PM. 
+Recommended Action: Please ensure the agent on FTCAZAPP01 is running and firewall rules are configured to allow communication with Azure Site recovery service. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Service extension workflow for disable protection has failed.
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (SourceAgentStopFilter) was stopped.'. (RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat) 
+Possible Causes: The agent on FTCAZAPP01 has not picked up the job for execution. The last heartbeat from agent was received at 11/7/2017 8:14:25 PM. 
+Recommended Action: Please ensure the agent on FTCAZAPP01 is running and firewall rules are configured to allow communication with Azure Site recovery service. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150060} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = db96b591-d65b-461f-8d5a-4e0953165404} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (SourceAgentStopFilter) was stopped.'. (RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat) 
+Possible Causes: The agent on FTCAZAPP01 has not picked up the job for execution. The last heartbeat from agent was received at 11/7/2017 8:14:25 PM. 
+Recommended Action: Please ensure the agent on FTCAZAPP01 is running and firewall rules are configured to allow communication with Azure Site recovery service. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 539} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = db96b591-d65b-461f-8d5a-4e0953165404} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137} 
+
+
+
+*************************************************** Error details of ClientRequestID: 473f3016-ed80-476f-b5bb-1cc4d6083637-2017-11-08 01:56:47Z-Ibz***************************************************
+
+Service extension workflow for disable protection has failed.
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (SourceAgentStopFilter) was stopped.'. (RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat) 
+Possible Causes: The agent on FTCAZAPP01 has not picked up the job for execution. The last heartbeat from agent was received at 11/7/2017 8:14:25 PM. 
+Recommended Action: Please ensure the agent on FTCAZAPP01 is running and firewall rules are configured to allow communication with Azure Site recovery service. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150060} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = a3f49260-105d-43db-8342-8d9001bcf330} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (SourceAgentStopFilter) was stopped.'. (RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat) 
+Possible Causes: The agent on FTCAZAPP01 has not picked up the job for execution. The last heartbeat from agent was received at 11/7/2017 8:14:25 PM. 
+Recommended Action: Please ensure the agent on FTCAZAPP01 is running and firewall rules are configured to allow communication with Azure Site recovery service. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 539} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = a3f49260-105d-43db-8342-8d9001bcf330} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137} 
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (SourceAgentStopFilter) was stopped.'. (RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat) 
+Possible Causes: The agent on FTCAZAPP01 has not picked up the job for execution. The last heartbeat from agent was received at 11/7/2017 8:14:25 PM. 
+Recommended Action: Please ensure the agent on FTCAZAPP01 is running and firewall rules are configured to allow communication with Azure Site recovery service. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150060} {WorkflowName = A2ADisableProtectionOnPrimaryWorkflow} {WorkflowId = a3f49260-105d-43db-8342-8d9001bcf330_120240cb-0454-4e15-b45b-ba75a3973359_A2A_DisableProtectionOnPrimary_b70985c7-ca1d-51e1-8506-88f98894fe38} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (SourceAgentStopFilter) was stopped.'. (RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat) 
+Possible Causes: The agent on FTCAZAPP01 has not picked up the job for execution. The last heartbeat from agent was received at 11/7/2017 8:14:25 PM. 
+Recommended Action: Please ensure the agent on FTCAZAPP01 is running and firewall rules are configured to allow communication with Azure Site recovery service. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+
+
+*************************************************** Error details of ClientRequestID: 50fd01bc-63e5-4ac3-a1b8-77d00e4ab02c-2017-11-10 14:35:52Z-Ibz***************************************************
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (GatewayCancelResyncCopy) was stopped.'. (RCM-GatewayJobTimedOut-GatewayService-GatewayJobTimedOut) 
+Possible Causes: The service could not complete the job in the allotted time. 
+Recommended Action: Retry the operation. If the issue persists, contact support. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150060} {WorkflowName = A2ADisableProtectionOnPrimaryWorkflow} {WorkflowId = 1e3ec6a3-b0b1-4bf8-a654-676de3a81fad_c559df38-e35f-43aa-9fbe-f662ad084710_A2A_DisableProtectionOnPrimary_7bf97842-5c84-5428-8784-8709b1fb417d_replica} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (GatewayCancelResyncCopy) was stopped.'. (RCM-GatewayJobTimedOut-GatewayService-GatewayJobTimedOut) 
+Possible Causes: The service could not complete the job in the allotted time. 
+Recommended Action: Retry the operation. If the issue persists, contact support. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Service extension workflow for disable protection has failed.
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (GatewayCancelResyncCopy) was stopped.'. (RCM-GatewayJobTimedOut-GatewayService-GatewayJobTimedOut) 
+Possible Causes: The service could not complete the job in the allotted time. 
+Recommended Action: Retry the operation. If the issue persists, contact support. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150060} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = 1e3ec6a3-b0b1-4bf8-a654-676de3a81fad} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (GatewayCancelResyncCopy) was stopped.'. (RCM-GatewayJobTimedOut-GatewayService-GatewayJobTimedOut) 
+Possible Causes: The service could not complete the job in the allotted time. 
+Recommended Action: Retry the operation. If the issue persists, contact support. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 539} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = 1e3ec6a3-b0b1-4bf8-a654-676de3a81fad} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137} 
+
+
+
+*************************************************** Error details of ClientRequestID: 50fd01bc-63e5-4ac3-a1b8-77d00e4ab26c-2017-11-10 15:22:26Z-Ibz***************************************************
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (GatewayCancelResyncCopy) was stopped.'. (RCM-GatewayJobTimedOut-GatewayService-GatewayJobTimedOut) 
+Possible Causes: The service could not complete the job in the allotted time. 
+Recommended Action: Retry the operation. If the issue persists, contact support. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150060} {WorkflowName = A2ADisableProtectionOnPrimaryWorkflow} {WorkflowId = 8c0caa7a-dc2e-4f83-92a3-91dbf76818b9_5d4c1b3f-65cc-49fc-adef-b4267d8bda5a_A2A_DisableProtectionOnPrimary_7bf97842-5c84-5428-8784-8709b1fb417d_replica} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (GatewayCancelResyncCopy) was stopped.'. (RCM-GatewayJobTimedOut-GatewayService-GatewayJobTimedOut) 
+Possible Causes: The service could not complete the job in the allotted time. 
+Recommended Action: Retry the operation. If the issue persists, contact support. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Service extension workflow for disable protection has failed.
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (GatewayCancelResyncCopy) was stopped.'. (RCM-GatewayJobTimedOut-GatewayService-GatewayJobTimedOut) 
+Possible Causes: The service could not complete the job in the allotted time. 
+Recommended Action: Retry the operation. If the issue persists, contact support. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150060} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = 8c0caa7a-dc2e-4f83-92a3-91dbf76818b9} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'The operation (GatewayCancelResyncCopy) was stopped.'. (RCM-GatewayJobTimedOut-GatewayService-GatewayJobTimedOut) 
+Possible Causes: The service could not complete the job in the allotted time. 
+Recommended Action: Retry the operation. If the issue persists, contact support. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 539} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = 8c0caa7a-dc2e-4f83-92a3-91dbf76818b9} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137} 
+
+
+
+*************************************************** Error details of ClientRequestID: a0c5f669-f330-41ce-b85c-a781cdcd2964-2017-11-06 20:54:57Z-Ibz***************************************************
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'Unable to complete the operation DisableProtectionWorkflow (0e7cd87b-fb9f-4a66-8f0c-25b603bc277c_A2ADisableProtectionTask).'. (RCM-LockConflict) 
+Possible Causes: A conflicting operation CompleteResyncWorkflow (WorkflowId: CompleteResyncWorkflow_aea50251-2820-4597-8ffa-3af681a6c7fd, ActivityId: 9973f5c7-d03e-4304-8c12-462938d09301) is in progress. Conflict detected for (7214aac6-a77e-4b12-9cf1-1ffccffc8a86 - ProtectionPair). 
+Recommended Action: Either wait for the operation in progress to complete, or cancel it and then retry the operation that couldn't complete. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150059} {WorkflowName = A2ADisableProtectionOnPrimaryWorkflow} {WorkflowId = 27553038-755f-4638-ac5a-17efedd62396_0e7cd87b-fb9f-4a66-8f0c-25b603bc277c_A2A_DisableProtectionOnPrimary_81a76b1e-7522-50ef-a868-f5839795c724_replica} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'Unable to complete the operation DisableProtectionWorkflow (0e7cd87b-fb9f-4a66-8f0c-25b603bc277c_A2ADisableProtectionTask).'. (RCM-LockConflict) 
+Possible Causes: A conflicting operation CompleteResyncWorkflow (WorkflowId: CompleteResyncWorkflow_aea50251-2820-4597-8ffa-3af681a6c7fd, ActivityId: 9973f5c7-d03e-4304-8c12-462938d09301) is in progress. Conflict detected for (7214aac6-a77e-4b12-9cf1-1ffccffc8a86 - ProtectionPair). 
+Recommended Action: Either wait for the operation in progress to complete, or cancel it and then retry the operation that couldn't complete. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Service extension workflow for disable protection has failed.
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'Unable to complete the operation DisableProtectionWorkflow (0e7cd87b-fb9f-4a66-8f0c-25b603bc277c_A2ADisableProtectionTask).'. (RCM-LockConflict) 
+Possible Causes: A conflicting operation CompleteResyncWorkflow (WorkflowId: CompleteResyncWorkflow_aea50251-2820-4597-8ffa-3af681a6c7fd, ActivityId: 9973f5c7-d03e-4304-8c12-462938d09301) is in progress. Conflict detected for (7214aac6-a77e-4b12-9cf1-1ffccffc8a86 - ProtectionPair). 
+Recommended Action: Either wait for the operation in progress to complete, or cancel it and then retry the operation that couldn't complete. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150059} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = 27553038-755f-4638-ac5a-17efedd62396} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'Unable to complete the operation DisableProtectionWorkflow (0e7cd87b-fb9f-4a66-8f0c-25b603bc277c_A2ADisableProtectionTask).'. (RCM-LockConflict) 
+Possible Causes: A conflicting operation CompleteResyncWorkflow (WorkflowId: CompleteResyncWorkflow_aea50251-2820-4597-8ffa-3af681a6c7fd, ActivityId: 9973f5c7-d03e-4304-8c12-462938d09301) is in progress. Conflict detected for (7214aac6-a77e-4b12-9cf1-1ffccffc8a86 - ProtectionPair). 
+Recommended Action: Either wait for the operation in progress to complete, or cancel it and then retry the operation that couldn't complete. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 539} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = 27553038-755f-4638-ac5a-17efedd62396} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137} 
+
+
+
+*************************************************** Error details of ClientRequestID: a0c5f669-f330-41ce-b85c-a781cdcd29b1-2017-11-06 21:01:24Z-Ibz***************************************************
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'Unable to complete the operation DisableProtectionWorkflow (e688fb95-a828-4dda-bb85-2430b3c963fe_A2ADisableProtectionTask).'. (RCM-LockConflict) 
+Possible Causes: A conflicting operation CompleteResyncWorkflow (WorkflowId: CompleteResyncWorkflow_aea50251-2820-4597-8ffa-3af681a6c7fd, ActivityId: 9973f5c7-d03e-4304-8c12-462938d09301) is in progress. Conflict detected for (7214aac6-a77e-4b12-9cf1-1ffccffc8a86 - ProtectionPair). 
+Recommended Action: Either wait for the operation in progress to complete, or cancel it and then retry the operation that couldn't complete. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150059} {WorkflowName = A2ADisableProtectionOnPrimaryWorkflow} {WorkflowId = 2469c038-10bf-470d-82bb-0909c0ac416a_e688fb95-a828-4dda-bb85-2430b3c963fe_A2A_DisableProtectionOnPrimary_81a76b1e-7522-50ef-a868-f5839795c724_replica} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'Unable to complete the operation DisableProtectionWorkflow (e688fb95-a828-4dda-bb85-2430b3c963fe_A2ADisableProtectionTask).'. (RCM-LockConflict) 
+Possible Causes: A conflicting operation CompleteResyncWorkflow (WorkflowId: CompleteResyncWorkflow_aea50251-2820-4597-8ffa-3af681a6c7fd, ActivityId: 9973f5c7-d03e-4304-8c12-462938d09301) is in progress. Conflict detected for (7214aac6-a77e-4b12-9cf1-1ffccffc8a86 - ProtectionPair). 
+Recommended Action: Either wait for the operation in progress to complete, or cancel it and then retry the operation that couldn't complete. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Service extension workflow for disable protection has failed.
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'Unable to complete the operation DisableProtectionWorkflow (e688fb95-a828-4dda-bb85-2430b3c963fe_A2ADisableProtectionTask).'. (RCM-LockConflict) 
+Possible Causes: A conflicting operation CompleteResyncWorkflow (WorkflowId: CompleteResyncWorkflow_aea50251-2820-4597-8ffa-3af681a6c7fd, ActivityId: 9973f5c7-d03e-4304-8c12-462938d09301) is in progress. Conflict detected for (7214aac6-a77e-4b12-9cf1-1ffccffc8a86 - ProtectionPair). 
+Recommended Action: Either wait for the operation in progress to complete, or cancel it and then retry the operation that couldn't complete. 
+Inner Exception: 
+
+Stack Trace: 
+.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 150059} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = 2469c038-10bf-470d-82bb-0909c0ac416a} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested operation failed with reason: 'Unable to complete the operation DisableProtectionWorkflow (e688fb95-a828-4dda-bb85-2430b3c963fe_A2ADisableProtectionTask).'. (RCM-LockConflict) 
+Possible Causes: A conflicting operation CompleteResyncWorkflow (WorkflowId: CompleteResyncWorkflow_aea50251-2820-4597-8ffa-3af681a6c7fd, ActivityId: 9973f5c7-d03e-4304-8c12-462938d09301) is in progress. Conflict detected for (7214aac6-a77e-4b12-9cf1-1ffccffc8a86 - ProtectionPair). 
+Recommended Action: Either wait for the operation in progress to complete, or cancel it and then retry the operation that couldn't complete. 
+Inner Exception: 
+
+Stack Trace: 
+} 
+
+Exception: 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137.
+
+Error occured which is getting recorded. | Params: {ErrorCode = 539} {WorkflowName = DisableProtectionWorkflow} {WorkflowId = 2469c038-10bf-470d-82bb-0909c0ac416a} {ErrorInfo = 
+Type: SrsServiceException 
+Error Message: The requested action couldn't be performed by the 'A2A' Replication Provider. 
+Possible Causes: The Provider action failed. Check other errors for more information. 
+Recommended Action: Resolve the issue and retry the operation. 
+Inner Exception: 
+
+Stack Trace: 
+   at SRSTEEImplementation.DRTaskHandlers.ReplicationActionTask.DraJobCreation() in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\DRTaskHandlers\CommonReplicationActionTasks\ReplicationActionTask.cs:line 333
+   at SRSTEEImplementation.DRTaskHandlers.DraJobBaseTask.StartDrTaskInternal(String& state) in S:\2522\3510\src\Online\RecSrv\SRS\Service\DRTEEImplementation\BaseTasks\DraJobBaseTask.cs:line 137} 
+
+
+
+---------------------------------------------------------- Issues for ClientRequestIds ----------------------------------------------------------
+
+*********Issues found in ClientRequestID, 04b11d3b-5876-4bcf-816b-7681c85496cb-2017-11-11 04:15:15Z-Ibz:
+
+Issue: RCM-JobsFailed-SourceAgent-20748, Bug: 1738909
+
+*********Issues found in ClientRequestID, ef6e9092-8f4d-4f9f-9412-d5b25ade10f2-2017-11-07 10:04:54Z-Ibz:
+
+Issue: AgentJobTimedOutNoHeartbeat, Bug: 1530067
+
+*********Issues found in ClientRequestID, 4342c4ba-8e66-4256-b787-6c26a12940f1-2017-11-08 10:43:08Z-Ibz:
+
+Issue: AgentJobTimedOutNoHeartbeat, Bug: 1530067
+
+*********Issues found in ClientRequestID, 473f3016-ed80-476f-b5bb-1cc4d6083011-2017-11-08 00:28:37Z-Ibz:
+
+Issue: AgentJobTimedOutNoHeartbeat, Bug: 1530067
+
+*********Issues found in ClientRequestID, 473f3016-ed80-476f-b5bb-1cc4d6083637-2017-11-08 01:56:47Z-Ibz:
+
+Issue: AgentJobTimedOutNoHeartbeat, Bug: 1530067
+
+*********Issues found in ClientRequestID, 50fd01bc-63e5-4ac3-a1b8-77d00e4ab02c-2017-11-10 14:35:52Z-Ibz:
+
+Issue: GatewayJobTimedOut, Bug: 1532737
+
+*********Issues found in ClientRequestID, 50fd01bc-63e5-4ac3-a1b8-77d00e4ab26c-2017-11-10 15:22:26Z-Ibz:
+
+Issue: GatewayJobTimedOut, Bug: 1532737
+
+*********Issues found in ClientRequestID, a0c5f669-f330-41ce-b85c-a781cdcd2964-2017-11-06 20:54:57Z-Ibz:
+
+Issue: RCM-LockConflict, Bug: 1738894
+
+*********Issues found in ClientRequestID, a0c5f669-f330-41ce-b85c-a781cdcd29b1-2017-11-06 21:01:24Z-Ibz:
+
+Issue: RCM-LockConflict, Bug: 1738894
+
+---------------------------------------------------------- ClientRequestIds for issues----------------------------------------------------------
+
+*********ClientRequestIDs affected by issue: AgentJobTimedOutNoHeartbeat, Bug: 1530067
+
+ef6e9092-8f4d-4f9f-9412-d5b25ade10f2-2017-11-07 10:04:54Z-Ibz
+4342c4ba-8e66-4256-b787-6c26a12940f1-2017-11-08 10:43:08Z-Ibz
+473f3016-ed80-476f-b5bb-1cc4d6083011-2017-11-08 00:28:37Z-Ibz
+473f3016-ed80-476f-b5bb-1cc4d6083637-2017-11-08 01:56:47Z-Ibz
+
+*********ClientRequestIDs affected by issue: GatewayJobTimedOut, Bug: 1532737
+
+50fd01bc-63e5-4ac3-a1b8-77d00e4ab02c-2017-11-10 14:35:52Z-Ibz
+50fd01bc-63e5-4ac3-a1b8-77d00e4ab26c-2017-11-10 15:22:26Z-Ibz
+
+*********ClientRequestIDs affected by issue: RCM-LockConflict, Bug: 1738894
+
+a0c5f669-f330-41ce-b85c-a781cdcd2964-2017-11-06 20:54:57Z-Ibz
+a0c5f669-f330-41ce-b85c-a781cdcd29b1-2017-11-06 21:01:24Z-Ibz
+
+*********ClientRequestIDs affected by issue: RCM-JobsFailed-SourceAgent-20748, Bug: 1738909
+
+04b11d3b-5876-4bcf-816b-7681c85496cb-2017-11-11 04:15:15Z-Ibz
+
