@@ -4,6 +4,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 //using CommandLine;
 using Kusto.Data.Net.Client;
 
@@ -17,15 +18,32 @@ namespace HelloKusto
             string clientRequestIdsFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "ClientRequestIdsFilePath" + ".txt");
             string issueMapFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "IssueMapFilePath" + ".txt");
 
+            if (args.Length >= 1)
+            {
+                clientRequestIdsFilePath = args[0];
+            }
+
+            if(args.Length >= 2)
+            {
+                inMarketResultsFilePath = args[1];
+            }
+
+            if(args.Length == 3)
+            {
+                issueMapFilePath = args[2];
+            }
+
+        
             IssueHelper.Initialize(issueMapFilePath);
             ClientRequestIdHelper.Initialize(clientRequestIdsFilePath);
 
-            var queryProviderEurope = KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringEurope);
-            var queryProviderUS = KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringUS);
-            var queryProviderAsia = KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringAsia);
-            var queryProviderInternal = KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringInternal);
-            var queryProviderMoonCake = KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringMoonCake);
-            var queryProviderFairFax = KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringFairFax);
+            Parallel.ForEach(ClientRequestIdHelper.clientRequestInfoList, (clientRequestInfo) =>
+            {
+                StringBuilder content = new StringBuilder();
+                content = QueryHelper.ExecuteErrorQuery(clientRequestInfo);
+
+                clientRequestInfo.AddErrorContent(content);
+            });
 
             using (StreamWriter file = File.CreateText(inMarketResultsFilePath))
             {
@@ -34,80 +52,8 @@ namespace HelloKusto
                     file.WriteLine("*************************************************** Error details of ClientRequestID: " + clientRequestInfo.Id + "***************************************************");
                     file.WriteLine();
 
-                    string query = "SRSDataEvent | where ClientRequestId == '" + clientRequestInfo.Id + "'" +
-                        "| where Level < 3 " +
-                        "| project PreciseTimeStamp , Message , Level, ClientRequestId " +
-                        "| order by PreciseTimeStamp asc nulls last";
-
-                    var readerEurope = queryProviderEurope.ExecuteQuery(query);
-                    var readerUS = queryProviderUS.ExecuteQuery(query);
-                    var readerAsia = queryProviderAsia.ExecuteQuery(query);
-                    var readerInternal = queryProviderInternal.ExecuteQuery(query);
-                    //var readerMoonCake = queryProviderMoonCake.ExecuteQuery(query);
-                    //var readerFairFax = queryProviderFairFax.ExecuteQuery(query);
-
-                    var columnsEurope = Enumerable.Range(0, readerEurope.FieldCount)
-                                    .Select(readerEurope.GetName)
-                                    .ToList();
-                    var columnsUS = Enumerable.Range(0, readerUS.FieldCount)
-                                    .Select(readerUS.GetName)
-                                    .ToList();
-                    var columnsAsia = Enumerable.Range(0, readerAsia.FieldCount)
-                                    .Select(readerAsia.GetName)
-                                    .ToList();
-                    var columnsInternal = Enumerable.Range(0, readerInternal.FieldCount)
-                                    .Select(readerInternal.GetName)
-                                    .ToList();
-                    //var columnsMoonCake = Enumerable.Range(0, readerMoonCake.FieldCount)
-                    //                .Select(readerMoonCake.GetName)
-                    //                .ToList();
-                    //var columnsFairFax = Enumerable.Range(0, readerFairFax.FieldCount)
-                    //                .Select(readerFairFax.GetName)
-                    //                .ToList();
-
-                    StringBuilder content = new StringBuilder();
-
-                    while (readerEurope.Read())
-                    {
-                        content.AppendLine(readerEurope[columnsEurope[1]].ToString());
-                        content.AppendLine();
-                    }
-                    while (readerUS.Read())
-                    {
-                        content.AppendLine(readerUS[columnsUS[1]].ToString());
-                        content.AppendLine();
-                    }
-                    while (readerAsia.Read())
-                    {
-                        content.AppendLine(readerAsia[columnsAsia[1]].ToString());
-                        content.AppendLine();
-                    }
-                    while (readerInternal.Read())
-                    {
-                        content.AppendLine(readerInternal[columnsInternal[1]].ToString());
-                        content.AppendLine();
-                    }
-
-                    //while (readerMoonCake.Read())
-                    //{
-                    //    var content = readerMoonCake[columnsMoonCake[1]];
-                    //    file.WriteLine(readerMoonCake[columnsMoonCake[1]]);
-                    //    file.WriteLine();
-                    //}
-                    //while (readerFairFax.Read())
-                    //{
-                    //    var content = readerFairFax[columnsFairFax[1]];
-                    //    file.WriteLine(readerFairFax[columnsFairFax[1]]);
-                    //    file.WriteLine();
-                    //}
-
-                    file.WriteLine(content.ToString());
+                    file.WriteLine(clientRequestInfo.ErrorContent.ToString());
                     file.WriteLine();
-
-                    foreach (var issue in IssueHelper.GetMachingIssues(content.ToString()))
-                    {
-                        clientRequestInfo.AddIssue(issue);
-                    }
                 }
 
                 // Writing ClientRequestId to Issue map to file
@@ -118,7 +64,7 @@ namespace HelloKusto
                     file.WriteLine("*********Issues found in ClientRequestID, " + clientRequestId.Id + ":");
                     file.WriteLine();
 
-                    foreach (var issue in clientRequestId.Issues)
+                    foreach (var issue in IssueHelper.GetMachingIssues(clientRequestId.ErrorContent.ToString()))
                     {
                         string issueStatement = "Issue: " + issue.Type + ", Bug: " + issue.BugId;
                         file.WriteLine(issueStatement);

@@ -16,13 +16,12 @@ namespace HelloKusto
         public const string ConnectionStringFairFax = @"Data Source=https://asrclus.kusto.usgovcloudapi.net:443;Initial Catalog=ASRKustoDB_FF;AAD Federated Security=True";
     }
 
-    class IssueType 
+    class QueryString 
     {
-        public const string EC44 = "EC-44";
-        public const string EC148 = "EC-148";
-        public const string SourceAgentStopFilter = "SourceAgentStopFilter";
-        public const string GatewayJobTimedOut = "GatewayJobTimedOut";
-        public const string DisableFailResyncLockConflict = "DisableFailResyncLockConflict";
-        public const string RCMJobsFailedSourceAgent20748 = "RCM-JobsFailed-SourceAgent-20748";
+        public const string ErrorQuery = "SRSDataEvent | where ClientRequestId == '{0}'" +
+                        "| where Level < 3 " +
+                        "| project PreciseTimeStamp , Message , Level, ClientRequestId " +
+                        "| order by PreciseTimeStamp asc nulls last";
+
     };
 }

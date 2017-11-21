@@ -1,40 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace HelloKusto
 {
     class ClientRequestInfo
     {
         public string Id;
-        public HashSet<Issue> Issues;
+        public StringBuilder ErrorContent;
 
         public ClientRequestInfo()
         {
-            Id = "";
-            this.Issues = new HashSet<Issue>();
+            this.Id = "";
+            this.ErrorContent = new StringBuilder();
         }
 
         public ClientRequestInfo(string id)
         {
             this.Id = id;
-            this.Issues = new HashSet<Issue>();
+            this.ErrorContent = new StringBuilder();
         }
 
-        public ClientRequestInfo(string id, HashSet<Issue> issues)
+        public ClientRequestInfo(string id, StringBuilder errorContent)
         {
             this.Id = id;
-            this.Issues = issues;
+            this.ErrorContent = errorContent;
         }
 
-        public void AddIssue(Issue issue)
+        public void AddErrorContent(StringBuilder errorContent)
         {
-            this.Issues.Add(issue);
+            this.ErrorContent.Append(errorContent);
         }
 
         public bool IfAffectedByIssue(Issue issue)
         {
-            return Issues.Contains(issue);
+            return IssueHelper.GetMachingIssues(this.ErrorContent.ToString()).Contains(issue);
         }
     }
 
