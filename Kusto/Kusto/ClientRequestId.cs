@@ -9,6 +9,14 @@ namespace HelloKusto
     {
         public string Id;
         public StringBuilder ErrorContent;
+        public Subscription SubscriptionInfo;
+        public string ProviderGuid;
+        public string StampName;
+        public string Region;
+        public string ScenarioName;
+        public string ObjectType;
+        public string ObjectId;
+        public string ResourceId;
 
         public ClientRequestInfo()
         {

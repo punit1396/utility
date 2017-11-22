@@ -22,6 +22,30 @@ namespace HelloKusto
                         "| where Level < 3 " +
                         "| project PreciseTimeStamp , Message , Level, ClientRequestId " +
                         "| order by PreciseTimeStamp asc nulls last";
+        public const string SRSOperationEventQuery = "SRSOperationEvent | where ClientRequestId == '{0}'" +
+                        "| order by PreciseTimeStamp asc nulls last";
+        public const string SubscriptionQuery = "CustomerDataExtended| where SubscriptionId == '{0}'";
+    }
 
-    };
+    class ColumnName
+    {
+        public const string PreciseTimeStamp = "PreciseTimeStamp";
+        public const string ClientRequestId = "ClientRequestId";
+        public const string Message = "Message";
+        public const string SubscriptionId = "SubscriptionId";
+        public const string SubscriptionId1 = "SubscriptionId1";
+        public const string ProviderGuid = "ProviderGuid";
+        public const string StampName = "StampName";
+        public const string Region = "Region";
+        public const string ResourceId = "ResourceId";
+        public const string ResourceId1 = "ResourceId1";
+        public const string ScenarioName = "ScenarioName";
+        public const string ObjectType = "ObjectType";
+        public const string ObjectId = "ObjectId";
+        public const string BillingType = "BillingType";
+        public const string SubscriptionName = "SubscriptionName";
+        public const string OfferType = "OfferType";
+        public const string CustomerName = "CustomerName";
+
+    }
 }

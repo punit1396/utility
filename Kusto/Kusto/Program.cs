@@ -40,9 +40,7 @@ namespace HelloKusto
             Parallel.ForEach(ClientRequestIdHelper.clientRequestInfoList, (clientRequestInfo) =>
             {
                 StringBuilder content = new StringBuilder();
-                content = QueryHelper.ExecuteErrorQuery(clientRequestInfo);
-
-                clientRequestInfo.AddErrorContent(content);
+                QueryHelper.FillClientRequestInfoDetails(clientRequestInfo);
             });
 
             using (StreamWriter file = File.CreateText(inMarketResultsFilePath))
@@ -61,13 +59,22 @@ namespace HelloKusto
                 file.WriteLine();
                 foreach (var clientRequestId in ClientRequestIdHelper.clientRequestInfoList)
                 {
+                    var machingIssues = IssueHelper.GetMachingIssues(clientRequestId.ErrorContent.ToString());
+
+                    string clientRequestInfoStatement = "ObjectType: " + clientRequestId.ObjectType + ", ObjectId: " + clientRequestId.ObjectId +
+                        ", ScenarioName: " + clientRequestId.ScenarioName + ", ProviderGuid: " + clientRequestId.ProviderGuid + 
+                        ", Region: " + clientRequestId.Region + ", ResourceId: " + clientRequestId.ResourceId + ", StampName: " + clientRequestId.StampName;
+                    string subscriptionInfoStatement = "SubscriptionId: " + clientRequestId.SubscriptionInfo.Id + ", SubscriptionName: " + clientRequestId.SubscriptionInfo.SubscriptionName +
+                        ", CustomerName: " + clientRequestId.SubscriptionInfo.CustomerName + ", BillingType: " + clientRequestId.SubscriptionInfo.BillingType +
+                        ", OfferType: " + clientRequestId.SubscriptionInfo.OfferType;
                     file.WriteLine("*********Issues found in ClientRequestID, " + clientRequestId.Id + ":");
+                    file.WriteLine(clientRequestInfoStatement);
+                    file.WriteLine(subscriptionInfoStatement);
                     file.WriteLine();
 
-                    foreach (var issue in IssueHelper.GetMachingIssues(clientRequestId.ErrorContent.ToString()))
+                    foreach (var issue in machingIssues)
                     {
-                        string issueStatement = "Issue: " + issue.Type + ", Bug: " + issue.BugId;
-                        file.WriteLine(issueStatement);
+                        file.WriteLine("Issue: " + issue.Type + ", Bug: " + issue.BugId);
                     }
 
                     file.WriteLine();
@@ -77,13 +84,18 @@ namespace HelloKusto
                 file.WriteLine();
                 foreach (var issue in IssueHelper.IssueList)
                 {
-                    file.WriteLine("*********ClientRequestIDs affected by issue: " + issue.Type + ", Bug: " + issue.BugId);
-                    file.WriteLine();
-                    foreach (var clientRequestInfo in ClientRequestIdHelper.GetAffectedClientRequestInfos(issue))
+                    var affectedClientRequestIdInfos = ClientRequestIdHelper.GetAffectedClientRequestInfos(issue);
+                    if (affectedClientRequestIdInfos != null && affectedClientRequestIdInfos.Count > 0)
                     {
-                        file.WriteLine(clientRequestInfo.Id);
+                        file.WriteLine("*********ClientRequestIDs affected by issue: " + issue.Type + ", Bug: " + issue.BugId);
+                        file.WriteLine();
+                        foreach (var clientRequestInfo in affectedClientRequestIdInfos)
+                        {
+                            string clientRequestInfoStatement = string.IsNullOrEmpty(clientRequestInfo.StampName) ? clientRequestInfo.Id : clientRequestInfo.StampName.Split('-').First() + "   " + clientRequestInfo.Id;
+                            file.WriteLine(clientRequestInfoStatement);
+                        }
+                        file.WriteLine();
                     }
-                    file.WriteLine();
                 }
 
             }
