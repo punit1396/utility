@@ -5,10 +5,22 @@ RCM-LockConflict|1738894|conflicting operation CompleteResyncWorkflow,RCM-LockCo
 RCM-JobsFailed-SourceAgent-20748|1738909|RCM-JobsFailed-SourceAgent-20748
 RCM-JobsFailed-SourceAgent-20743|1747601|RCM-JobsFailed-SourceAgent-20743
 GetSuitableTargetVmSize failure|1528938|Sequence contains no matching element,GetSuitableTargetVmSize,EnableProtectionWorkflow
+FailedToSetExtension EB-45|1650879|EB-45,EnableProtectionWorkflow
+FailedToSetExtension EB-62|1751038|EB-62,EnableProtectionWorkflow
+FailedToSetExtension EC-14|1529181|EC-14,EnableProtectionWorkflow
 FailedToSetExtension EC-44|1529586|EC-44,EnableProtectionWorkflow
+FailedToSetExtension EC-142|1750433|EC-142,EnableProtectionWorkflow
+FailedToSetExtension EC-145|1653468|EC-145,EnableProtectionWorkflow
 FailedToSetExtension EC-148|1650893|EC-148,EnableProtectionWorkflow
 AzureActiveDirectoryOperationFailed|1747574|Azure Active Directory error message,AADSTS70001
 VmExtensionOperationNotStarted|1528672|Extension operation is not started by Azure VM agent,EnableProtectionWorkflow
 TrackExtensionTimedOut|1530257|Site recovery extension operation is started but is taking more time than expected,EnableProtectionWorkflow
+TrackPreviousExtensionTimedOut|1528672|Previous site recovery extension operation is taking more time than expected
 A2AMobilityServiceInstallerInternalError|1747645|Failed to install Site recovery mobility service,EnableProtectionWorkflow
 AzureDraTaskTimedOutVmmResponsive|1528871|Task execution has timed out while waiting for job to complete in Azure
+ReplicationBlocked|1750829|Replication pair is in ReplicationBlocked state
+A2AMobilityServiceInstallerInvalidInstallLocation|1679114|Invalid installation location specified for mobility service installer
+ProtectionRecoveryUnexpectedError|1750396|ProtectionRecoveryUnexpectedError-403,RCM-ProtectionServiceFaultException-ProtSvc-ProtectionRecoveryUnexpectedError
+A2AMobilityServiceConfiguratorInvalidCommandLineParameter|1750945|Site recovery configuration failed with internal server error
+ProtectionServiceUnexpectedSigCalculationState|1750420|Protection for the virtual machine couldn't be enabled because the initial replication failed
+DRAVersionNotSupported|1751609|Unsupported operation,The operation isn't supported by the current version,of the Microsoft Azure Site Recovery Provider,Ensure that the on-premise server,is running the required provider version

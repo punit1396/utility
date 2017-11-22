@@ -106,7 +106,19 @@ namespace HelloKusto
                         file.WriteLine();
                     }
                 }
+                file.WriteLine("*********Uncategorised ClientRequestIDs: ");
+                foreach (var clientRequestId in ClientRequestIdHelper.clientRequestInfoList)
+                {
+                    var machingIssues = IssueHelper.GetMachingIssues(clientRequestId.ErrorContent.ToString());
 
+                    if (machingIssues == null || machingIssues.Count == 0)
+                    {
+                        string clientRequestInfoStatement = string.IsNullOrEmpty(clientRequestId.StampName) ? clientRequestId.Id : clientRequestId.StampName.Split('-').First() + "   " + clientRequestId.Id;
+                        file.WriteLine(clientRequestInfoStatement);
+                    }
+
+                    file.WriteLine();
+                }
             }
         }
 
