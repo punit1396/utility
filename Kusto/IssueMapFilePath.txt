@@ -1,4 +1,14 @@
-AgentJobTimedOutNoHeartbeat|1530067|RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat,SourceAgentStopFilter,DisableProtectionWorkflow
+AgentJobTimedOutNoHeartbeat - disable protection|1530067|RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat,SourceAgentStopFilter,DisableProtectionWorkflow
+AgentJobTimedOutNoHeartbeat - enable protection|1529249|RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat,SourceAgentNotifyResyncStart,EnableProtectionWorkflow
 GatewayJobTimedOut|1532737|GatewayCancelResyncCopy,RCM-GatewayJobTimedOut-GatewayService-GatewayJobTimedOut
 RCM-LockConflict|1738894|conflicting operation CompleteResyncWorkflow,RCM-LockConflict
 RCM-JobsFailed-SourceAgent-20748|1738909|RCM-JobsFailed-SourceAgent-20748
+RCM-JobsFailed-SourceAgent-20743|1747601|RCM-JobsFailed-SourceAgent-20743
+GetSuitableTargetVmSize failure|1528938|Sequence contains no matching element,GetSuitableTargetVmSize,EnableProtectionWorkflow
+FailedToSetExtension EC-44|1529586|EC-44,EnableProtectionWorkflow
+FailedToSetExtension EC-148|1650893|EC-148,EnableProtectionWorkflow
+AzureActiveDirectoryOperationFailed|1747574|Azure Active Directory error message,AADSTS70001
+VmExtensionOperationNotStarted|1528672|Extension operation is not started by Azure VM agent,EnableProtectionWorkflow
+TrackExtensionTimedOut|1530257|Site recovery extension operation is started but is taking more time than expected,EnableProtectionWorkflow
+A2AMobilityServiceInstallerInternalError|1747645|Failed to install Site recovery mobility service,EnableProtectionWorkflow
+AzureDraTaskTimedOutVmmResponsive|1528871|Task execution has timed out while waiting for job to complete in Azure
