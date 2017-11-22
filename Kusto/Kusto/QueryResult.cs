@@ -10,6 +10,7 @@
         public string StampName;
         public string Region;
         public string ResourceId;
+        public string ServiceActivityId;
     }
 
     class SRSDataEvent : QueryResult
@@ -22,6 +23,9 @@
         public string ScenarioName;
         public string ObjectType;
         public string ObjectId;
+        public string SRSOperationName;
+        public string State;
+
     }
 
     class Subscription

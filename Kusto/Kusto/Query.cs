@@ -54,6 +54,10 @@ namespace HelloKusto
                 sRSOperationEvent.Region = dataReader[ColumnName.Region].ToString();
                 sRSOperationEvent.SubscriptionId = dataReader[ColumnName.SubscriptionId1].ToString();
                 sRSOperationEvent.ResourceId = dataReader[ColumnName.ResourceId1].ToString();
+                sRSOperationEvent.PreciseTimeStamp = dataReader[ColumnName.PreciseTimeStamp].ToString();
+                sRSOperationEvent.SRSOperationName = dataReader[ColumnName.SRSOperationName].ToString();
+                sRSOperationEvent.State = dataReader[ColumnName.State].ToString();
+                sRSOperationEvent.ServiceActivityId = dataReader[ColumnName.ServiceActivityId].ToString();
                 content.Add(sRSOperationEvent);
             }
 
@@ -116,6 +120,7 @@ namespace HelloKusto
             try
             {
                 clientRequestInfo.SubscriptionInfo = new Subscription();
+                clientRequestInfo.SRSOperationEvents = sRSOperationEventList;
                 clientRequestInfo.ScenarioName = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ScenarioName)).ScenarioName;
                 clientRequestInfo.ObjectType = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ObjectType)).ObjectType;
                 clientRequestInfo.ObjectId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ObjectId)).ObjectId;

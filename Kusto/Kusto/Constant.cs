@@ -46,6 +46,9 @@ namespace HelloKusto
         public const string SubscriptionName = "SubscriptionName";
         public const string OfferType = "OfferType";
         public const string CustomerName = "CustomerName";
+        public const string ServiceActivityId = "ServiceActivityId";
+        public const string SRSOperationName = "SRSOperationName";
+        public const string State = "State";
 
     }
 }

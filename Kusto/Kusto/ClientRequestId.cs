@@ -17,6 +17,7 @@ namespace HelloKusto
         public string ObjectType;
         public string ObjectId;
         public string ResourceId;
+        public List<SRSOperationEvent> SRSOperationEvents = new List<SRSOperationEvent>();
 
         public ClientRequestInfo()
         {

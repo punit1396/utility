@@ -49,8 +49,17 @@ namespace HelloKusto
                 {
                     file.WriteLine("*************************************************** Error details of ClientRequestID: " + clientRequestInfo.Id + "***************************************************");
                     file.WriteLine();
-
+                    file.WriteLine("------- SRSDataEvents:");
+                    file.WriteLine();
                     file.WriteLine(clientRequestInfo.ErrorContent.ToString());
+                    file.WriteLine();
+                    file.WriteLine("------- SRSOperationEvent:");
+                    file.WriteLine();
+
+                    foreach(var srsOperationEvent in clientRequestInfo.SRSOperationEvents)
+                    {
+                        file.WriteLine(srsOperationEvent.PreciseTimeStamp + "   " + srsOperationEvent.SRSOperationName + "             " + srsOperationEvent.State + "   " + srsOperationEvent.ServiceActivityId + "   " + srsOperationEvent.ScenarioName);
+                    }
                     file.WriteLine();
                 }
 
