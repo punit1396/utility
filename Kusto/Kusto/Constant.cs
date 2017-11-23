@@ -12,8 +12,9 @@ namespace HelloKusto
         public const string ConnectionStringUS = @"Data Source=https://asrcluscus.kusto.windows.net:443;Initial Catalog=ASRKustoDB_US;AAD Federated Security=True";
         public const string ConnectionStringAsia = @"Data Source=https://asrclussea.kusto.windows.net:443;Initial Catalog=ASRKustoDB_Asia;AAD Federated Security=True";
         public const string ConnectionStringInternal = @"Data Source=https://asrclus1.kusto.windows.net:443;Initial Catalog=ASRKustoDB;AAD Federated Security=True";
-        public const string ConnectionStringMoonCake = @"Data Source=https://asrclus.kusto.windows.net:443;Initial Catalog=ASRKustoDB;AAD Federated Security=True";
-        public const string ConnectionStringFairFax = @"Data Source=https://asrclus.kusto.usgovcloudapi.net:443;Initial Catalog=ASRKustoDB_FF;AAD Federated Security=True";
+        public const string ConnectionStringMoonCake = @"https://asrclusmc.kusto.chinacloudapi.cn:443;Initial Catalog=NetDefaultDB;dSTS Federated Security=True";
+        public const string ConnectionStringBlackForest = @"https://asrclusbf.kusto.cloudapi.de:443;Initial Catalog=NetDefaultDB;dSTS Federated Security=True";
+        public const string ConnectionStringFairFax = @"https://asrclusff.kusto.usgovcloudapi.net:443;Initial Catalog=NetDefaultDB;dSTS Federated Security=True";
     }
 
     class QueryString 
@@ -25,6 +26,9 @@ namespace HelloKusto
         public const string SRSOperationEventQuery = "SRSOperationEvent | where ClientRequestId == '{0}'" +
                         "| order by PreciseTimeStamp asc nulls last";
         public const string SubscriptionQuery = "CustomerDataExtended| where SubscriptionId == '{0}'";
+        public const string GenericDataEventQuery = "SRSDataEvent | where (PreciseTimeStamp < ago({0}d) and PreciseTimeStamp >= ago({1}d))";
+        public const string GenricMessagePredicateDataEventQuery = "Message contains '{0}'";
+        public const string GenericDataEventProjectQueryString = "| where Level < 3| project ClientRequestId | summarize by ClientRequestId";
     }
 
     class ColumnName

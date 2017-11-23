@@ -8,7 +8,7 @@ namespace HelloKusto
     {
         public string Type;
         public string BugId;
-        private HashSet<string> Symptoms;
+        public HashSet<string> Symptoms;
 
         public Issue()
         {

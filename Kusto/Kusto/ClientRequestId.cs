@@ -18,6 +18,7 @@ namespace HelloKusto
         public string ObjectId;
         public string ResourceId;
         public List<SRSOperationEvent> SRSOperationEvents = new List<SRSOperationEvent>();
+        public List<Issue> issueList = new List<Issue>();
 
         public ClientRequestInfo()
         {
@@ -76,7 +77,7 @@ namespace HelloKusto
             List<ClientRequestInfo> clientRequestInfos = new List<ClientRequestInfo>();
             foreach (var clientRequestInfo in clientRequestInfoList)
             {
-                if (clientRequestInfo.IfAffectedByIssue(issue))
+                if (clientRequestInfo.issueList.Contains(issue) || clientRequestInfo.IfAffectedByIssue(issue))
                 {
                     clientRequestInfos.Add(clientRequestInfo);
                 }

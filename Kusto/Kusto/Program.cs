@@ -12,35 +12,83 @@ namespace HelloKusto
 {
     class Program
     {
+        static string inMarketResultsFilePath;
+        static string clientRequestIdsFilePath;
+        static string issueMapFilePath;
+        static bool genericProcess;
+
         static void Main(string[] args)
         {
-            string inMarketResultsFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "InMarketResultsFilePath" + ".txt");
-            string clientRequestIdsFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "ClientRequestIdsFilePath" + ".txt");
-            string issueMapFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "IssueMapFilePath" + ".txt");
-            //string issueMapFilePath = @"https://raw.githubusercontent.com/AsrOneSdk/utility/master/Kusto/IssueMapFilePath.txt";
+            inMarketResultsFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "InMarketResultsFilePath" + ".txt");
+            clientRequestIdsFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "ClientRequestIdsFilePath" + ".txt");
+            issueMapFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "IssueMapFilePath" + ".txt");
+            genericProcess = false;
 
             if (args.Length >= 1)
             {
                 clientRequestIdsFilePath = args[0];
+                if (args[0].ToString().ToLower() == "g" || args[0].ToString().ToLower() == "generic")
+                {
+                    genericProcess = true;
+                }
             }
 
-            if(args.Length >= 2)
+            if (args.Length >= 2)
             {
                 inMarketResultsFilePath = args[1];
             }
 
-            if(args.Length == 3)
+            if (args.Length == 3)
             {
                 issueMapFilePath = args[2];
             }
 
-        
+            if (genericProcess)
+            {
+                GenericAnalysis();
+            }
+            else
+            {
+                SpecificAnalysis();
+            }
+        }
+
+        public static void GenericAnalysis()
+        {
+            IssueHelper.Initialize(issueMapFilePath);
+
+            Parallel.ForEach(IssueHelper.IssueList, (issue) =>
+            {
+                QueryHelper.ProcessClientRequestInfoDetailsForIssue(issue);
+            });
+
+            using (StreamWriter file = File.CreateText(inMarketResultsFilePath))
+            {
+
+                file.WriteLine("---------------------------------------------------------- ClientRequestIds for issues----------------------------------------------------------");
+                file.WriteLine();
+                foreach (var issue in IssueHelper.IssueList)
+                {
+                    var affectedClientRequestIdInfos = ClientRequestIdHelper.GetAffectedClientRequestInfos(issue);
+                    file.WriteLine("*********ClientRequestIDs affected by issue: " + issue.Type + ", Bug: " + issue.BugId + ", affected count:" + affectedClientRequestIdInfos.Count);
+                    file.WriteLine();
+                    foreach (var clientRequestInfo in affectedClientRequestIdInfos)
+                    {
+                        string clientRequestInfoStatement = clientRequestInfo.Id;
+                        file.WriteLine(clientRequestInfoStatement);
+                    }
+                    file.WriteLine();
+                }
+            }
+        }
+
+        public static void SpecificAnalysis()
+        {
             IssueHelper.Initialize(issueMapFilePath);
             ClientRequestIdHelper.Initialize(clientRequestIdsFilePath);
 
             Parallel.ForEach(ClientRequestIdHelper.clientRequestInfoList, (clientRequestInfo) =>
             {
-                StringBuilder content = new StringBuilder();
                 QueryHelper.FillClientRequestInfoDetails(clientRequestInfo);
             });
 
@@ -71,7 +119,7 @@ namespace HelloKusto
                     var machingIssues = IssueHelper.GetMachingIssues(clientRequestId.ErrorContent.ToString());
 
                     string clientRequestInfoStatement = "ObjectType: " + clientRequestId.ObjectType + ", ObjectId: " + clientRequestId.ObjectId +
-                        ", ScenarioName: " + clientRequestId.ScenarioName + ", ProviderGuid: " + clientRequestId.ProviderGuid + 
+                        ", ScenarioName: " + clientRequestId.ScenarioName + ", ProviderGuid: " + clientRequestId.ProviderGuid +
                         ", Region: " + clientRequestId.Region + ", ResourceId: " + clientRequestId.ResourceId + ", StampName: " + clientRequestId.StampName;
                     string subscriptionInfoStatement = "SubscriptionId: " + clientRequestId.SubscriptionInfo.Id + ", SubscriptionName: " + clientRequestId.SubscriptionInfo.SubscriptionName +
                         ", CustomerName: " + clientRequestId.SubscriptionInfo.CustomerName + ", BillingType: " + clientRequestId.SubscriptionInfo.BillingType +
@@ -122,84 +170,5 @@ namespace HelloKusto
             }
         }
 
-        public static void PushToExcel(DataTableReader reader)
-        {
-            //string attachment = "attachment; filename=city.xls";
-            //Response.ClearContent();
-            //Response.AddHeader("content-disposition", attachment);
-            //Response.ContentType = "application/vnd.ms-excel";
-            //string tab = "";
-            //foreach (DataColumn dc in dt.Columns)
-            //{
-            //    Response.Write(tab + dc.ColumnName);
-            //    tab = "\t";
-            //}
-            //Response.Write("\n");
-            //int i;
-            //foreach (DataRow dr in dt.Rows)
-            //{
-            //    tab = "";
-            //    for (i = 0; i < dt.Columns.Count; i++)
-            //    {
-            //        Response.Write(tab + dr[i].ToString());
-            //        tab = "\t";
-            //    }
-            //    Response.Write("\n");
-            //}
-            //Response.End();
-        }
     }
-
-    //public class InputOptions
-    //{
-    //    public InputOptions(string[] args)
-    //    {
-
-    //    }
-
-    //    #region Switch Properties
-    //    [Option("F", true, 1)]
-    //    [SwitchHelpText("First name of customer")]
-    //    public string firstName { get; set; }
-    //    [Switch("L", true, 2)]
-    //    [SwitchHelpText("Last name of customer")]
-    //    public LastNameEnum lastName { get; set; }
-    //    [SwitchHelpText("The date of birth of customer")]
-    //    [Switch("DOB", false, 3)]
-    //    public DateTime DOB { get; set; }
-    //    [Switch("T", false, 4, "bodega", "pizza shop")]
-    //    public Type CustomerType { get; set; }
-    //    #endregion
-
-    //    public override Dictionary<Func<bool>, string> GetParamExceptionDictionary()
-    //    {
-    //        Dictionary<Func<bool>, string> _exceptionChecks = new Dictionary<Func<bool>, string>();
-
-    //        Func<bool> _isDateInFuture = new Func<bool>(() => DateTime.Now <= this.DOB);
-
-    //        _exceptionChecks.Add(_isDateInFuture, "Please choose a date of birth that is not in the future!");
-    //        return _exceptionChecks;
-    //    }
-
-    //    [HelpText(0)]
-    //    public string Description
-    //    {
-    //        get { return "Finds a customer in the database."; }
-    //    }
-    //    [HelpText(1, "Example")]
-    //    public string ExampleText
-    //    {
-    //        get { return "This is an example: CustomerFinder.exe Yisrael Lax 11-28-1987"; }
-    //    }
-    //    [HelpText(2)]
-    //    public override string Usage
-    //    {
-    //        get { return base.Usage; }
-    //    }
-    //    [HelpText(3, "Parameters")]
-    //    public override string SwitchHelp
-    //    {
-    //        get { return base.SwitchHelp; }
-    //    }
-    //}
 }

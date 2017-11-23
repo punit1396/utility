@@ -26,13 +26,21 @@ namespace HelloKusto
         public List<SRSDataEvent> ExecuteErrorQuery(string queryString)
         {
             var content = new List<SRSDataEvent>();
-            var dataReader = this.QueryProvider.ExecuteQuery(queryString);
-
-            while (dataReader.Read())
+            try
             {
-                var srsDataEvent = new SRSDataEvent();
-                srsDataEvent.Message = dataReader[ColumnName.Message].ToString();
-                content.Add(srsDataEvent);
+                var dataReader = this.QueryProvider.ExecuteQuery(queryString);
+
+                while (dataReader.Read())
+                {
+                    var srsDataEvent = new SRSDataEvent();
+                    srsDataEvent.Message = dataReader[ColumnName.Message].ToString();
+                    content.Add(srsDataEvent);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception was thrown:");
+                Console.WriteLine(e);
             }
 
             return content;
@@ -41,24 +49,32 @@ namespace HelloKusto
         public List<SRSOperationEvent> ExecuteSRSOperationEventQuery(string queryString)
         {
             var content = new List<SRSOperationEvent>();
-            var dataReader = this.QueryProvider.ExecuteQuery(queryString);
-
-            while (dataReader.Read())
+            try
             {
-                var sRSOperationEvent = new SRSOperationEvent();
-                sRSOperationEvent.ScenarioName = dataReader[ColumnName.ScenarioName].ToString();
-                sRSOperationEvent.ObjectType = dataReader[ColumnName.ObjectType].ToString();
-                sRSOperationEvent.ObjectId = dataReader[ColumnName.ObjectId].ToString();
-                sRSOperationEvent.ProviderGuid = dataReader[ColumnName.ProviderGuid].ToString();
-                sRSOperationEvent.StampName = dataReader[ColumnName.StampName].ToString();
-                sRSOperationEvent.Region = dataReader[ColumnName.Region].ToString();
-                sRSOperationEvent.SubscriptionId = dataReader[ColumnName.SubscriptionId1].ToString();
-                sRSOperationEvent.ResourceId = dataReader[ColumnName.ResourceId1].ToString();
-                sRSOperationEvent.PreciseTimeStamp = dataReader[ColumnName.PreciseTimeStamp].ToString();
-                sRSOperationEvent.SRSOperationName = dataReader[ColumnName.SRSOperationName].ToString();
-                sRSOperationEvent.State = dataReader[ColumnName.State].ToString();
-                sRSOperationEvent.ServiceActivityId = dataReader[ColumnName.ServiceActivityId].ToString();
-                content.Add(sRSOperationEvent);
+                var dataReader = this.QueryProvider.ExecuteQuery(queryString);
+
+                while (dataReader.Read())
+                {
+                    var sRSOperationEvent = new SRSOperationEvent();
+                    sRSOperationEvent.ScenarioName = dataReader[ColumnName.ScenarioName].ToString();
+                    sRSOperationEvent.ObjectType = dataReader[ColumnName.ObjectType].ToString();
+                    sRSOperationEvent.ObjectId = dataReader[ColumnName.ObjectId].ToString();
+                    sRSOperationEvent.ProviderGuid = dataReader[ColumnName.ProviderGuid].ToString();
+                    sRSOperationEvent.StampName = dataReader[ColumnName.StampName].ToString();
+                    sRSOperationEvent.Region = dataReader[ColumnName.Region].ToString();
+                    sRSOperationEvent.SubscriptionId = dataReader[ColumnName.SubscriptionId1].ToString();
+                    sRSOperationEvent.ResourceId = dataReader[ColumnName.ResourceId1].ToString();
+                    sRSOperationEvent.PreciseTimeStamp = dataReader[ColumnName.PreciseTimeStamp].ToString();
+                    sRSOperationEvent.SRSOperationName = dataReader[ColumnName.SRSOperationName].ToString();
+                    sRSOperationEvent.State = dataReader[ColumnName.State].ToString();
+                    sRSOperationEvent.ServiceActivityId = dataReader[ColumnName.ServiceActivityId].ToString();
+                    content.Add(sRSOperationEvent);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception was thrown:");
+                Console.WriteLine(e);
             }
 
             return content;
@@ -66,38 +82,72 @@ namespace HelloKusto
 
         public Subscription ExecuteSubscriptionQuery(string subscriptionQuery)
         {
-            var dataReader = this.QueryProvider.ExecuteQuery(subscriptionQuery);
             var subscriptionInfo = new Subscription();
-            while (dataReader.Read())
+            try
             {
-                subscriptionInfo.Id = dataReader[ColumnName.SubscriptionId].ToString();
-                subscriptionInfo.BillingType = dataReader[ColumnName.BillingType].ToString();
-                subscriptionInfo.OfferType = dataReader[ColumnName.OfferType].ToString();
-                subscriptionInfo.CustomerName = dataReader[ColumnName.CustomerName].ToString();
-                subscriptionInfo.SubscriptionName = dataReader[ColumnName.SubscriptionName].ToString();
+                var dataReader = this.QueryProvider.ExecuteQuery(subscriptionQuery);
+                while (dataReader.Read())
+                {
+                    subscriptionInfo.Id = dataReader[ColumnName.SubscriptionId].ToString();
+                    subscriptionInfo.BillingType = dataReader[ColumnName.BillingType].ToString();
+                    subscriptionInfo.OfferType = dataReader[ColumnName.OfferType].ToString();
+                    subscriptionInfo.CustomerName = dataReader[ColumnName.CustomerName].ToString();
+                    subscriptionInfo.SubscriptionName = dataReader[ColumnName.SubscriptionName].ToString();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception was thrown:");
+                Console.WriteLine(e);
             }
             return subscriptionInfo;
+        }
+
+        public List<ClientRequestInfo> ExecuteGenericQuery(string genericQuery)
+        {
+            var clientRequestInfoList = new List<ClientRequestInfo>();
+            try
+            {
+                var dataReader = this.QueryProvider.ExecuteQuery(genericQuery);
+                while (dataReader.Read())
+                {
+                    var clientRequestInfo = new ClientRequestInfo();
+                    clientRequestInfo.Id = dataReader[ColumnName.ClientRequestId].ToString();
+                    clientRequestInfoList.Add(clientRequestInfo);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception was thrown:");
+                Console.WriteLine(e);
+            }
+            return clientRequestInfoList;
         }
     }
 
     class QueryHelper
     {
         private static Dictionary<string, ICslQueryProvider> queryProviderDictionary;
+        private static Dictionary<string, ICslQueryProvider> nationalQueryProviderDictionary;
 
         static QueryHelper()
         {
             queryProviderDictionary = new Dictionary<string, ICslQueryProvider>();
+            nationalQueryProviderDictionary = new Dictionary<string, ICslQueryProvider>();
             queryProviderDictionary.Add("Europe", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringEurope));
             queryProviderDictionary.Add("US", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringUS));
             queryProviderDictionary.Add("Asia", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringAsia));
             queryProviderDictionary.Add("Internal", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringInternal));
+            nationalQueryProviderDictionary.Add("MoonCake", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringMoonCake));
+            nationalQueryProviderDictionary.Add("BlackForest", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringBlackForest));
+            nationalQueryProviderDictionary.Add("FairFax", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringFairFax));
         }
 
         public static void FillClientRequestInfoDetails(ClientRequestInfo clientRequestInfo)
         {
             string errorQuery = string.Format(QueryString.ErrorQuery, clientRequestInfo.Id);
             string sRSOperationEventQuery = string.Format(QueryString.SRSOperationEventQuery, clientRequestInfo.Id);
-            
+
             var sRSDataEventList = new List<SRSDataEvent>();
             var sRSOperationEventList = new List<SRSOperationEvent>();
 
@@ -108,8 +158,18 @@ namespace HelloKusto
                 sRSOperationEventList.AddRange(query.ExecuteSRSOperationEventQuery(sRSOperationEventQuery));
             });
 
+            //if (sRSOperationEventList.Count < 1 && sRSDataEventList.Count < 1)
+            //{
+            //    Parallel.ForEach(nationalQueryProviderDictionary.Values, (queryProvider) =>
+            //    {
+            //        var query = new Query(queryProvider);
+            //        sRSDataEventList.AddRange(query.ExecuteErrorQuery(errorQuery));
+            //        sRSOperationEventList.AddRange(query.ExecuteSRSOperationEventQuery(sRSOperationEventQuery));
+            //    });
+            //}
+
             var errorContent = new StringBuilder();
-            foreach(var item in sRSDataEventList)
+            foreach (var item in sRSDataEventList)
             {
                 errorContent.AppendLine(item.Message);
                 errorContent.AppendLine();
@@ -130,17 +190,55 @@ namespace HelloKusto
                 clientRequestInfo.SubscriptionInfo.Id = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.SubscriptionId)).SubscriptionId;
                 clientRequestInfo.ResourceId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.SubscriptionId)).ResourceId;
 
-                if(!string.IsNullOrEmpty(clientRequestInfo.SubscriptionInfo.Id))
+                if (!string.IsNullOrEmpty(clientRequestInfo.SubscriptionInfo.Id))
                 {
                     string subscriptionQuery = string.Format(QueryString.SubscriptionQuery, clientRequestInfo.SubscriptionInfo.Id);
                     var query = new Query(queryProviderDictionary["US"]);
                     clientRequestInfo.SubscriptionInfo = query.ExecuteSubscriptionQuery(subscriptionQuery);
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
 
             }
+        }
+
+        public static void ProcessClientRequestInfoDetailsForIssue(Issue issue)
+        {
+            var clientRequestInfoList = new List<ClientRequestInfo>();
+            List<string> genericQueryDBTimeMonthList = new List<string>();
+
+            genericQueryDBTimeMonthList.Add(string.Format(QueryString.GenericDataEventQuery, "0", "30"));
+            genericQueryDBTimeMonthList.Add(string.Format(QueryString.GenericDataEventQuery, "30", "60"));
+            genericQueryDBTimeMonthList.Add(string.Format(QueryString.GenericDataEventQuery, "60", "90"));
+
+            var genericQueryPredicate = "";
+            if(issue.Symptoms != null && issue.Symptoms.Count > 0)
+            {
+                genericQueryPredicate = "|where " + string.Format(QueryString.GenricMessagePredicateDataEventQuery, issue.Symptoms.ElementAt(0));
+                foreach (var symptom in issue.Symptoms.Skip(1))
+                {
+                    genericQueryPredicate += " and " + string.Format(QueryString.GenricMessagePredicateDataEventQuery, symptom);
+                }
+            }
+            genericQueryPredicate += QueryString.GenericDataEventProjectQueryString;
+
+            Parallel.ForEach(genericQueryDBTimeMonthList, (genericQueryDBTimeMonth) =>
+            {
+                var genericQuery = genericQueryDBTimeMonth + genericQueryPredicate;
+                Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
+                {
+                    var query = new Query(queryProvider);
+                    clientRequestInfoList.AddRange(query.ExecuteGenericQuery(genericQuery));
+                });
+            });
+
+            foreach(var clientinfo in clientRequestInfoList)
+            {
+                clientinfo.issueList.Add(issue);
+            }
+
+            ClientRequestIdHelper.clientRequestInfoList.AddRange(clientRequestInfoList);
         }
     }
 }
