@@ -22,8 +22,12 @@ ReplicationBlocked|1750829|Replication pair is in ReplicationBlocked state
 A2AMobilityServiceInstallerInvalidInstallLocation|1679114|Invalid installation location specified for mobility service installer
 ProtectionRecoveryUnexpectedError|1750396|ProtectionRecoveryUnexpectedError-403,RCM-ProtectionServiceFaultException-ProtSvc-ProtectionRecoveryUnexpectedError
 A2AMobilityServiceConfiguratorInvalidCommandLineParameter|1750945|Site recovery configuration failed with internal server error
-ProtectionServiceUnexpectedSigCalculationState|1750420|Protection for the virtual machine couldn't be enabled because the initial replication failed
+ProtectionServiceUnexpectedSigCalculationState|1750420|Protection for the virtual machine couldn't be enabled because the initial replication failed,ErrorCode: 520,Message: Failed to complete signature calculation for resync session
 DRAVersionNotSupported|1751609|Unsupported operation,The operation isn't supported by the current version,of the Microsoft Azure Site Recovery Provider,Ensure that the on-premise server,is running the required provider version
 VirVMAsyncTaskError-DRA|1735712|VMM cannot complete the host operation on the,server because of the error,Resolve the host issue and then try the operation again
 AuthorizationFailed-RegisterVMM|1755411|Hyak.Common.CloudException,AuthorizationFailed,Microsoft.Resources/subscriptions/providers/read,does not have authorization to perform action
 InitialReplicationFailed|<Bug id to be filled>|31216,Initial replication for the virtual machine,or it was canceled outside the Microsoft Azure console
+EndTestFailoverDRAError-SRS|1756296|26018,RecoveryPlanOperationsParentWorkflow,System.InvalidOperationException,Sequence contains more than one element
+RCM-JobsFailed-GatewayService-UnhandledException|1532218|150060,DisableProtectionWorkflow,DisableProtectionOnPrimary,RCM-JobsFailed-GatewayService-UnhandledException
+vaguptaTesting1|1234567|Message: The installed Microsoft Azure Recovery Provider Version is not supported for Windows Server 2016,ErrorCode = 70162
+vaguptaTesting2|7654321|ErrorCode = 10003,Hyper-V Replica Azure DRA-Plugin failed to execute action PrepareCloudPrimary for VMM

@@ -6,7 +6,8 @@
         public string ClientRequestId;
         public string Message;
         public string SubscriptionId;
-        public string ProviderGuid;
+        public string SubscriptionId1;
+        public string ReplicationProviderId;
         public string StampName;
         public string Region;
         public string ResourceId;

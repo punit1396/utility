@@ -10,7 +10,7 @@ namespace HelloKusto
         public string Id;
         public StringBuilder ErrorContent;
         public Subscription SubscriptionInfo;
-        public string ProviderGuid;
+        public string ReplicationProviderId;
         public string StampName;
         public string Region;
         public string ScenarioName;

@@ -39,6 +39,7 @@ namespace HelloKusto
             }
             catch (Exception e)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Exception was thrown:");
                 Console.WriteLine(e);
             }
@@ -59,10 +60,11 @@ namespace HelloKusto
                     sRSOperationEvent.ScenarioName = dataReader[ColumnName.ScenarioName].ToString();
                     sRSOperationEvent.ObjectType = dataReader[ColumnName.ObjectType].ToString();
                     sRSOperationEvent.ObjectId = dataReader[ColumnName.ObjectId].ToString();
-                    sRSOperationEvent.ProviderGuid = dataReader[ColumnName.ProviderGuid].ToString();
+                    sRSOperationEvent.ReplicationProviderId = dataReader[ColumnName.ReplicationProviderId].ToString();
                     sRSOperationEvent.StampName = dataReader[ColumnName.StampName].ToString();
                     sRSOperationEvent.Region = dataReader[ColumnName.Region].ToString();
-                    sRSOperationEvent.SubscriptionId = dataReader[ColumnName.SubscriptionId1].ToString();
+                    sRSOperationEvent.SubscriptionId = dataReader[ColumnName.SubscriptionId].ToString();
+                    sRSOperationEvent.SubscriptionId1 = dataReader[ColumnName.SubscriptionId1].ToString();
                     sRSOperationEvent.ResourceId = dataReader[ColumnName.ResourceId1].ToString();
                     sRSOperationEvent.PreciseTimeStamp = dataReader[ColumnName.PreciseTimeStamp].ToString();
                     sRSOperationEvent.SRSOperationName = dataReader[ColumnName.SRSOperationName].ToString();
@@ -73,6 +75,8 @@ namespace HelloKusto
             }
             catch (Exception e)
             {
+
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Exception was thrown:");
                 Console.WriteLine(e);
             }
@@ -97,6 +101,8 @@ namespace HelloKusto
             }
             catch (Exception e)
             {
+
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Exception was thrown:");
                 Console.WriteLine(e);
             }
@@ -118,6 +124,8 @@ namespace HelloKusto
             }
             catch (Exception e)
             {
+
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Exception was thrown:");
                 Console.WriteLine(e);
             }
@@ -184,10 +192,22 @@ namespace HelloKusto
                 clientRequestInfo.ScenarioName = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ScenarioName)).ScenarioName;
                 clientRequestInfo.ObjectType = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ObjectType)).ObjectType;
                 clientRequestInfo.ObjectId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ObjectId)).ObjectId;
-                clientRequestInfo.ProviderGuid = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ProviderGuid)).ProviderGuid;
+                clientRequestInfo.ReplicationProviderId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ReplicationProviderId)).ReplicationProviderId;
                 clientRequestInfo.StampName = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.StampName)).StampName;
                 clientRequestInfo.Region = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.Region)).Region;
-                clientRequestInfo.SubscriptionInfo.Id = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.SubscriptionId)).SubscriptionId;
+                var opEventTemp = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.SubscriptionId));
+                if (opEventTemp != null)
+                {
+                    clientRequestInfo.SubscriptionInfo.Id = opEventTemp.SubscriptionId;
+                }
+                else
+                {
+                    opEventTemp = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.SubscriptionId1));
+                    if (opEventTemp != null)
+                    {
+                        clientRequestInfo.SubscriptionInfo.Id = opEventTemp.SubscriptionId1;
+                    }
+                }
                 clientRequestInfo.ResourceId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.SubscriptionId)).ResourceId;
 
                 if (!string.IsNullOrEmpty(clientRequestInfo.SubscriptionInfo.Id))
@@ -197,7 +217,7 @@ namespace HelloKusto
                     clientRequestInfo.SubscriptionInfo = query.ExecuteSubscriptionQuery(subscriptionQuery);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
             }

@@ -38,7 +38,7 @@ namespace HelloKusto
         public const string Message = "Message";
         public const string SubscriptionId = "SubscriptionId";
         public const string SubscriptionId1 = "SubscriptionId1";
-        public const string ProviderGuid = "ProviderGuid";
+        public const string ReplicationProviderId = "ReplicationProviderId";
         public const string StampName = "StampName";
         public const string Region = "Region";
         public const string ResourceId = "ResourceId";

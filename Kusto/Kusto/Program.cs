@@ -84,12 +84,23 @@ namespace HelloKusto
 
         public static void SpecificAnalysis()
         {
+            var currentForgroundColor = Console.ForegroundColor;
             IssueHelper.Initialize(issueMapFilePath);
             ClientRequestIdHelper.Initialize(clientRequestIdsFilePath);
 
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine("Reading ClientRequestIds from: " + clientRequestIdsFilePath);
+            Console.WriteLine("Reading IssueMaps from: " + issueMapFilePath);
+
+            var clientRequestIdTotalCount = ClientRequestIdHelper.clientRequestInfoList.Count;
+            var clientRequestIdCurrentCount = 1;
             Parallel.ForEach(ClientRequestIdHelper.clientRequestInfoList, (clientRequestInfo) =>
             {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("Started processing ClientRequestId: " + clientRequestInfo.Id);
                 QueryHelper.FillClientRequestInfoDetails(clientRequestInfo);
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("Finished processing ( " + clientRequestIdCurrentCount++ + "/" + clientRequestIdTotalCount + " ) ClientRequestId: " + clientRequestInfo.Id);
             });
 
             using (StreamWriter file = File.CreateText(inMarketResultsFilePath))
@@ -97,6 +108,26 @@ namespace HelloKusto
                 foreach (var clientRequestInfo in ClientRequestIdHelper.clientRequestInfoList)
                 {
                     file.WriteLine("*************************************************** Error details of ClientRequestID: " + clientRequestInfo.Id + "***************************************************");
+
+                    var machingIssues = IssueHelper.GetMachingIssues(clientRequestInfo.ErrorContent.ToString());
+
+                    string clientRequestInfoStatement = "ObjectType: " + clientRequestInfo.ObjectType + ", ObjectId: " + clientRequestInfo.ObjectId +
+                        ", ScenarioName: " + clientRequestInfo.ScenarioName + ", ReplicationProvider: " + Utility.GetReplicationProviderName(clientRequestInfo.ReplicationProviderId) +
+                        ", Region: " + clientRequestInfo.Region + ", ResourceId: " + clientRequestInfo.ResourceId + ", StampName: " + clientRequestInfo.StampName;
+                    string subscriptionInfoStatement = "SubscriptionId: " + clientRequestInfo.SubscriptionInfo.Id + ", SubscriptionName: " + clientRequestInfo.SubscriptionInfo.SubscriptionName +
+                        ", CustomerName: " + clientRequestInfo.SubscriptionInfo.CustomerName + ", BillingType: " + clientRequestInfo.SubscriptionInfo.BillingType +
+                        ", OfferType: " + clientRequestInfo.SubscriptionInfo.OfferType;
+                    file.WriteLine("------- Details:");
+                    file.WriteLine(clientRequestInfoStatement);
+                    file.WriteLine(subscriptionInfoStatement);
+                    file.WriteLine();
+
+                    foreach (var issue in machingIssues)
+                    {
+                        file.WriteLine("Issue: " + issue.Type + ", Bug: " + issue.BugId);
+                    }
+
+                    file.WriteLine();
                     file.WriteLine();
                     file.WriteLine("------- SRSOperationEvent:");
                     file.WriteLine();
@@ -108,32 +139,6 @@ namespace HelloKusto
                     file.WriteLine("------- SRSDataEvents:");
                     file.WriteLine();
                     file.WriteLine(clientRequestInfo.ErrorContent.ToString());
-                    file.WriteLine();
-                }
-
-                // Writing ClientRequestId to Issue map to file
-                file.WriteLine("---------------------------------------------------------- Issues for ClientRequestIds ----------------------------------------------------------");
-                file.WriteLine();
-                foreach (var clientRequestId in ClientRequestIdHelper.clientRequestInfoList)
-                {
-                    var machingIssues = IssueHelper.GetMachingIssues(clientRequestId.ErrorContent.ToString());
-
-                    string clientRequestInfoStatement = "ObjectType: " + clientRequestId.ObjectType + ", ObjectId: " + clientRequestId.ObjectId +
-                        ", ScenarioName: " + clientRequestId.ScenarioName + ", ProviderGuid: " + clientRequestId.ProviderGuid +
-                        ", Region: " + clientRequestId.Region + ", ResourceId: " + clientRequestId.ResourceId + ", StampName: " + clientRequestId.StampName;
-                    string subscriptionInfoStatement = "SubscriptionId: " + clientRequestId.SubscriptionInfo.Id + ", SubscriptionName: " + clientRequestId.SubscriptionInfo.SubscriptionName +
-                        ", CustomerName: " + clientRequestId.SubscriptionInfo.CustomerName + ", BillingType: " + clientRequestId.SubscriptionInfo.BillingType +
-                        ", OfferType: " + clientRequestId.SubscriptionInfo.OfferType;
-                    file.WriteLine("*********Issues found in ClientRequestID, " + clientRequestId.Id + ":");
-                    file.WriteLine(clientRequestInfoStatement);
-                    file.WriteLine(subscriptionInfoStatement);
-                    file.WriteLine();
-
-                    foreach (var issue in machingIssues)
-                    {
-                        file.WriteLine("Issue: " + issue.Type + ", Bug: " + issue.BugId);
-                    }
-
                     file.WriteLine();
                 }
 
@@ -164,10 +169,13 @@ namespace HelloKusto
                         string clientRequestInfoStatement = string.IsNullOrEmpty(clientRequestId.StampName) ? clientRequestId.Id : clientRequestId.StampName.Split('-').First() + "   " + clientRequestId.Id;
                         file.WriteLine(clientRequestInfoStatement);
                     }
-
-                    file.WriteLine();
                 }
             }
+
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Analysis is complete and output is generated at: " + inMarketResultsFilePath);
+            Console.ForegroundColor = currentForgroundColor;
         }
 
     }
