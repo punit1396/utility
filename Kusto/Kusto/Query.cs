@@ -208,7 +208,7 @@ namespace HelloKusto
                         clientRequestInfo.SubscriptionInfo.Id = opEventTemp.SubscriptionId1;
                     }
                 }
-                clientRequestInfo.ResourceId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.SubscriptionId)).ResourceId;
+                clientRequestInfo.ResourceId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ResourceId)).ResourceId;
 
                 if (!string.IsNullOrEmpty(clientRequestInfo.SubscriptionInfo.Id))
                 {
