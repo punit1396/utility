@@ -84,6 +84,8 @@ namespace HelloKusto
 
         public static void SpecificAnalysis()
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
             var currentForgroundColor = Console.ForegroundColor;
             IssueHelper.Initialize(issueMapFilePath);
             ClientRequestIdHelper.Initialize(clientRequestIdsFilePath);
@@ -173,6 +175,10 @@ namespace HelloKusto
             }
 
 
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Total time taken for analysis: " + Math.Ceiling((double)elapsedMs/1000) + " seconds");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Analysis is complete and output is generated at: " + inMarketResultsFilePath);
             Console.ForegroundColor = currentForgroundColor;
