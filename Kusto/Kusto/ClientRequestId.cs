@@ -9,6 +9,8 @@ namespace HelloKusto
     {
         public string Id;
         public StringBuilder ErrorContent;
+        public StringBuilder GatewayErrorContent = new StringBuilder();
+        public StringBuilder RCMErrorContent = new StringBuilder();
         public Subscription SubscriptionInfo;
         public string ReplicationProviderId;
         public string StampName;
@@ -45,7 +47,8 @@ namespace HelloKusto
 
         public bool IfAffectedByIssue(Issue issue)
         {
-            return IssueHelper.GetMachingIssues(this.ErrorContent.ToString()).Contains(issue);
+            var temp = this.ErrorContent.ToString() + this.GatewayErrorContent.ToString() + this.RCMErrorContent.ToString();
+            return IssueHelper.GetMachingIssues(temp).Contains(issue);
         }
     }
 

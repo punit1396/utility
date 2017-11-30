@@ -19,16 +19,25 @@ namespace HelloKusto
 
     class QueryString 
     {
-        public const string ErrorQuery = "SRSDataEvent | where ClientRequestId == '{0}'" +
+        public const string ErrorQuery = "{0} | where ClientRequestId == '{1}'" +
                         "| where Level < 3 " +
                         "| project PreciseTimeStamp , Message , Level, ClientRequestId " +
                         "| order by PreciseTimeStamp asc nulls last";
-        public const string SRSOperationEventQuery = "SRSOperationEvent | where ClientRequestId == '{0}'" +
+        public const string SRSOperationEventQuery = "{0} | where ClientRequestId == '{1}'" +
                         "| order by PreciseTimeStamp asc nulls last";
-        public const string SubscriptionQuery = "CustomerDataExtended| where SubscriptionId == '{0}'";
+        public const string SubscriptionQuery = "{0}| where SubscriptionId == '{1}'";
         public const string GenericDataEventQuery = "SRSDataEvent | where (PreciseTimeStamp < ago({0}d) and PreciseTimeStamp >= ago({1}d))";
         public const string GenricMessagePredicateDataEventQuery = "Message contains '{0}'";
         public const string GenericDataEventProjectQueryString = "| where Level < 3| project ClientRequestId | summarize by ClientRequestId";
+    }
+
+    class TableName
+    {
+        public const string SRSDataEvent = "SRSDataEvent";
+        public const string SRSOperationEvent = "SRSOperationEvent";
+        public const string CustomerDataExtended = "CustomerDataExtended";
+        public const string GatewayDiagnosticEvent = "GatewayDiagnosticEvent";
+        public const string RcmDiagnosticEvent = "RcmDiagnosticEvent";
     }
 
     class ColumnName

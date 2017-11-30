@@ -142,6 +142,24 @@ namespace HelloKusto
                     file.WriteLine();
                     file.WriteLine(clientRequestInfo.ErrorContent.ToString());
                     file.WriteLine();
+
+                    if (clientRequestInfo.RCMErrorContent.Length > 1)
+                    {
+                        file.WriteLine();
+                        file.WriteLine("------- RcmDiagnosticEvent:");
+                        file.WriteLine();
+                        file.WriteLine(clientRequestInfo.RCMErrorContent.ToString());
+                        file.WriteLine();
+                    }
+
+                    if (clientRequestInfo.GatewayErrorContent.Length > 1)
+                    {
+                        file.WriteLine();
+                        file.WriteLine("------- GatewayDiagnosticEvent:");
+                        file.WriteLine();
+                        file.WriteLine(clientRequestInfo.GatewayErrorContent.ToString());
+                        file.WriteLine();
+                    }
                 }
 
                 file.WriteLine("---------------------------------------------------------- ClientRequestIds for issues----------------------------------------------------------");

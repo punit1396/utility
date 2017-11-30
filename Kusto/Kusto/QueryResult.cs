@@ -29,6 +29,15 @@
 
     }
 
+    class RcmDiagnosticEvent : QueryResult
+    {
+
+    }
+    class GatewayDiagnosticEvent : QueryResult
+    {
+
+    }
+
     class Subscription
     {
         public string Id;

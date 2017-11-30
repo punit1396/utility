@@ -109,6 +109,54 @@ namespace HelloKusto
             return subscriptionInfo;
         }
 
+        public List<RcmDiagnosticEvent> ExecuteRCMQuery(string queryString)
+        {
+            var content = new List<RcmDiagnosticEvent>();
+            try
+            {
+                var dataReader = this.QueryProvider.ExecuteQuery(queryString);
+
+                while (dataReader.Read())
+                {
+                    var srsDataEvent = new RcmDiagnosticEvent();
+                    srsDataEvent.Message = dataReader[ColumnName.Message].ToString();
+                    content.Add(srsDataEvent);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Exception was thrown:");
+                Console.WriteLine(e);
+            }
+
+            return content;
+        }
+
+        public List<GatewayDiagnosticEvent> ExecuteGatewayQuery(string queryString)
+        {
+            var content = new List<GatewayDiagnosticEvent>();
+            try
+            {
+                var dataReader = this.QueryProvider.ExecuteQuery(queryString);
+
+                while (dataReader.Read())
+                {
+                    var srsDataEvent = new GatewayDiagnosticEvent();
+                    srsDataEvent.Message = dataReader[ColumnName.Message].ToString();
+                    content.Add(srsDataEvent);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Exception was thrown:");
+                Console.WriteLine(e);
+            }
+
+            return content;
+        }
+
         public List<ClientRequestInfo> ExecuteGenericQuery(string genericQuery)
         {
             var clientRequestInfoList = new List<ClientRequestInfo>();
@@ -153,40 +201,74 @@ namespace HelloKusto
 
         public static void FillClientRequestInfoDetails(ClientRequestInfo clientRequestInfo)
         {
-            string errorQuery = string.Format(QueryString.ErrorQuery, clientRequestInfo.Id);
-            string sRSOperationEventQuery = string.Format(QueryString.SRSOperationEventQuery, clientRequestInfo.Id);
-
-            var sRSDataEventList = new List<SRSDataEvent>();
-            var sRSOperationEventList = new List<SRSOperationEvent>();
-
-            Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
-            {
-                var query = new Query(queryProvider);
-                sRSDataEventList.AddRange(query.ExecuteErrorQuery(errorQuery));
-                sRSOperationEventList.AddRange(query.ExecuteSRSOperationEventQuery(sRSOperationEventQuery));
-            });
-
-            //if (sRSOperationEventList.Count < 1 && sRSDataEventList.Count < 1)
-            //{
-            //    Parallel.ForEach(nationalQueryProviderDictionary.Values, (queryProvider) =>
-            //    {
-            //        var query = new Query(queryProvider);
-            //        sRSDataEventList.AddRange(query.ExecuteErrorQuery(errorQuery));
-            //        sRSOperationEventList.AddRange(query.ExecuteSRSOperationEventQuery(sRSOperationEventQuery));
-            //    });
-            //}
-
-            var errorContent = new StringBuilder();
-            foreach (var item in sRSDataEventList)
-            {
-                errorContent.AppendLine(item.Message);
-                errorContent.AppendLine();
-            }
-
-            clientRequestInfo.AddErrorContent(errorContent);
-
             try
             {
+                string errorQuery = string.Format(QueryString.ErrorQuery, TableName.SRSDataEvent, clientRequestInfo.Id);
+                string sRSOperationEventQuery = string.Format(QueryString.SRSOperationEventQuery, TableName.SRSOperationEvent, clientRequestInfo.Id);
+                string gatewayDiagnosticEventQuery = string.Format(QueryString.ErrorQuery, TableName.GatewayDiagnosticEvent, clientRequestInfo.Id);
+                string rcmDiagnosticEventQuery = string.Format(QueryString.ErrorQuery, TableName.RcmDiagnosticEvent, clientRequestInfo.Id);
+
+                var sRSDataEventList = new List<SRSDataEvent>();
+                var sRSOperationEventList = new List<SRSOperationEvent>();
+                var gatewayDiagnosticEventList = new List<GatewayDiagnosticEvent>();
+                var rcmDiagnosticEventList = new List<RcmDiagnosticEvent>();
+
+                Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
+                {
+                    var query = new Query(queryProvider);
+                    sRSDataEventList.AddRange(query.ExecuteErrorQuery(errorQuery));
+                    sRSOperationEventList.AddRange(query.ExecuteSRSOperationEventQuery(sRSOperationEventQuery));
+                });
+
+                //if (sRSOperationEventList.Count < 1 && sRSDataEventList.Count < 1)
+                //{
+                //    Parallel.ForEach(nationalQueryProviderDictionary.Values, (queryProvider) =>
+                //    {
+                //        var query = new Query(queryProvider);
+                //        sRSDataEventList.AddRange(query.ExecuteErrorQuery(errorQuery));
+                //        sRSOperationEventList.AddRange(query.ExecuteSRSOperationEventQuery(sRSOperationEventQuery));
+                //    });
+                //}
+
+                var errorContent = new StringBuilder();
+                foreach (var item in sRSDataEventList)
+                {
+                    errorContent.AppendLine(item.Message);
+                    errorContent.AppendLine();
+                }
+
+                clientRequestInfo.AddErrorContent(errorContent);
+
+                if (errorContent.ToString().ToLower().Contains("GatewayService-".ToLower()))
+                {
+                    Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
+                    {
+                        var query = new Query(queryProvider);
+                        gatewayDiagnosticEventList.AddRange(query.ExecuteGatewayQuery(gatewayDiagnosticEventQuery));
+                    });
+                }
+
+                foreach (var item in gatewayDiagnosticEventList)
+                {
+                    clientRequestInfo.GatewayErrorContent.AppendLine(item.Message);
+                    clientRequestInfo.GatewayErrorContent.AppendLine();
+                }
+
+                if (errorContent.ToString().ToLower().Contains("RCM-".ToLower()))
+                {
+                    Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
+                    {
+                        var query = new Query(queryProvider);
+                        rcmDiagnosticEventList.AddRange(query.ExecuteRCMQuery(rcmDiagnosticEventQuery));
+                    });
+                }
+
+                foreach (var item in rcmDiagnosticEventList)
+                {
+                    clientRequestInfo.RCMErrorContent.AppendLine(item.Message);
+                    clientRequestInfo.RCMErrorContent.AppendLine();
+                }
+
                 clientRequestInfo.SubscriptionInfo = new Subscription();
                 clientRequestInfo.SRSOperationEvents = sRSOperationEventList;
                 clientRequestInfo.ScenarioName = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ScenarioName)).ScenarioName;
@@ -212,7 +294,7 @@ namespace HelloKusto
 
                 if (!string.IsNullOrEmpty(clientRequestInfo.SubscriptionInfo.Id))
                 {
-                    string subscriptionQuery = string.Format(QueryString.SubscriptionQuery, clientRequestInfo.SubscriptionInfo.Id);
+                    string subscriptionQuery = string.Format(QueryString.SubscriptionQuery, TableName.CustomerDataExtended, clientRequestInfo.SubscriptionInfo.Id);
                     var query = new Query(queryProviderDictionary["US"]);
                     clientRequestInfo.SubscriptionInfo = query.ExecuteSubscriptionQuery(subscriptionQuery);
                 }
@@ -233,7 +315,7 @@ namespace HelloKusto
             genericQueryDBTimeMonthList.Add(string.Format(QueryString.GenericDataEventQuery, "60", "90"));
 
             var genericQueryPredicate = "";
-            if(issue.Symptoms != null && issue.Symptoms.Count > 0)
+            if (issue.Symptoms != null && issue.Symptoms.Count > 0)
             {
                 genericQueryPredicate = "|where " + string.Format(QueryString.GenricMessagePredicateDataEventQuery, issue.Symptoms.ElementAt(0));
                 foreach (var symptom in issue.Symptoms.Skip(1))
@@ -253,7 +335,7 @@ namespace HelloKusto
                 });
             });
 
-            foreach(var clientinfo in clientRequestInfoList)
+            foreach (var clientinfo in clientRequestInfoList)
             {
                 clientinfo.issueList.Add(issue);
             }
