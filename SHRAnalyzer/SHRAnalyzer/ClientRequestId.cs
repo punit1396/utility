@@ -8,10 +8,10 @@ namespace HelloKusto
     class ClientRequestInfo
     {
         public string Id;
-        public StringBuilder ErrorContent;
+        public StringBuilder ErrorContent = new StringBuilder();
         public StringBuilder GatewayErrorContent = new StringBuilder();
         public StringBuilder RCMErrorContent = new StringBuilder();
-        public Subscription SubscriptionInfo;
+        public Subscription SubscriptionInfo = new Subscription();
         public string ReplicationProviderId;
         public string StampName;
         public string Region;

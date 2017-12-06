@@ -176,7 +176,7 @@ namespace HelloKusto
                         string subscriptionInfoStatement = "SubscriptionId: " + subscriptionInfo.Id + ", SubscriptionName: " + subscriptionInfo.SubscriptionName +
                             ", CustomerName: " + subscriptionInfo.CustomerName + ", BillingType: " + subscriptionInfo.BillingType +
                             ", OfferType: " + subscriptionInfo.OfferType;
-                        file.WriteLine("*********ClientRequestIDs for " + subscriptionInfoStatement);
+                        file.WriteLine("*********ClientRequestIDs affected (Count: " + affectedClientRequestIdInfos.ToList().Count + ") for " + subscriptionInfoStatement);
                         file.WriteLine();
                         foreach (var clientRequestInfo in affectedClientRequestIdInfos.ToList())
                         {
