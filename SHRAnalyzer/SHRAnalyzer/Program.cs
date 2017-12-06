@@ -162,6 +162,38 @@ namespace HelloKusto
                     }
                 }
 
+                var fullSubscriptionInfoList = ClientRequestIdHelper.clientRequestInfoList.Select(clientrequestId => clientrequestId.SubscriptionInfo);
+
+                var subscriptionInfoList = fullSubscriptionInfoList != null ? fullSubscriptionInfoList.GroupBy(sub => sub.Id).Select(group => group.FirstOrDefault()) : new List<Subscription>();
+
+                file.WriteLine("---------------------------------------------------------- ClientRequestIds for subscriptions----------------------------------------------------------");
+                file.WriteLine();
+                foreach (var subscriptionInfo in subscriptionInfoList)
+                {
+                    var affectedClientRequestIdInfos = ClientRequestIdHelper.clientRequestInfoList.Where(clientRequestId => clientRequestId.SubscriptionInfo.Id == subscriptionInfo.Id);
+                    if (affectedClientRequestIdInfos != null && affectedClientRequestIdInfos.ToList().Count > 0)
+                    {
+                        string subscriptionInfoStatement = "SubscriptionId: " + subscriptionInfo.Id + ", SubscriptionName: " + subscriptionInfo.SubscriptionName +
+                            ", CustomerName: " + subscriptionInfo.CustomerName + ", BillingType: " + subscriptionInfo.BillingType +
+                            ", OfferType: " + subscriptionInfo.OfferType;
+                        file.WriteLine("*********ClientRequestIDs for " + subscriptionInfoStatement);
+                        file.WriteLine();
+                        foreach (var clientRequestInfo in affectedClientRequestIdInfos.ToList())
+                        {
+                            var machingIssues = IssueHelper.GetMachingIssues(clientRequestInfo.ErrorContent.ToString());
+                            string issueInfoStatement = "";
+                            foreach (var issue in machingIssues)
+                            {
+                                issueInfoStatement += "| Issue:" + issue.Type + ", Bug:" + issue.BugId;
+                            }
+
+                            string clientRequestInfoStatement = string.IsNullOrEmpty(clientRequestInfo.StampName) ? clientRequestInfo.Id : clientRequestInfo.StampName.Split('-').First() + "   " + clientRequestInfo.Id;
+                            file.WriteLine(clientRequestInfoStatement + issueInfoStatement);
+                        }
+                        file.WriteLine();
+                    }
+                }
+
                 file.WriteLine("---------------------------------------------------------- ClientRequestIds for issues----------------------------------------------------------");
                 file.WriteLine();
                 foreach (var issue in IssueHelper.IssueList)
@@ -169,7 +201,7 @@ namespace HelloKusto
                     var affectedClientRequestIdInfos = ClientRequestIdHelper.GetAffectedClientRequestInfos(issue);
                     if (affectedClientRequestIdInfos != null && affectedClientRequestIdInfos.Count > 0)
                     {
-                        file.WriteLine("*********ClientRequestIDs affected by issue: " + issue.Type + ", Bug: " + issue.BugId);
+                        file.WriteLine("*********ClientRequestIDs affected by issue: " + issue.Type + ", Bug: " + issue.BugId + ", Count: " + affectedClientRequestIdInfos.Count);
                         file.WriteLine();
                         foreach (var clientRequestInfo in affectedClientRequestIdInfos)
                         {
@@ -202,5 +234,23 @@ namespace HelloKusto
             Console.ForegroundColor = currentForgroundColor;
         }
 
+        class SubscriptionComparer : IEqualityComparer<Subscription>
+        {
+            bool IEqualityComparer<Subscription>.Equals(Subscription x, Subscription y)
+            {
+                if (x?.Id == null || y?.Id == null)
+                    return false;
+
+                return (x.Id.Equals(y.Id, StringComparison.OrdinalIgnoreCase));
+            }
+
+            int IEqualityComparer<Subscription>.GetHashCode(Subscription obj)
+            {
+                if (obj == null || obj.Id == null)
+                    return 0;
+
+                return obj.Id.GetHashCode();
+            }
+        }
     }
 }
