@@ -341,7 +341,7 @@ namespace HelloKusto
 
                 var IRFailedoperationEvent = sRSOperationEventList.FirstOrDefault(x => (x.ScenarioName != null && string.Compare(x.ScenarioName, "IrCompletion", StringComparison.OrdinalIgnoreCase) == 0) && (x.State != null && string.Compare(x.State, "Failed", StringComparison.OrdinalIgnoreCase) == 0));
 
-                if(IRFailedoperationEvent != null)
+                if(IRFailedoperationEvent != null && clientRequestInfo.ReplicationProviderId != null && string.Compare(clientRequestInfo.ReplicationProviderId, WellKnownProviders.HyperVReplicaAzure, StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     var cbEngineTraceMessagesList = new List<CBEngineTraceMessages>();
                     string cbEngineTraceMessagesQuery = string.Format(QueryString.cbEngineTraceMessagesQuery, TableName.CBEngineTraceMessages, clientRequestInfo.ObjectId);
