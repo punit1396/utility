@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace HelloKusto
 {
@@ -34,6 +35,21 @@ namespace HelloKusto
             bool IfSymptomsMatch = true;
             foreach (var symptom in Symptoms)
             {
+                if(symptom.StartsWith("[Regex]", StringComparison.OrdinalIgnoreCase))
+                {
+                    string pattern = symptom.Substring( symptom.IndexOf("[Regex]", StringComparison.OrdinalIgnoreCase));
+
+                    if(Regex.Match(content.ToString(), pattern).Success)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        IfSymptomsMatch = false;
+                        break;
+                    }
+                }
+
                 if (!content.ToString().ToLower().Contains(symptom.ToLower()))
                 {
                     IfSymptomsMatch = false;
@@ -57,6 +73,11 @@ namespace HelloKusto
                     string line;
                     while ((line = reader.ReadLine()) != null)
                     {
+                        if(line.Trim().StartsWith("#", StringComparison.OrdinalIgnoreCase))
+                        {
+                            continue;
+                        }
+
                         var issueDetailsArray = line.Trim().Split('|');
                         var symptomsArray = issueDetailsArray[2].Split(',');
                         IssueList.Add(new Issue(issueDetailsArray[0], issueDetailsArray[1], new HashSet<string>(symptomsArray)));
