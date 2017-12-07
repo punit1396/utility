@@ -226,7 +226,7 @@ namespace HelloKusto
             mabProviderDictionary.Add("MabWUS", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringMabWUS));
             mabProviderDictionary.Add("MabWEU", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringMabWEU));
             mabProviderDictionary.Add("MabProd1", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringMabProd1));
-            mabProviderDictionary.Add("MabTest1", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringMabTest1));
+            //mabProviderDictionary.Add("MabTest1", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringMabTest1));
         }
 
         public static void FillClientRequestInfoDetails(ClientRequestInfo clientRequestInfo)

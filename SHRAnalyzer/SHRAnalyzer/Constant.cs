@@ -18,7 +18,7 @@ namespace HelloKusto
         public const string ConnectionStringMabWUS = @"Data Source=https://mabprodwus.kusto.windows.net:443;Initial Catalog=MABKustoProd;AAD Federated Security=True";
         public const string ConnectionStringMabWEU = @"Data Source=https://mabprodweu.kusto.windows.net:443;Initial Catalog=MABKustoProd;AAD Federated Security=True";
         public const string ConnectionStringMabProd1 = @"Data Source=https://mabprod1.kusto.windows.net:443;Initial Catalog=MABKustoProd1;AAD Federated Security=True";
-        public const string ConnectionStringMabTest1 = @"Data Source=https://mabtest1.kusto.windows.net:443;Initial Catalog=MABKustoTest1;AAD Federated Security=True";
+        //public const string ConnectionStringMabTest1 = @"Data Source=https://mabtest1.kusto.windows.net:443;Initial Catalog=MABKustoTest1;AAD Federated Security=True";
     }
 
     class QueryString 
