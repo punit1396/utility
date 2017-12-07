@@ -53,7 +53,7 @@ namespace HelloKusto
         public bool IfAffectedByIssue(Issue issue)
         {
             var temp = this.ErrorContent.ToString() + this.GatewayErrorContent.ToString() + this.RCMErrorContent.ToString();
-            return IssueHelper.GetMachingIssues(temp).Contains(issue);
+            return (this.issueList.Contains(issue) || IssueHelper.GetMachingIssues(temp).Contains(issue));
         }
     }
 
@@ -85,7 +85,7 @@ namespace HelloKusto
             List<ClientRequestInfo> clientRequestInfos = new List<ClientRequestInfo>();
             foreach (var clientRequestInfo in clientRequestInfoList)
             {
-                if (clientRequestInfo.issueList.Contains(issue) || clientRequestInfo.IfAffectedByIssue(issue))
+                if (clientRequestInfo.IfAffectedByIssue(issue))
                 {
                     clientRequestInfos.Add(clientRequestInfo);
                 }

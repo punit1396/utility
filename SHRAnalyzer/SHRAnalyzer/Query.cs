@@ -228,7 +228,8 @@ namespace HelloKusto
 
                 foreach (var item in sRSDataEventList)
                 {
-                    clientRequestInfo.AddErrorContent(item.Message);
+                    clientRequestInfo.ErrorContent.AppendLine(item.Message);
+                    clientRequestInfo.ErrorContent.AppendLine();
                 }
 
                 if (clientRequestInfo.ErrorContent.ToString().ToLower().Contains("Microsoft.Carmine.WSManWrappers.WSManException".ToLower()))
@@ -244,7 +245,8 @@ namespace HelloKusto
 
                     foreach(var item in draEventList)
                     {
-                        clientRequestInfo.AddErrorContent(item.Message);
+                        clientRequestInfo.ErrorContent.AppendLine(item.Message);
+                        clientRequestInfo.ErrorContent.AppendLine();
                     }
                 }
 
