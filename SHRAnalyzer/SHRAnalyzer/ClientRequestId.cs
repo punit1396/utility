@@ -9,6 +9,7 @@ namespace HelloKusto
     {
         public string Id;
         public StringBuilder ErrorContent = new StringBuilder();
+        public StringBuilder DRAContent = new StringBuilder();
         public StringBuilder GatewayErrorContent = new StringBuilder();
         public StringBuilder RCMErrorContent = new StringBuilder();
         public Subscription SubscriptionInfo = new Subscription();
@@ -52,7 +53,7 @@ namespace HelloKusto
 
         public bool IfAffectedByIssue(Issue issue)
         {
-            var temp = this.ErrorContent.ToString() + this.GatewayErrorContent.ToString() + this.RCMErrorContent.ToString();
+            var temp = this.ErrorContent.ToString() + this.DRAContent.ToString() + this.GatewayErrorContent.ToString() + this.RCMErrorContent.ToString();
             return (this.issueList.Contains(issue) || IssueHelper.GetMachingIssues(temp).Contains(issue));
         }
     }

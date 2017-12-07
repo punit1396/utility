@@ -232,6 +232,15 @@ namespace HelloKusto
                 file.WriteLine(clientRequestInfo.ErrorContent.ToString());
                 file.WriteLine();
 
+                if (clientRequestInfo.DRAContent.Length > 1)
+                {
+                    file.WriteLine();
+                    file.WriteLine("------- DRAEvents:");
+                    file.WriteLine();
+                    file.WriteLine(clientRequestInfo.DRAContent.ToString());
+                    file.WriteLine();
+                }
+
                 if (clientRequestInfo.RCMErrorContent.Length > 1)
                 {
                     file.WriteLine();

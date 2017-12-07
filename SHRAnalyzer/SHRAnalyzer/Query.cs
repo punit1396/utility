@@ -245,8 +245,8 @@ namespace HelloKusto
 
                     foreach(var item in draEventList)
                     {
-                        clientRequestInfo.ErrorContent.AppendLine(item.Message);
-                        clientRequestInfo.ErrorContent.AppendLine();
+                        clientRequestInfo.DRAContent.AppendLine(item.Message);
+                        clientRequestInfo.DRAContent.AppendLine();
                     }
                 }
 
