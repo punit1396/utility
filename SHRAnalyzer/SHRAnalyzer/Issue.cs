@@ -37,7 +37,7 @@ namespace HelloKusto
             {
                 if(symptom.StartsWith("[Regex]", StringComparison.OrdinalIgnoreCase))
                 {
-                    string pattern = symptom.Substring( symptom.IndexOf("[Regex]", StringComparison.OrdinalIgnoreCase));
+                    string pattern = symptom.Substring(symptom.IndexOf("[Regex]", StringComparison.OrdinalIgnoreCase) + "[Regex]".Length);
 
                     if(Regex.Match(content.ToString(), pattern).Success)
                     {
