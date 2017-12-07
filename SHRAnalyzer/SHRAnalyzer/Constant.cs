@@ -15,6 +15,10 @@ namespace HelloKusto
         public const string ConnectionStringMoonCake = @"https://asrclusmc.kusto.chinacloudapi.cn:443;Initial Catalog=NetDefaultDB;dSTS Federated Security=True";
         public const string ConnectionStringBlackForest = @"https://asrclusbf.kusto.cloudapi.de:443;Initial Catalog=NetDefaultDB;dSTS Federated Security=True";
         public const string ConnectionStringFairFax = @"https://asrclusff.kusto.usgovcloudapi.net:443;Initial Catalog=NetDefaultDB;dSTS Federated Security=True";
+        public const string ConnectionStringMabWUS = @"Data Source=https://mabprodwus.kusto.windows.net:443;Initial Catalog=MABKustoProd;AAD Federated Security=True";
+        public const string ConnectionStringMabWEU = @"Data Source=https://mabprodweu.kusto.windows.net:443;Initial Catalog=MABKustoProd;AAD Federated Security=True";
+        public const string ConnectionStringMabProd1 = @"Data Source=https://mabprod1.kusto.windows.net:443;Initial Catalog=MABKustoProd1;AAD Federated Security=True";
+        public const string ConnectionStringMabTest1 = @"Data Source=https://mabtest1.kusto.windows.net:443;Initial Catalog=MABKustoTest1;AAD Federated Security=True";
     }
 
     class QueryString 
@@ -31,6 +35,9 @@ namespace HelloKusto
                         "| order by PreciseTimeStamp asc nulls last";
         public const string SRSOperationEventQuery = "{0} | where ClientRequestId == '{1}'" +
                         "| order by PreciseTimeStamp asc nulls last";
+        public const string cbEngineTraceMessagesQuery = "{0} | where Level == 'WARNING'" +
+                        "| where VmId == '{1}'" +
+                        "| order by PreciseTimeStamp asc nulls last";
         public const string SubscriptionQuery = "{0}| where SubscriptionId == '{1}'";
         public const string GenericDataEventQuery = "SRSDataEvent | where (PreciseTimeStamp < ago({0}d) and PreciseTimeStamp >= ago({1}d))";
         public const string GenricMessagePredicateDataEventQuery = "Message contains '{0}'";
@@ -44,6 +51,7 @@ namespace HelloKusto
         public const string CustomerDataExtended = "CustomerDataExtended";
         public const string GatewayDiagnosticEvent = "GatewayDiagnosticEvent";
         public const string RcmDiagnosticEvent = "RcmDiagnosticEvent";
+        public const string CBEngineTraceMessages = "CBEngineTraceMessages";
     }
 
     class ColumnName

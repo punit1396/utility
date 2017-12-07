@@ -12,6 +12,7 @@ namespace HelloKusto
         public StringBuilder DRAContent = new StringBuilder();
         public StringBuilder GatewayErrorContent = new StringBuilder();
         public StringBuilder RCMErrorContent = new StringBuilder();
+        public StringBuilder CBEngineTraceMessagesErrorContent = new StringBuilder();
         public Subscription SubscriptionInfo = new Subscription();
         public string ReplicationProviderId;
         public string StampName;
@@ -53,7 +54,7 @@ namespace HelloKusto
 
         public bool IfAffectedByIssue(Issue issue)
         {
-            var temp = this.ErrorContent.ToString() + this.DRAContent.ToString() + this.GatewayErrorContent.ToString() + this.RCMErrorContent.ToString();
+            var temp = this.ErrorContent.ToString() + this.DRAContent.ToString() + this.GatewayErrorContent.ToString() + this.RCMErrorContent.ToString() + this.CBEngineTraceMessagesErrorContent.ToString();
             return (this.issueList.Contains(issue) || IssueHelper.GetMachingIssues(temp).Contains(issue));
         }
     }

@@ -38,6 +38,11 @@
 
     }
 
+    class CBEngineTraceMessages : QueryResult
+    {
+
+    }
+
     class Subscription
     {
         public string Id;

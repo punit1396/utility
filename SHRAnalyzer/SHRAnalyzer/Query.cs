@@ -179,17 +179,43 @@ namespace HelloKusto
             }
             return clientRequestInfoList;
         }
+
+        public List<CBEngineTraceMessages> ExecuteCBEngineTraceMessagesQuery(string queryString)
+        {
+            var content = new List<CBEngineTraceMessages>();
+            try
+            {
+                var dataReader = this.QueryProvider.ExecuteQuery(queryString);
+
+                while (dataReader.Read())
+                {
+                    var srsDataEvent = new CBEngineTraceMessages();
+                    srsDataEvent.Message = dataReader[ColumnName.Message].ToString();
+                    content.Add(srsDataEvent);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Exception was thrown:");
+                Console.WriteLine(e);
+            }
+
+            return content;
+        }
     }
 
     class QueryHelper
     {
         private static Dictionary<string, ICslQueryProvider> queryProviderDictionary;
+        private static Dictionary<string, ICslQueryProvider> mabProviderDictionary;
         private static Dictionary<string, ICslQueryProvider> nationalQueryProviderDictionary;
 
         static QueryHelper()
         {
             queryProviderDictionary = new Dictionary<string, ICslQueryProvider>();
             nationalQueryProviderDictionary = new Dictionary<string, ICslQueryProvider>();
+            mabProviderDictionary = new Dictionary<string, ICslQueryProvider>();
             queryProviderDictionary.Add("Europe", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringEurope));
             queryProviderDictionary.Add("US", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringUS));
             queryProviderDictionary.Add("Asia", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringAsia));
@@ -197,6 +223,10 @@ namespace HelloKusto
             nationalQueryProviderDictionary.Add("MoonCake", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringMoonCake));
             nationalQueryProviderDictionary.Add("BlackForest", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringBlackForest));
             nationalQueryProviderDictionary.Add("FairFax", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringFairFax));
+            mabProviderDictionary.Add("MabWUS", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringMabWUS));
+            mabProviderDictionary.Add("MabWEU", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringMabWEU));
+            mabProviderDictionary.Add("MabProd1", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringMabProd1));
+            mabProviderDictionary.Add("MabTest1", KustoClientFactory.CreateCslQueryProvider(Constant.ConnectionStringMabTest1));
         }
 
         public static void FillClientRequestInfoDetails(ClientRequestInfo clientRequestInfo)
@@ -308,6 +338,26 @@ namespace HelloKusto
                     }
                 }
                 clientRequestInfo.ResourceId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ResourceId)).ResourceId;
+
+                var IRFailedoperationEvent = sRSOperationEventList.FirstOrDefault(x => (x.ScenarioName != null && string.Compare(x.ScenarioName, "IrCompletion", StringComparison.OrdinalIgnoreCase) == 0) && (x.State != null && string.Compare(x.State, "Failed", StringComparison.OrdinalIgnoreCase) == 0));
+
+                if(IRFailedoperationEvent != null)
+                {
+                    var cbEngineTraceMessagesList = new List<CBEngineTraceMessages>();
+                    string cbEngineTraceMessagesQuery = string.Format(QueryString.cbEngineTraceMessagesQuery, TableName.CBEngineTraceMessages, clientRequestInfo.ObjectId);
+
+                    Parallel.ForEach(mabProviderDictionary.Values, (queryProvider) =>
+                    {
+                        var query = new Query(queryProvider);
+                        cbEngineTraceMessagesList.AddRange(query.ExecuteCBEngineTraceMessagesQuery(cbEngineTraceMessagesQuery));
+                    });
+
+                    foreach (var item in cbEngineTraceMessagesList)
+                    {
+                        clientRequestInfo.CBEngineTraceMessagesErrorContent.AppendLine(item.Message);
+                        clientRequestInfo.CBEngineTraceMessagesErrorContent.AppendLine();
+                    }
+                }
 
                 if (!string.IsNullOrEmpty(clientRequestInfo.SubscriptionInfo.Id))
                 {

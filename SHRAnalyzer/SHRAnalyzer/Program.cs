@@ -241,6 +241,15 @@ namespace HelloKusto
                     file.WriteLine();
                 }
 
+                if (clientRequestInfo.CBEngineTraceMessagesErrorContent.Length > 1)
+                {
+                    file.WriteLine();
+                    file.WriteLine("------- CBEngineTraceMessagesErrorContent:");
+                    file.WriteLine();
+                    file.WriteLine(clientRequestInfo.CBEngineTraceMessagesErrorContent.ToString());
+                    file.WriteLine();
+                }
+
                 if (clientRequestInfo.RCMErrorContent.Length > 1)
                 {
                     file.WriteLine();
