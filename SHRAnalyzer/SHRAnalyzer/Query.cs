@@ -262,7 +262,7 @@ namespace HelloKusto
                     clientRequestInfo.ErrorContent.AppendLine();
                 }
 
-                if (clientRequestInfo.ErrorContent.ToString().ToLower().Contains("Microsoft.Carmine.WSManWrappers.WSManException".ToLower()))
+                if (Program.needDRALogs && clientRequestInfo.ErrorContent.ToString().ToLower().Contains("Microsoft.Carmine.WSManWrappers.WSManException".ToLower()))
                 {
                     var draEventList = new List<SRSDataEvent>();
                     string draEventQuery = TableName.SRSDataEvent + string.Format(QueryString.ClientRequestIdPredicate, clientRequestInfo.Id) + string.Format(QueryString.MessagePredicate, "DRA job logs are available") + QueryString.ProjectionStatement + QueryString.OrderStatement;

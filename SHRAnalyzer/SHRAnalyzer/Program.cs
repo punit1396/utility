@@ -16,6 +16,7 @@ namespace HelloKusto
         static string clientRequestIdsFilePath;
         static string issueMapFilePath;
         static bool genericProcess;
+        public static bool needDRALogs;
 
         static void Main(string[] args)
         {
@@ -23,6 +24,7 @@ namespace HelloKusto
             clientRequestIdsFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "ClientRequestIdsFilePath" + ".txt");
             issueMapFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "IssueMapFilePath" + ".txt");
             genericProcess = false;
+            needDRALogs = false;
 
             if (args.Length >= 1)
             {
@@ -40,7 +42,15 @@ namespace HelloKusto
 
             if (args.Length == 3)
             {
-                issueMapFilePath = args[2];
+                if (args[2].ToString().ToLower() == "needdralogs")
+                {
+                    needDRALogs = true;
+                }
+                else
+                {
+                    issueMapFilePath = args[2];
+                }
+                
             }
 
             if (genericProcess)
