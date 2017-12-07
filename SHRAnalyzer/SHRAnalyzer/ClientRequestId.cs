@@ -45,6 +45,11 @@ namespace HelloKusto
             this.ErrorContent.Append(errorContent);
         }
 
+        public void AddErrorContent(string errorContent)
+        {
+            this.ErrorContent.Append(errorContent);
+        }
+
         public bool IfAffectedByIssue(Issue issue)
         {
             var temp = this.ErrorContent.ToString() + this.GatewayErrorContent.ToString() + this.RCMErrorContent.ToString();

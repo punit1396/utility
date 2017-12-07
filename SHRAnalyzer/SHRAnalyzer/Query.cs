@@ -205,13 +205,9 @@ namespace HelloKusto
             {
                 string errorQuery = string.Format(QueryString.ErrorQuery, TableName.SRSDataEvent, clientRequestInfo.Id);
                 string sRSOperationEventQuery = string.Format(QueryString.SRSOperationEventQuery, TableName.SRSOperationEvent, clientRequestInfo.Id);
-                string gatewayDiagnosticEventQuery = string.Format(QueryString.ErrorQuery, TableName.GatewayDiagnosticEvent, clientRequestInfo.Id);
-                string rcmDiagnosticEventQuery = string.Format(QueryString.ErrorQuery, TableName.RcmDiagnosticEvent, clientRequestInfo.Id);
-
+                
                 var sRSDataEventList = new List<SRSDataEvent>();
                 var sRSOperationEventList = new List<SRSOperationEvent>();
-                var gatewayDiagnosticEventList = new List<GatewayDiagnosticEvent>();
-                var rcmDiagnosticEventList = new List<RcmDiagnosticEvent>();
 
                 Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
                 {
@@ -230,43 +226,62 @@ namespace HelloKusto
                 //    });
                 //}
 
-                var errorContent = new StringBuilder();
                 foreach (var item in sRSDataEventList)
                 {
-                    errorContent.AppendLine(item.Message);
-                    errorContent.AppendLine();
+                    clientRequestInfo.AddErrorContent(item.Message);
                 }
 
-                clientRequestInfo.AddErrorContent(errorContent);
-
-                if (errorContent.ToString().ToLower().Contains("GatewayService-".ToLower()))
+                if (clientRequestInfo.ErrorContent.ToString().ToLower().Contains("Microsoft.Carmine.WSManWrappers.WSManException".ToLower()))
                 {
+                    var draEventList = new List<SRSDataEvent>();
+                    string draEventQuery = TableName.SRSDataEvent + string.Format(QueryString.ClientRequestIdPredicate, clientRequestInfo.Id) + string.Format(QueryString.MessagePredicate, "DRA job logs are available") + QueryString.ProjectionStatement + QueryString.OrderStatement;
+
+                    Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
+                    {
+                        var query = new Query(queryProvider);
+                        draEventList.AddRange(query.ExecuteErrorQuery(draEventQuery));
+                    });
+
+                    foreach(var item in draEventList)
+                    {
+                        clientRequestInfo.AddErrorContent(item.Message);
+                    }
+                }
+
+                if (clientRequestInfo.ErrorContent.ToString().ToLower().Contains("GatewayService-".ToLower()))
+                {
+                    var gatewayDiagnosticEventList = new List<GatewayDiagnosticEvent>();
+                    string gatewayDiagnosticEventQuery = string.Format(QueryString.ErrorQuery, TableName.GatewayDiagnosticEvent, clientRequestInfo.Id);
+
                     Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
                     {
                         var query = new Query(queryProvider);
                         gatewayDiagnosticEventList.AddRange(query.ExecuteGatewayQuery(gatewayDiagnosticEventQuery));
                     });
+
+                    foreach (var item in gatewayDiagnosticEventList)
+                    {
+                        clientRequestInfo.GatewayErrorContent.AppendLine(item.Message);
+                        clientRequestInfo.GatewayErrorContent.AppendLine();
+                    }
                 }
 
-                foreach (var item in gatewayDiagnosticEventList)
+                if (clientRequestInfo.ErrorContent.ToString().ToLower().Contains("RCM-".ToLower()))
                 {
-                    clientRequestInfo.GatewayErrorContent.AppendLine(item.Message);
-                    clientRequestInfo.GatewayErrorContent.AppendLine();
-                }
+                    var rcmDiagnosticEventList = new List<RcmDiagnosticEvent>();
+                    string rcmDiagnosticEventQuery = string.Format(QueryString.ErrorQuery, TableName.RcmDiagnosticEvent, clientRequestInfo.Id);
 
-                if (errorContent.ToString().ToLower().Contains("RCM-".ToLower()))
-                {
                     Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
                     {
                         var query = new Query(queryProvider);
                         rcmDiagnosticEventList.AddRange(query.ExecuteRCMQuery(rcmDiagnosticEventQuery));
                     });
-                }
 
-                foreach (var item in rcmDiagnosticEventList)
-                {
-                    clientRequestInfo.RCMErrorContent.AppendLine(item.Message);
-                    clientRequestInfo.RCMErrorContent.AppendLine();
+                    foreach (var item in rcmDiagnosticEventList)
+                    {
+                        clientRequestInfo.RCMErrorContent.AppendLine(item.Message);
+                        clientRequestInfo.RCMErrorContent.AppendLine();
+                    }
                 }
 
                 clientRequestInfo.SubscriptionInfo = new Subscription();

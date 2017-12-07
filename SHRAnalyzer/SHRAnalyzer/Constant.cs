@@ -19,8 +19,14 @@ namespace HelloKusto
 
     class QueryString 
     {
+        public const string ClientRequestIdPredicate = "| where ClientRequestId == '{0}'";
+        public const string LevelPredicate = "| where Level < {0}";
+        public const string MessagePredicate = "| where Message contains '{0}'";
+        public const string ProjectionStatement = "| project PreciseTimeStamp , Message , Level, ClientRequestId ";
+        public const string OrderStatement = "| order by PreciseTimeStamp asc nulls last";
+
         public const string ErrorQuery = "{0} | where ClientRequestId == '{1}'" +
-                        "| where Level < 3 " +
+                        "| where Level < 3" +
                         "| project PreciseTimeStamp , Message , Level, ClientRequestId " +
                         "| order by PreciseTimeStamp asc nulls last";
         public const string SRSOperationEventQuery = "{0} | where ClientRequestId == '{1}'" +
