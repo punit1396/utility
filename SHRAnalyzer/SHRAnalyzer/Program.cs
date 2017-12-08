@@ -28,29 +28,42 @@ namespace HelloKusto
 
             if (args.Length >= 1)
             {
-                clientRequestIdsFilePath = args[0];
                 if (args[0].ToString().ToLower() == "g" || args[0].ToString().ToLower() == "generic")
                 {
                     genericProcess = true;
+                }
+                else if(args[0].ToString().ToLower() == "/withdralogs")
+                {
+                    needDRALogs = true;
+                }
+                else
+                {
+                    clientRequestIdsFilePath = args[0];
                 }
             }
 
             if (args.Length >= 2)
             {
-                inMarketResultsFilePath = args[1];
+                if (args[1].ToString().ToLower() == "/withdralogs")
+                {
+                    needDRALogs = true;
+                }
+                else
+                {
+                    inMarketResultsFilePath = args[1];
+                }
             }
 
             if (args.Length == 3)
             {
-                if (args[2].ToString().ToLower() == "needdralogs")
+                if (args[2].ToString().ToLower() == "/withdralogs")
                 {
                     needDRALogs = true;
                 }
                 else
                 {
                     issueMapFilePath = args[2];
-                }
-                
+                }   
             }
 
             if (genericProcess)

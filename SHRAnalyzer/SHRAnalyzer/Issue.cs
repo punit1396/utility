@@ -73,7 +73,7 @@ namespace HelloKusto
                     string line;
                     while ((line = reader.ReadLine()) != null)
                     {
-                        if(line.Trim().StartsWith("#", StringComparison.OrdinalIgnoreCase))
+                        if(string.IsNullOrEmpty(line) || string.IsNullOrWhiteSpace(line) || line.Trim().StartsWith("#", StringComparison.OrdinalIgnoreCase))
                         {
                             continue;
                         }
