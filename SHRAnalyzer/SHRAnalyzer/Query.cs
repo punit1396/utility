@@ -9,27 +9,110 @@ using Kusto.Data.Net.Client;
 
 namespace HelloKusto
 {
+    public enum QueryTaskTypes
+    {
+        SRSDataErrorEventFetchTask,
+        SRSOperationEventFetchTask,
+        DRAEventFetchTask,
+        RCMDiagnosticEventFetchTask,
+        GatewayDiagnosticEventFetchTask,
+        CbEngineTraceMessagesFetchTask,
+        SubscriptionInfoFetchTask
+    }
+
     class Query
     {
         public ICslQueryProvider QueryProvider;
+        public ClientRequestProperties clientRequestProperties = new ClientRequestProperties();
 
         public Query(string connectionString)
         {
             this.QueryProvider = KustoClientFactory.CreateCslQueryProvider(connectionString);
+            clientRequestProperties.SetOption(ClientRequestProperties.OptionNoTruncation, true);
+            clientRequestProperties.SetOption(ClientRequestProperties.OptionNoRequestTimeout, true);
         }
 
         public Query(ICslQueryProvider queryProvider)
         {
             this.QueryProvider = queryProvider;
+            clientRequestProperties.SetOption(ClientRequestProperties.OptionNoTruncation, true);
+            clientRequestProperties.SetOption(ClientRequestProperties.OptionNoRequestTimeout, true);
+        }
+
+        public Task<IDataReader> ExecuteQueryAsync(string query)
+        {
+            Task<IDataReader> result = null;
+
+            try
+            {
+                result = this.QueryProvider.ExecuteQueryAsync(this.QueryProvider.DefaultDatabaseName, query, clientRequestProperties);
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Exception was thrown:");
+                Console.WriteLine(e);
+            }
+            return result;
+        }
+
+        public IDataReader ExecuteQuery(string query)
+        {
+            IDataReader result = null;
+
+            try
+            {
+                result = this.QueryProvider.ExecuteQuery(query);
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Exception was thrown:");
+                Console.WriteLine(e);
+            }
+            return result;
         }
 
         public List<SRSDataEvent> ExecuteErrorQuery(string queryString)
         {
+            return ExecuteErrorQuery(this.ExecuteQuery(queryString));
+        }
+
+        public List<SRSOperationEvent> ExecuteSRSOperationEventQuery(string queryString)
+        {
+            return ExecuteSRSOperationEventQuery(this.ExecuteQuery(queryString));
+        }
+
+        public List<RcmDiagnosticEvent> ExecuteRCMQuery(string queryString)
+        {
+            return ExecuteRCMQuery(this.ExecuteQuery(queryString));
+        }
+
+        public List<GatewayDiagnosticEvent> ExecuteGatewayQuery(string queryString)
+        {
+            return ExecuteGatewayQuery(this.ExecuteQuery(queryString));
+        }
+
+        public List<CBEngineTraceMessages> ExecuteCBEngineTraceMessagesQuery(string queryString)
+        {
+            return ExecuteCBEngineTraceMessagesQuery(this.ExecuteQuery(queryString));
+        }
+
+        public Subscription ExecuteSubscriptionQuery(string subscriptionQuery)
+        {
+            return ExecuteSubscriptionQuery(this.ExecuteQuery(subscriptionQuery));
+        }
+
+        public List<ClientRequestInfo> ExecuteGenericQuery(string genericQuery)
+        {
+            return ExecuteGenericQuery(this.ExecuteQuery(genericQuery));
+        }
+
+        public static List<SRSDataEvent> ExecuteErrorQuery(IDataReader dataReader)
+        {
             var content = new List<SRSDataEvent>();
             try
             {
-                var dataReader = this.QueryProvider.ExecuteQuery(queryString);
-
                 while (dataReader.Read())
                 {
                     var srsDataEvent = new SRSDataEvent();
@@ -47,13 +130,11 @@ namespace HelloKusto
             return content;
         }
 
-        public List<SRSOperationEvent> ExecuteSRSOperationEventQuery(string queryString)
+        public static List<SRSOperationEvent> ExecuteSRSOperationEventQuery(IDataReader dataReader)
         {
             var content = new List<SRSOperationEvent>();
             try
             {
-                var dataReader = this.QueryProvider.ExecuteQuery(queryString);
-
                 while (dataReader.Read())
                 {
                     var sRSOperationEvent = new SRSOperationEvent();
@@ -84,12 +165,77 @@ namespace HelloKusto
             return content;
         }
 
-        public Subscription ExecuteSubscriptionQuery(string subscriptionQuery)
+        public static List<RcmDiagnosticEvent> ExecuteRCMQuery(IDataReader dataReader)
+        {
+            var content = new List<RcmDiagnosticEvent>();
+            try
+            {
+                while (dataReader.Read())
+                {
+                    var srsDataEvent = new RcmDiagnosticEvent();
+                    srsDataEvent.Message = dataReader[ColumnName.Message].ToString();
+                    content.Add(srsDataEvent);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Exception was thrown:");
+                Console.WriteLine(e);
+            }
+
+            return content;
+        }
+
+        public static List<GatewayDiagnosticEvent> ExecuteGatewayQuery(IDataReader dataReader)
+        {
+            var content = new List<GatewayDiagnosticEvent>();
+            try
+            {
+                while (dataReader.Read())
+                {
+                    var srsDataEvent = new GatewayDiagnosticEvent();
+                    srsDataEvent.Message = dataReader[ColumnName.Message].ToString();
+                    content.Add(srsDataEvent);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Exception was thrown:");
+                Console.WriteLine(e);
+            }
+
+            return content;
+        }
+
+        public static List<CBEngineTraceMessages> ExecuteCBEngineTraceMessagesQuery(IDataReader dataReader)
+        {
+            var content = new List<CBEngineTraceMessages>();
+            try
+            {
+                while (dataReader.Read())
+                {
+                    var srsDataEvent = new CBEngineTraceMessages();
+                    srsDataEvent.Message = dataReader[ColumnName.Message].ToString();
+                    content.Add(srsDataEvent);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Exception was thrown:");
+                Console.WriteLine(e);
+            }
+
+            return content;
+        }
+
+        public static Subscription ExecuteSubscriptionQuery(IDataReader dataReader)
         {
             var subscriptionInfo = new Subscription();
             try
             {
-                var dataReader = this.QueryProvider.ExecuteQuery(subscriptionQuery);
                 while (dataReader.Read())
                 {
                     subscriptionInfo.Id = dataReader[ColumnName.SubscriptionId].ToString();
@@ -109,60 +255,11 @@ namespace HelloKusto
             return subscriptionInfo;
         }
 
-        public List<RcmDiagnosticEvent> ExecuteRCMQuery(string queryString)
-        {
-            var content = new List<RcmDiagnosticEvent>();
-            try
-            {
-                var dataReader = this.QueryProvider.ExecuteQuery(queryString);
-
-                while (dataReader.Read())
-                {
-                    var srsDataEvent = new RcmDiagnosticEvent();
-                    srsDataEvent.Message = dataReader[ColumnName.Message].ToString();
-                    content.Add(srsDataEvent);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Exception was thrown:");
-                Console.WriteLine(e);
-            }
-
-            return content;
-        }
-
-        public List<GatewayDiagnosticEvent> ExecuteGatewayQuery(string queryString)
-        {
-            var content = new List<GatewayDiagnosticEvent>();
-            try
-            {
-                var dataReader = this.QueryProvider.ExecuteQuery(queryString);
-
-                while (dataReader.Read())
-                {
-                    var srsDataEvent = new GatewayDiagnosticEvent();
-                    srsDataEvent.Message = dataReader[ColumnName.Message].ToString();
-                    content.Add(srsDataEvent);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Exception was thrown:");
-                Console.WriteLine(e);
-            }
-
-            return content;
-        }
-
-        public List<ClientRequestInfo> ExecuteGenericQuery(string genericQuery)
+        public static List<ClientRequestInfo> ExecuteGenericQuery(IDataReader dataReader)
         {
             var clientRequestInfoList = new List<ClientRequestInfo>();
             try
             {
-                var dataReader = this.QueryProvider.ExecuteQuery(genericQuery);
                 while (dataReader.Read())
                 {
                     var clientRequestInfo = new ClientRequestInfo();
@@ -179,30 +276,6 @@ namespace HelloKusto
             }
             return clientRequestInfoList;
         }
-
-        public List<CBEngineTraceMessages> ExecuteCBEngineTraceMessagesQuery(string queryString)
-        {
-            var content = new List<CBEngineTraceMessages>();
-            try
-            {
-                var dataReader = this.QueryProvider.ExecuteQuery(queryString);
-
-                while (dataReader.Read())
-                {
-                    var srsDataEvent = new CBEngineTraceMessages();
-                    srsDataEvent.Message = dataReader[ColumnName.Message].ToString();
-                    content.Add(srsDataEvent);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Exception was thrown:");
-                Console.WriteLine(e);
-            }
-
-            return content;
-        }
     }
 
     class QueryHelper
@@ -210,7 +283,7 @@ namespace HelloKusto
         private static Dictionary<string, ICslQueryProvider> queryProviderDictionary;
         private static Dictionary<string, ICslQueryProvider> mabProviderDictionary;
         private static Dictionary<string, ICslQueryProvider> nationalQueryProviderDictionary;
-
+        public static Dictionary<ClientRequestInfo, Dictionary<QueryTaskTypes, List<Task<IDataReader>>>> taskDictionary = new Dictionary<ClientRequestInfo, Dictionary<QueryTaskTypes, List<Task<IDataReader>>>>();
         static QueryHelper()
         {
             queryProviderDictionary = new Dictionary<string, ICslQueryProvider>();
@@ -368,7 +441,214 @@ namespace HelloKusto
             }
             catch (Exception e)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Exception was thrown:");
+                Console.WriteLine(e);
+            }
+        }
 
+        public static void TriggerSRSDataErrorAndOperationAsyncCalls(ClientRequestInfo clientRequestInfo)
+        {
+            if (!taskDictionary.ContainsKey(clientRequestInfo))
+            {
+                taskDictionary.Add(clientRequestInfo, new Dictionary<QueryTaskTypes, List<Task<IDataReader>>>());
+            }
+            if (!taskDictionary[clientRequestInfo].ContainsKey(QueryTaskTypes.SRSDataErrorEventFetchTask))
+            {
+                taskDictionary[clientRequestInfo].Add(QueryTaskTypes.SRSDataErrorEventFetchTask, new List<Task<IDataReader>>());
+            }
+            if (!taskDictionary[clientRequestInfo].ContainsKey(QueryTaskTypes.SRSOperationEventFetchTask))
+            {
+                taskDictionary[clientRequestInfo].Add(QueryTaskTypes.SRSOperationEventFetchTask, new List<Task<IDataReader>>());
+            }
+
+            string errorQuery = string.Format(QueryString.ErrorQuery, TableName.SRSDataEvent, clientRequestInfo.Id);
+            string sRSOperationEventQuery = string.Format(QueryString.SRSOperationEventQuery, TableName.SRSOperationEvent, clientRequestInfo.Id);
+            Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
+            {
+                var query = new Query(queryProvider);
+                taskDictionary[clientRequestInfo][QueryTaskTypes.SRSDataErrorEventFetchTask].Add(query.ExecuteQueryAsync(errorQuery));
+                taskDictionary[clientRequestInfo][QueryTaskTypes.SRSOperationEventFetchTask].Add(query.ExecuteQueryAsync(sRSOperationEventQuery));
+            });
+        }
+
+        public static void FillClientRequestInfoDetailsWithAsyncCalls(ClientRequestInfo clientRequestInfo)
+        {
+            try
+            {
+                if (!taskDictionary.ContainsKey(clientRequestInfo))
+                {
+                    taskDictionary.Add(clientRequestInfo, new Dictionary<QueryTaskTypes, List<Task<IDataReader>>>());
+                }
+                if(!taskDictionary[clientRequestInfo].ContainsKey(QueryTaskTypes.SRSDataErrorEventFetchTask))
+                {
+                    taskDictionary[clientRequestInfo].Add(QueryTaskTypes.SRSDataErrorEventFetchTask, new List<Task<IDataReader>>());
+                }
+                if (!taskDictionary[clientRequestInfo].ContainsKey(QueryTaskTypes.SRSOperationEventFetchTask))
+                {
+                    taskDictionary[clientRequestInfo].Add(QueryTaskTypes.SRSOperationEventFetchTask, new List<Task<IDataReader>>());
+                }
+                if (!taskDictionary[clientRequestInfo].ContainsKey(QueryTaskTypes.DRAEventFetchTask))
+                {
+                    taskDictionary[clientRequestInfo].Add(QueryTaskTypes.DRAEventFetchTask, new List<Task<IDataReader>>());
+                }
+                if (!taskDictionary[clientRequestInfo].ContainsKey(QueryTaskTypes.RCMDiagnosticEventFetchTask))
+                {
+                    taskDictionary[clientRequestInfo].Add(QueryTaskTypes.RCMDiagnosticEventFetchTask, new List<Task<IDataReader>>());
+                }
+                if (!taskDictionary[clientRequestInfo].ContainsKey(QueryTaskTypes.GatewayDiagnosticEventFetchTask))
+                {
+                    taskDictionary[clientRequestInfo].Add(QueryTaskTypes.GatewayDiagnosticEventFetchTask, new List<Task<IDataReader>>());
+                }
+                if (!taskDictionary[clientRequestInfo].ContainsKey(QueryTaskTypes.CbEngineTraceMessagesFetchTask))
+                {
+                    taskDictionary[clientRequestInfo].Add(QueryTaskTypes.CbEngineTraceMessagesFetchTask, new List<Task<IDataReader>>());
+                }
+                if (!taskDictionary[clientRequestInfo].ContainsKey(QueryTaskTypes.SubscriptionInfoFetchTask))
+                {
+                    taskDictionary[clientRequestInfo].Add(QueryTaskTypes.SubscriptionInfoFetchTask, new List<Task<IDataReader>>());
+                }
+
+                Task.WaitAll(taskDictionary[clientRequestInfo][QueryTaskTypes.SRSDataErrorEventFetchTask].ToArray());
+                foreach (var task in taskDictionary[clientRequestInfo][QueryTaskTypes.SRSDataErrorEventFetchTask])
+                {
+                    foreach (var item in Query.ExecuteErrorQuery(task.Result))
+                    {
+                        clientRequestInfo.ErrorContent.AppendLine(item.Message);
+                        clientRequestInfo.ErrorContent.AppendLine();
+                    }
+                }
+
+                if (Program.needDRALogs && clientRequestInfo.ErrorContent.ToString().ToLower().Contains("Microsoft.Carmine.WSManWrappers.WSManException".ToLower()))
+                {
+                    string draEventQuery = TableName.SRSDataEvent + string.Format(QueryString.ClientRequestIdPredicate, clientRequestInfo.Id) + string.Format(QueryString.MessagePredicate, "DRA job logs are available") + QueryString.ProjectionStatement + QueryString.OrderStatement;
+                    Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
+                    {
+                        var query = new Query(queryProvider);
+                        taskDictionary[clientRequestInfo][QueryTaskTypes.DRAEventFetchTask].Add(query.ExecuteQueryAsync(draEventQuery));
+                    });
+                }
+
+                if (clientRequestInfo.ErrorContent.ToString().ToLower().Contains("RCM-".ToLower()))
+                {
+                    string rcmDiagnosticEventQuery = string.Format(QueryString.ErrorQuery, TableName.RcmDiagnosticEvent, clientRequestInfo.Id);
+                    Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
+                    {
+                        var query = new Query(queryProvider);
+                        taskDictionary[clientRequestInfo][QueryTaskTypes.RCMDiagnosticEventFetchTask].Add(query.ExecuteQueryAsync(rcmDiagnosticEventQuery));
+                    });
+                }
+
+                if (clientRequestInfo.ErrorContent.ToString().ToLower().Contains("GatewayService-".ToLower()))
+                {
+                    string gatewayDiagnosticEventQuery = string.Format(QueryString.ErrorQuery, TableName.GatewayDiagnosticEvent, clientRequestInfo.Id);
+                    Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
+                    {
+                        var query = new Query(queryProvider);
+                        taskDictionary[clientRequestInfo][QueryTaskTypes.GatewayDiagnosticEventFetchTask].Add(query.ExecuteQueryAsync(gatewayDiagnosticEventQuery));
+                    });
+                }
+
+                var sRSOperationEventList = new List<SRSOperationEvent>();
+                Task.WaitAll(taskDictionary[clientRequestInfo][QueryTaskTypes.SRSOperationEventFetchTask].ToArray());
+                foreach (var task in taskDictionary[clientRequestInfo][QueryTaskTypes.SRSOperationEventFetchTask])
+                {
+                    sRSOperationEventList.AddRange(Query.ExecuteSRSOperationEventQuery(task.Result));
+                }
+
+                clientRequestInfo.SubscriptionInfo = new Subscription();
+                clientRequestInfo.SRSOperationEvents = sRSOperationEventList;
+                clientRequestInfo.ScenarioName = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ScenarioName)).ScenarioName;
+                clientRequestInfo.ObjectType = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ObjectType)).ObjectType;
+                clientRequestInfo.ObjectId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ObjectId)).ObjectId;
+                clientRequestInfo.ReplicationProviderId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ReplicationProviderId)).ReplicationProviderId;
+                clientRequestInfo.StampName = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.StampName)).StampName;
+                clientRequestInfo.Region = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.Region)).Region;
+                var opEventTemp = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.SubscriptionId));
+                if (opEventTemp != null)
+                {
+                    clientRequestInfo.SubscriptionInfo.Id = opEventTemp.SubscriptionId;
+                }
+                else
+                {
+                    opEventTemp = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.SubscriptionId1));
+                    if (opEventTemp != null)
+                    {
+                        clientRequestInfo.SubscriptionInfo.Id = opEventTemp.SubscriptionId1;
+                    }
+                }
+                clientRequestInfo.ResourceId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ResourceId)).ResourceId;
+
+                var IRFailedoperationEvent = sRSOperationEventList.FirstOrDefault(x => (x.ScenarioName != null && string.Compare(x.ScenarioName, "IrCompletion", StringComparison.OrdinalIgnoreCase) == 0) && (x.State != null && string.Compare(x.State, "Failed", StringComparison.OrdinalIgnoreCase) == 0));
+
+                if (IRFailedoperationEvent != null && clientRequestInfo.ReplicationProviderId != null && string.Compare(clientRequestInfo.ReplicationProviderId, WellKnownProviders.HyperVReplicaAzure, StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    string cbEngineTraceMessagesQuery = string.Format(QueryString.cbEngineTraceMessagesQuery, TableName.CBEngineTraceMessages, clientRequestInfo.ObjectId);
+                    Parallel.ForEach(mabProviderDictionary.Values, (queryProvider) =>
+                    {
+                        var query = new Query(queryProvider);
+                        taskDictionary[clientRequestInfo][QueryTaskTypes.CbEngineTraceMessagesFetchTask].Add(query.ExecuteQueryAsync(cbEngineTraceMessagesQuery));
+                    });
+                }
+
+                if (!string.IsNullOrEmpty(clientRequestInfo.SubscriptionInfo.Id))
+                {
+                    string subscriptionQuery = string.Format(QueryString.SubscriptionQuery, TableName.CustomerDataExtended, clientRequestInfo.SubscriptionInfo.Id);
+                    var query = new Query(queryProviderDictionary["US"]);
+                    taskDictionary[clientRequestInfo][QueryTaskTypes.SubscriptionInfoFetchTask].Add(query.ExecuteQueryAsync(subscriptionQuery));
+                }
+
+                Task.WaitAll(taskDictionary[clientRequestInfo][QueryTaskTypes.RCMDiagnosticEventFetchTask].ToArray());
+                foreach (var task in taskDictionary[clientRequestInfo][QueryTaskTypes.RCMDiagnosticEventFetchTask])
+                {
+                    foreach (var item in Query.ExecuteRCMQuery(task.Result))
+                    {
+                        clientRequestInfo.RCMErrorContent.AppendLine(item.Message);
+                        clientRequestInfo.RCMErrorContent.AppendLine();
+                    }
+                }
+
+                Task.WaitAll(taskDictionary[clientRequestInfo][QueryTaskTypes.GatewayDiagnosticEventFetchTask].ToArray());
+                foreach (var task in taskDictionary[clientRequestInfo][QueryTaskTypes.GatewayDiagnosticEventFetchTask])
+                {
+                    foreach (var item in Query.ExecuteGatewayQuery(task.Result))
+                    {
+                        clientRequestInfo.GatewayErrorContent.AppendLine(item.Message);
+                        clientRequestInfo.GatewayErrorContent.AppendLine();
+                    }
+                }
+
+                Task.WaitAll(taskDictionary[clientRequestInfo][QueryTaskTypes.CbEngineTraceMessagesFetchTask].ToArray());
+                foreach (var task in taskDictionary[clientRequestInfo][QueryTaskTypes.CbEngineTraceMessagesFetchTask])
+                {
+                    foreach (var item in Query.ExecuteCBEngineTraceMessagesQuery(task.Result))
+                    {
+                        clientRequestInfo.CBEngineTraceMessagesErrorContent.AppendLine(item.Message);
+                        clientRequestInfo.CBEngineTraceMessagesErrorContent.AppendLine();
+                    }
+                }
+
+                Task.WaitAll(taskDictionary[clientRequestInfo][QueryTaskTypes.SubscriptionInfoFetchTask].ToArray());
+                foreach (var task in taskDictionary[clientRequestInfo][QueryTaskTypes.SubscriptionInfoFetchTask])
+                {
+                    clientRequestInfo.SubscriptionInfo = Query.ExecuteSubscriptionQuery(task.Result);
+                }
+
+                Task.WaitAll(taskDictionary[clientRequestInfo][QueryTaskTypes.DRAEventFetchTask].ToArray());
+                foreach (var task in taskDictionary[clientRequestInfo][QueryTaskTypes.DRAEventFetchTask])
+                {
+                    foreach (var item in Query.ExecuteErrorQuery(task.Result))
+                    {
+                        clientRequestInfo.DRAContent.AppendLine(item.Message);
+                        clientRequestInfo.DRAContent.AppendLine();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Exception was thrown:");
+                Console.WriteLine(e);
             }
         }
 

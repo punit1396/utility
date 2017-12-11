@@ -199,14 +199,24 @@ namespace HelloKusto
 
         public static string GetReplicationProviderName(string ReplicationProviderId)
         {
-            string replicationProviderName;
-            if (replicationProviderNameMap.ContainsKey(ReplicationProviderId))
+            string replicationProviderName = "";
+            try
             {
-                replicationProviderName = replicationProviderNameMap[ReplicationProviderId];
+                if (!string.IsNullOrEmpty(ReplicationProviderId) && replicationProviderNameMap.ContainsKey(ReplicationProviderId))
+                {
+                    replicationProviderName = replicationProviderNameMap[ReplicationProviderId];
+                }
+                else
+                {
+                    replicationProviderName = ReplicationProviderId;
+                }
+
             }
-            else
+            catch (Exception e)
             {
-                replicationProviderName = ReplicationProviderId;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Exception was thrown:");
+                Console.WriteLine(e);
             }
 
             return replicationProviderName;
