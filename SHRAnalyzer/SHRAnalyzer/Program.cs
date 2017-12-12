@@ -17,6 +17,7 @@ namespace HelloKusto
         static string issueMapFilePath;
         static bool genericProcess;
         public static bool needDRALogs;
+        public static bool useSyncCalls;
 
         static void Main(string[] args)
         {
@@ -146,24 +147,42 @@ namespace HelloKusto
         {
             var clientRequestIdTotalCount = ClientRequestIdHelper.clientRequestInfoList.Count;
             var clientRequestIdCurrentCount = 1;
-            foreach (var clientRequestInfo in ClientRequestIdHelper.clientRequestInfoList)
+
+            if (useSyncCalls)
             {
-                Console.ForegroundColor = ConsoleColor.DarkBlue;
-                Console.WriteLine("Started submitting SRSData snd SRSOperations query for ClientRequestId: " + clientRequestInfo.Id);
-                QueryHelper.TriggerSRSDataErrorAndOperationAsyncCalls(clientRequestInfo);
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("Submitted SRSData snd SRSOperations query for ClientRequestId: ( " + clientRequestIdCurrentCount++ + "/" + clientRequestIdTotalCount + " ) ClientRequestId: " + clientRequestInfo.Id);
+
+                foreach (var clientRequestInfo in ClientRequestIdHelper.clientRequestInfoList)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    Console.WriteLine("Started submitting SRSData snd SRSOperations query for ClientRequestId: " + clientRequestInfo.Id);
+                    QueryHelper.TriggerSRSDataErrorAndOperationAsyncCalls(clientRequestInfo);
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("Submitted SRSData snd SRSOperations query for ClientRequestId: ( " + clientRequestIdCurrentCount++ + "/" + clientRequestIdTotalCount + " ) ClientRequestId: " + clientRequestInfo.Id);
+                }
+
+                clientRequestIdCurrentCount = 1;
+                Parallel.ForEach(ClientRequestIdHelper.clientRequestInfoList, (clientRequestInfo) =>
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("Started processing ClientRequestId: " + clientRequestInfo.Id);
+                    QueryHelper.FillClientRequestInfoDetailsWithAsyncCalls(clientRequestInfo);
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine("Finished processing ( " + clientRequestIdCurrentCount++ + "/" + clientRequestIdTotalCount + " ) ClientRequestId: " + clientRequestInfo.Id);
+                });
+            }
+            else
+            {
+                Parallel.ForEach(ClientRequestIdHelper.clientRequestInfoList, (clientRequestInfo) =>
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("Started processing ClientRequestId: " + clientRequestInfo.Id);
+                    QueryHelper.FillClientRequestInfoDetails(clientRequestInfo);
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine("Finished processing ( " + clientRequestIdCurrentCount++ + "/" + clientRequestIdTotalCount + " ) ClientRequestId: " + clientRequestInfo.Id);
+                });
+
             }
 
-            clientRequestIdCurrentCount = 1;
-            Parallel.ForEach(ClientRequestIdHelper.clientRequestInfoList, (clientRequestInfo) =>
-            {
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("Started processing ClientRequestId: " + clientRequestInfo.Id);
-                QueryHelper.FillClientRequestInfoDetailsWithAsyncCalls(clientRequestInfo);
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine("Finished processing ( " + clientRequestIdCurrentCount++ + "/" + clientRequestIdTotalCount + " ) ClientRequestId: " + clientRequestInfo.Id);
-            });
         }
 
         private static void PrintClientRequestIdsByIssues(StreamWriter file)
