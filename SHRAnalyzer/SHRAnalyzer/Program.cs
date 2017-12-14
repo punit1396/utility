@@ -21,70 +21,59 @@ namespace HelloKusto
 
         static void Main(string[] args)
         {
-            //var commandLineOptions = new CommandLineOptions();
-            //if (CommandLine.Parser.Default.ParseArguments(args, commandLineOptions))
-            //{
-            //    // Values are available here
-            //    if (commandLineOptions.Verbose) Console.WriteLine("Filename: {0}", commandLineOptions.InputFile);
-            //}
-
-            inMarketResultsFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "InMarketResultsFilePath" + ".txt");
-            clientRequestIdsFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "ClientRequestIdsFilePath" + ".txt");
-            issueMapFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "IssueMapFilePath" + ".txt");
-            genericProcess = false;
-            needDRALogs = false;
-
-            //Console.ReadLine();
-
-            if (args.Length >= 1)
+            var commandLineOptions = new CommandLineOptions();
+            var commandLineParsingState = CommandLine.Parser.Default.ParseArguments(args, commandLineOptions);
+            if (commandLineParsingState)
             {
-                if (args[0].ToString().ToLower() == "g" || args[0].ToString().ToLower() == "generic")
+                if(!string.IsNullOrEmpty(commandLineOptions.InputFile))
                 {
-                    genericProcess = true;
-                }
-                else if(args[0].ToString().ToLower() == "/withdralogs")
-                {
-                    needDRALogs = true;
+                    clientRequestIdsFilePath = commandLineOptions.InputFile;
                 }
                 else
                 {
-                    clientRequestIdsFilePath = args[0];
+                    clientRequestIdsFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "ClientRequestIdsFilePath" + ".txt");
                 }
-            }
 
-            if (args.Length >= 2)
-            {
-                if (args[1].ToString().ToLower() == "/withdralogs")
+                if (!string.IsNullOrEmpty(commandLineOptions.OutputFile))
                 {
-                    needDRALogs = true;
+                    inMarketResultsFilePath = commandLineOptions.OutputFile;
                 }
                 else
                 {
-                    inMarketResultsFilePath = args[1];
+                    inMarketResultsFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "InMarketResultsFilePath" + ".txt");
                 }
-            }
 
-            if (args.Length == 3)
-            {
-                if (args[2].ToString().ToLower() == "/withdralogs")
+                if (!string.IsNullOrEmpty(commandLineOptions.IssueMapFile))
                 {
-                    needDRALogs = true;
+                    issueMapFilePath = commandLineOptions.IssueMapFile;
                 }
                 else
                 {
-                    issueMapFilePath = args[2];
-                }   
+                    issueMapFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "IssueMapFilePath" + ".txt");
+                }
+
+                needDRALogs = commandLineOptions.WithDRALogs;
+                useSyncCalls = commandLineOptions.UseAsyncKustoCalls;
             }
 
-            TestHook();
-
-            if (genericProcess)
+            if (args.Length == 0 || args[0] == "/?" || string.IsNullOrEmpty(commandLineOptions.InputFile))
             {
-                GenericAnalysis();
+                Console.WriteLine(commandLineOptions.GetUsage());
+                return;
             }
-            else
+
+            if (commandLineParsingState)
             {
-                SpecificAnalysis();
+                TestHook();
+
+                if (genericProcess)
+                {
+                    GenericAnalysis();
+                }
+                else
+                {
+                    SpecificAnalysis();
+                }
             }
         }
 
