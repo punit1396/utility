@@ -117,6 +117,7 @@
   <ItemGroup>
     <Compile Include="ASRIssueModel.cs" />
     <Compile Include="ClientRequestId.cs" />
+    <Compile Include="CommandLineParser.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="Issue.cs" />
     <Compile Include="Program.cs" />

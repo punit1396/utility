@@ -21,11 +21,20 @@ namespace HelloKusto
 
         static void Main(string[] args)
         {
+            //var commandLineOptions = new CommandLineOptions();
+            //if (CommandLine.Parser.Default.ParseArguments(args, commandLineOptions))
+            //{
+            //    // Values are available here
+            //    if (commandLineOptions.Verbose) Console.WriteLine("Filename: {0}", commandLineOptions.InputFile);
+            //}
+
             inMarketResultsFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "InMarketResultsFilePath" + ".txt");
             clientRequestIdsFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "ClientRequestIdsFilePath" + ".txt");
             issueMapFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "IssueMapFilePath" + ".txt");
             genericProcess = false;
             needDRALogs = false;
+
+            //Console.ReadLine();
 
             if (args.Length >= 1)
             {
