@@ -18,7 +18,7 @@ namespace HelloKusto
            HelpText = "Full path of file where result of analysis would be generated.")]
         public string OutputFile { get; set; }
 
-        [Option('m', "issueMap", Required = false,
+        [Option('m', "issueMapFilePath", Required = false,
             HelpText = "Full path of file with string maps and bug ids for known issues.")]
         public string IssueMapFile { get; set; }
 
@@ -40,6 +40,7 @@ namespace HelloKusto
             helpText.AppendLine(HelpText.AutoBuild(this,(HelpText current) => HelpText.DefaultParsingErrorsHandler(this, current)));
             helpText.AppendLine();
             helpText.AppendLine("Example:");
+            helpText.AppendLine();
             helpText.AppendLine("\\\\idlsstore\\V2Writable\\avrai\\sharing\\SHRAnalyzer\\SHRAnalyzer.exe -i \"F:\\ClientRequestIdsFilePath.txt\" -o \"F:\\InMarketResultsFilePath.txt\"");
             helpText.AppendLine("\\\\idlsstore\\V2Writable\\avrai\\sharing\\SHRAnalyzer\\SHRAnalyzer.exe -i \"F:\\ClientRequestIdsFilePath.txt\" -o \"F:\\InMarketResultsFilePath.txt\" --withDraLogs");
             helpText.AppendLine("\\\\idlsstore\\V2Writable\\avrai\\sharing\\SHRAnalyzer\\SHRAnalyzer.exe --clientRequestIdFilePath=\"F:\\ClientRequestIdsFilePath.txt\" --resultsFilePath=\"F:\\InMarketResultsFilePath.txt\"");

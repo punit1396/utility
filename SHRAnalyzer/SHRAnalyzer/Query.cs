@@ -579,12 +579,34 @@ namespace HelloKusto
 
                 clientRequestInfo.SubscriptionInfo = new Subscription();
                 clientRequestInfo.SRSOperationEvents = sRSOperationEventList;
-                clientRequestInfo.ScenarioName = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ScenarioName)).ScenarioName;
-                clientRequestInfo.ObjectType = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ObjectType)).ObjectType;
-                clientRequestInfo.ObjectId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ObjectId)).ObjectId;
-                clientRequestInfo.ReplicationProviderId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ReplicationProviderId)).ReplicationProviderId;
-                clientRequestInfo.StampName = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.StampName)).StampName;
-                clientRequestInfo.Region = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.Region)).Region;
+                if (sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ScenarioName)) != null)
+                {
+                    clientRequestInfo.ScenarioName = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ScenarioName)).ScenarioName;
+                }
+                if (sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ObjectType)) != null)
+                {
+                    clientRequestInfo.ObjectType = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ObjectType)).ObjectType;
+                }
+                if (sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ObjectId)) != null)
+                {
+                    clientRequestInfo.ObjectId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ObjectId)).ObjectId;
+                }
+                if (sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ReplicationProviderId)) != null)
+                {
+                    clientRequestInfo.ReplicationProviderId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ReplicationProviderId)).ReplicationProviderId;
+                }
+                if (sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.StampName)) != null)
+                {
+                    clientRequestInfo.StampName = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.StampName)).StampName;
+                }
+                if (sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.Region)) != null)
+                {
+                    clientRequestInfo.Region = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.Region)).Region;
+                }
+                if (sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ResourceId)) != null)
+                {
+                    clientRequestInfo.ResourceId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ResourceId)).ResourceId;
+                }
                 var opEventTemp = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.SubscriptionId));
                 if (opEventTemp != null)
                 {
@@ -598,7 +620,6 @@ namespace HelloKusto
                         clientRequestInfo.SubscriptionInfo.Id = opEventTemp.SubscriptionId1;
                     }
                 }
-                clientRequestInfo.ResourceId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ResourceId)).ResourceId;
 
                 var IRFailedoperationEvent = sRSOperationEventList.FirstOrDefault(x => (x.ScenarioName != null && string.Compare(x.ScenarioName, "IrCompletion", StringComparison.OrdinalIgnoreCase) == 0) && (x.State != null && string.Compare(x.State, "Failed", StringComparison.OrdinalIgnoreCase) == 0));
 
