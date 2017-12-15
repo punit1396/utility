@@ -18,20 +18,30 @@ namespace HelloKusto
         static bool genericProcess;
         public static bool needDRALogs;
         public static bool useSyncCalls;
+        public static ConsoleColor currentForgroundColor;
 
         static void Main(string[] args)
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            currentForgroundColor = Console.ForegroundColor;
+
             var commandLineOptions = new CommandLineOptions();
             var commandLineParsingState = CommandLine.Parser.Default.ParseArguments(args, commandLineOptions);
             if (commandLineParsingState)
             {
-                if(!string.IsNullOrEmpty(commandLineOptions.InputFile))
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+
+                if (!string.IsNullOrEmpty(commandLineOptions.InputFile))
                 {
                     clientRequestIdsFilePath = commandLineOptions.InputFile;
+                    Console.WriteLine("Reading ClientRequestIds from file: " + clientRequestIdsFilePath);
+                    ClientRequestIdHelper.Initialize(clientRequestIdsFilePath);
                 }
-                else
+
+                if (!string.IsNullOrEmpty(commandLineOptions.InputList))
                 {
-                    clientRequestIdsFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "ClientRequestIdsFilePath" + ".txt");
+                    Console.WriteLine("Reading ClientRequestIds from command line list: " + commandLineOptions.InputList);
+                    ClientRequestIdHelper.Initialize(commandLineOptions.InputList.Split(',').ToList());
                 }
 
                 if (!string.IsNullOrEmpty(commandLineOptions.OutputFile))
@@ -46,45 +56,63 @@ namespace HelloKusto
                 if (!string.IsNullOrEmpty(commandLineOptions.IssueMapFile))
                 {
                     issueMapFilePath = commandLineOptions.IssueMapFile;
+                    IssueHelper.Initialize(issueMapFilePath);
                 }
                 else
                 {
                     issueMapFilePath = Path.Combine(Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]), "IssueMapFilePath" + ".txt");
                 }
+                Console.WriteLine("Reading IssueMaps from file: " + issueMapFilePath);
+                IssueHelper.Initialize(issueMapFilePath);
 
                 needDRALogs = commandLineOptions.WithDRALogs;
                 useSyncCalls = commandLineOptions.UseAsyncKustoCalls;
             }
 
-            if (args.Length == 0 || args[0] == "/?" || string.IsNullOrEmpty(commandLineOptions.InputFile))
+            if(args.Length == 0 || args[0] == "/?" || (string.IsNullOrEmpty(commandLineOptions.InputFile) && string.IsNullOrEmpty(commandLineOptions.InputList)) || string.IsNullOrEmpty(inMarketResultsFilePath) || string.IsNullOrEmpty(issueMapFilePath))
             {
                 Console.WriteLine(commandLineOptions.GetUsage());
                 return;
             }
 
-            if (commandLineParsingState)
-            {
-                TestHook();
+            TestHook();
 
-                if (genericProcess)
-                {
-                    GenericAnalysis();
-                }
-                else
-                {
-                    SpecificAnalysis();
-                }
+            if (genericProcess)
+            {
+                GenericAnalysis();
             }
+            else
+            {
+                SpecificAnalysis();
+            }
+
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Total time taken for analysis: " + Math.Ceiling((double)elapsedMs / 1000) + " seconds");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Analysis is complete and output is generated at: " + inMarketResultsFilePath);
+            Console.ForegroundColor = currentForgroundColor;
         }
 
         public static void TestHook()
         {
         }
 
+        public static void SpecificAnalysis()
+        {
+            ProcessClientRequestIds();
+
+            using (StreamWriter file = File.CreateText(inMarketResultsFilePath))
+            {
+                PrintErrorDetailsForClientRequestIds(file);
+                PrintClientRequestIdsBySubscription(file);
+                PrintClientRequestIdsByIssues(file);
+            }
+        }
+
         public static void GenericAnalysis()
         {
-            IssueHelper.Initialize(issueMapFilePath);
-
             Parallel.ForEach(IssueHelper.IssueList, (issue) =>
             {
                 QueryHelper.ProcessClientRequestInfoDetailsForIssue(issue);
@@ -108,37 +136,6 @@ namespace HelloKusto
                     file.WriteLine();
                 }
             }
-        }
-
-        public static void SpecificAnalysis()
-        {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-            var currentForgroundColor = Console.ForegroundColor;
-
-            IssueHelper.Initialize(issueMapFilePath);
-            ClientRequestIdHelper.Initialize(clientRequestIdsFilePath);
-
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine("Reading ClientRequestIds from: " + clientRequestIdsFilePath);
-            Console.WriteLine("Reading IssueMaps from: " + issueMapFilePath);
-
-            ProcessClientRequestIds();
-
-            using (StreamWriter file = File.CreateText(inMarketResultsFilePath))
-            {
-                PrintErrorDetailsForClientRequestIds(file);
-                PrintClientRequestIdsBySubscription(file);
-                PrintClientRequestIdsByIssues(file);
-            }
-
-
-            watch.Stop();
-            var elapsedMs = watch.ElapsedMilliseconds;
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Total time taken for analysis: " + Math.Ceiling((double)elapsedMs / 1000) + " seconds");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Analysis is complete and output is generated at: " + inMarketResultsFilePath);
-            Console.ForegroundColor = currentForgroundColor;
         }
 
         private static void ProcessClientRequestIds()

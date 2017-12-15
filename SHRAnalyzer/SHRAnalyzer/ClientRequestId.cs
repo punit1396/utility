@@ -82,6 +82,22 @@ namespace HelloKusto
 
         }
 
+        public static void Initialize(List<string> clientRequestIdList)
+        {
+            try
+            {
+                foreach (var clientRequesttId in clientRequestIdList)
+                {
+                    clientRequestInfoList.Add(new ClientRequestInfo(clientRequesttId.Trim()));
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+
+        }
+
         public static List<ClientRequestInfo> GetAffectedClientRequestInfos(Issue issue)
         {
             List<ClientRequestInfo> clientRequestInfos = new List<ClientRequestInfo>();
