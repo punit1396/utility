@@ -29,7 +29,7 @@ namespace HelloKusto
             var commandLineParsingState = CommandLine.Parser.Default.ParseArguments(args, commandLineOptions);
             if (commandLineParsingState)
             {
-                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
 
                 if (!string.IsNullOrEmpty(commandLineOptions.InputFile))
                 {
@@ -72,6 +72,7 @@ namespace HelloKusto
             if(args.Length == 0 || args[0] == "/?" || (string.IsNullOrEmpty(commandLineOptions.InputFile) && string.IsNullOrEmpty(commandLineOptions.InputList)) || string.IsNullOrEmpty(inMarketResultsFilePath) || string.IsNullOrEmpty(issueMapFilePath))
             {
                 Console.WriteLine(commandLineOptions.GetUsage());
+                Console.ForegroundColor = currentForgroundColor;
                 return;
             }
 

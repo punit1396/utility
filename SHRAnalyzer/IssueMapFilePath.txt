@@ -1,8 +1,17 @@
+########################################## E2E Cleanup Section ##########################################
+DRAVersionNotSupported|1751609|Unsupported operation,The operation isn't supported by the current version,of the Microsoft Azure Site Recovery Provider,Ensure that the on-premise server,is running the required provider version
+########################################## A2A Onboarding Section ##########################################
+AuthorizationFailed-RegisterVMM|1755411|Hyak.Common.CloudException,AuthorizationFailed,Microsoft.Resources/subscriptions/providers/read,does not have authorization to perform action
+Unhandled-UnauthorizedAccessException generating certificate|1531760|System.UnauthorizedAccessException: CertEnroll::CX509Enrollment::_CreateRequest: Access is denied. 0x80070005 (WIN32: 5 ERROR_ACCESS_DENIED)
+Unhandled-invalid token from AAD|1530282|UnAuthorized Error: Got invalid token from AAD. All required claims not present in access token for subscription
+########################################## A2A Cleanup Section ##########################################
 AgentJobTimedOutNoHeartbeat - disable protection|1530067|RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat,SourceAgentStopFilter,DisableProtectionWorkflow
+GatewayJobTimedOut-GatewayCancelResyncCopy|1532737|GatewayCancelResyncCopy,RCM-GatewayJobTimedOut-GatewayService-GatewayJobTimedOut
+GatewayJobTimedOut-GatewayStopReplication|1820870|GatewayStopReplication,RCM-GatewayJobTimedOut-GatewayService-GatewayJobTimedOut
+RCM-LockConflict|1738894|conflicting operation CompleteResyncWorkflow,RCM-LockConflict
+########################################## A2A Protection Section ##########################################
 AgentJobTimedOutNoHeartbeat - enable protection-start|1529249|RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat,SourceAgentNotifyResyncStart,EnableProtectionWorkflow
 AgentJobTimedOutNoHeartbeat - enable protection-end|1529249|RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat,SourceAgentNotifyResyncEnd,EnableProtectionWorkflow
-GatewayJobTimedOut|1532737|GatewayCancelResyncCopy,RCM-GatewayJobTimedOut-GatewayService-GatewayJobTimedOut
-RCM-LockConflict|1738894|conflicting operation CompleteResyncWorkflow,RCM-LockConflict
 RCM-JobsFailed-SourceAgent-20748|1738909|RCM-JobsFailed-SourceAgent-20748
 RCM-JobsFailed-SourceAgent-20743|1747601|RCM-JobsFailed-SourceAgent-20743
 GetSuitableTargetVmSize failure|1528938|Sequence contains no matching element,GetSuitableTargetVmSize,EnableProtectionWorkflow
@@ -21,18 +30,15 @@ A2AMobilityServiceInstallerInternalError|1747645|EB-1,Failed to install Site rec
 AzureDraTaskTimedOutVmmResponsive|1528871|Task execution has timed out while waiting for job to complete in Azure
 ReplicationBlocked|1750829|Replication pair is in ReplicationBlocked state
 A2AMobilityServiceInstallerInvalidInstallLocation|1679114|EB-10,Invalid installation location specified for mobility service installer
+A2AMobilityServiceInstallerRoleChangeNotAllowed|1650879|A2AInstallMobilityServiceWorkflow,EB-75,Site recovery mobility service role change is not allowed. 
 ProtectionRecoveryUnexpectedError|1750396|ProtectionRecoveryUnexpectedError-403,RCM-ProtectionServiceFaultException-ProtSvc-ProtectionRecoveryUnexpectedError
 A2AMobilityServiceConfiguratorInvalidCommandLineParameter|1750945|Site recovery configuration failed with internal server error
 ProtectionServiceUnexpectedSigCalculationState|1750420|Protection for the virtual machine couldn't be enabled because the initial replication failed,ErrorCode: 520,Message: Failed to complete signature calculation for resync session
-DRAVersionNotSupported|1751609|Unsupported operation,The operation isn't supported by the current version,of the Microsoft Azure Site Recovery Provider,Ensure that the on-premise server,is running the required provider version
 VirVMAsyncTaskError-DRA|1735712|VMM cannot complete the host operation on the,server because of the error,Resolve the host issue and then try the operation again
-AuthorizationFailed-RegisterVMM|1755411|Hyak.Common.CloudException,AuthorizationFailed,Microsoft.Resources/subscriptions/providers/read,does not have authorization to perform action
 InitialReplicationFailed|<Bug id to be filled>|31216,Initial replication for the virtual machine,or it was canceled outside the Microsoft Azure console
 EndTestFailoverDRAError-SRS|1756296|26018,RecoveryPlanOperationsParentWorkflow,System.InvalidOperationException,Sequence contains more than one element
 RCM-JobsFailed-GatewayService-UnhandledException-disable|1532218|150060,DisableProtectionWorkflow,DisableProtectionOnPrimary,RCM-JobsFailed-GatewayService-UnhandledException
 RCM-JobsFailed-GatewayService-UnhandledException-enable|1717342 1750880 1767485|150060,A2AStartInitialReplicationWorkflow,RCM-JobsFailed-GatewayService-UnhandledException
-vaguptaTesting1|1234567|Message: The installed Microsoft Azure Recovery Provider Version is not supported for Windows Server 2016,ErrorCode = 70162
-vaguptaTesting2|7654321|ErrorCode = 10003,Hyper-V Replica Azure DRA-Plugin failed to execute action PrepareCloudPrimary for VMM
 ResyncSnapShotDoesNotExists|1767625|ErrorCode: 508,Message: The resync snapshot for source,does not exist
 HvrStorageAccountNotFound-0|1528693|Internal Service Error (HvrStorageAccountNotFound-0),(RCM-ProtectionServiceFaultException-ProtSvc-HvrStorageAccountNotFound) 
 HvrStorageResourceNotFound-404|1528693|ErrorInfo = ErrorCode: 512,Message: Internal Service Error (HvrStorageResourceNotFound-404),CompleteInitialReplicationWorkflow
@@ -40,8 +46,10 @@ UserErrorResourceGroupNotFound-0|1528693|ErrorInfo = ErrorCode: 512,Message: Int
 StorageAccountNotfound|1528693|ErrorInfo = ErrorCode: 542,Message: The operation cannot be completed because the storage account,is not available,CompleteInitialReplicationWorkflow
 Unhandled-ResourceGroupDeprovisioningState|1747790|A2AInstallMobilityServiceWorkflow,BeginCreateOrUpdateWithHttpMessagesAsync,The resource group,is in deprovisioning state and cannot perform this operation
 Unhandled-AzureVmConnectedToNetworkShouldReportPrimaryNic|1750911|Assertion,Azure VM,connected to network,should report one primary NIC,Currently reporting,NICs
-Unhandled-JsonSerializationException-Cloudpairing-rawCertData|1767550|Newtonsoft.Json.JsonSerializationException: Required property 'rawCertData' not found in JSON,Path 'properties'
+Unhandled-JsonSerializationException-rawCertData|1767550|Newtonsoft.Json.JsonSerializationException: Required property 'rawCertData' not found in JSON,Path 'properties'
 SocketException||An error occurred while sending the request,System.Net.WebException: Unable to connect to the remote server,System.Net.Sockets.SocketException: A connection attempt failed because the connected party did not properly respond after a period of time,or established connection failed because connected host has failed to respond
+A2AInstallMobilityServiceWorkflow-ConfigIssue|1803207|SrsReplicationProviders.MobilityServiceInstallationExtensions,System.FormatException: Input string was not in a correct format
+########################################## H2A Section ##########################################
 CatalogUnauthorizedError-H2A|13599732|Exception during EnableProtection in Protection service,ErrorCode = CatalogUnauthorizedError,Internal Service Error (Fault Detail is equal to ErrorCode = CatalogUnauthorizedError,EnableProtectionWorkflow
 InvalidInput-H2A|1783780|Azure status code: BadRequest. Azure error code: PropertyValueTooLarge,EnableProtectionWorkflow,Microsoft.WindowsAzure.Storage.StorageException,PropertyValueTooLarge-The property value exceeds the maximum allowed size,AfterGetProtectionRequirements,SrsReplicationProviders.HyperVReplicaAzureExtension.PostReplicationAction
 Unhandled-AfterGetProtectionRequirements-H2A|1783799|System.NullReferenceException,SrsReplicationProviders.HyperVReplicaAzureExtension.AfterGetProtectionRequirements,Failed to fetch the version of Microsoft Azure Recovery Services Agent installed,Check that WS-Management service is installed and running,older version of the VMM agent
