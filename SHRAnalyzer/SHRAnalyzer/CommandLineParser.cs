@@ -34,6 +34,10 @@ namespace HelloKusto
             HelpText = "Use async Kusto calls for the analysis.")]
         public bool UseAsyncKustoCalls { get; set; }
 
+        [Option("displayByMonth", DefaultValue = false,
+            HelpText = "Show analysis by month.")]
+        public bool DisplayByMonth { get; set; }
+
         [ParserState]
         public IParserState LastParserState { get; set; }
 
@@ -52,6 +56,8 @@ namespace HelloKusto
             helpText.AppendLine("\\\\idlsstore\\V2Writable\\avrai\\sharing\\SHRAnalyzer\\SHRAnalyzer.exe --clientRequestIdFilePath=\"F:\\ClientRequestIdsFilePath.txt\" --resultsFilePath=\"F:\\InMarketResultsFilePath.txt\"");
             helpText.AppendLine();
             helpText.AppendLine("\\\\idlsstore\\V2Writable\\avrai\\sharing\\SHRAnalyzer\\SHRAnalyzer.exe -c \"cd616c7f-06f0-41ea-82b8-40f51bf4e047-2017-12-06 00:14:33Z-Ibz,08e29f0f-d7c0-44b4-b4de-7f5126b359d4\" -o \"F:\\InMarketResultsFilePath.txt\"");
+            helpText.AppendLine();
+            helpText.AppendLine("\\\\idlsstore\\V2Writable\\avrai\\sharing\\SHRAnalyzer\\SHRAnalyzer.exe -i \"F:\\ClientRequestIdsFilePath.txt\" -o \"F:\\InMarketResultsFilePath.txt\" --displayByMonth");
             helpText.AppendLine();
             return helpText.ToString();
         }

@@ -21,6 +21,7 @@ namespace HelloKusto
         public string ObjectType;
         public string ObjectId;
         public string ResourceId;
+        public DateTime PreciseTimeStamp = DateTime.MinValue;
         public List<SRSOperationEvent> SRSOperationEvents = new List<SRSOperationEvent>();
         public List<Issue> issueList = new List<Issue>();
 
@@ -102,6 +103,20 @@ namespace HelloKusto
         {
             List<ClientRequestInfo> clientRequestInfos = new List<ClientRequestInfo>();
             foreach (var clientRequestInfo in clientRequestInfoList)
+            {
+                if (clientRequestInfo.IfAffectedByIssue(issue))
+                {
+                    clientRequestInfos.Add(clientRequestInfo);
+                }
+            }
+
+            return clientRequestInfos;
+        }
+
+        public static List<ClientRequestInfo> GetAffectedClientRequestInfos(Issue issue, List<ClientRequestInfo> passedClientRequestInfos)
+        {
+            List<ClientRequestInfo> clientRequestInfos = new List<ClientRequestInfo>();
+            foreach (var clientRequestInfo in passedClientRequestInfos)
             {
                 if (clientRequestInfo.IfAffectedByIssue(issue))
                 {

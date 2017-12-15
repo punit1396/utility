@@ -18,6 +18,7 @@ namespace HelloKusto
         static bool genericProcess;
         public static bool needDRALogs;
         public static bool useSyncCalls;
+        public static bool displayByMonth;
         public static ConsoleColor currentForgroundColor;
 
         static void Main(string[] args)
@@ -67,6 +68,7 @@ namespace HelloKusto
 
                 needDRALogs = commandLineOptions.WithDRALogs;
                 useSyncCalls = commandLineOptions.UseAsyncKustoCalls;
+                displayByMonth = commandLineOptions.DisplayByMonth;
             }
 
             if(args.Length == 0 || args[0] == "/?" || (string.IsNullOrEmpty(commandLineOptions.InputFile) && string.IsNullOrEmpty(commandLineOptions.InputList)) || string.IsNullOrEmpty(inMarketResultsFilePath) || string.IsNullOrEmpty(issueMapFilePath))
@@ -81,6 +83,10 @@ namespace HelloKusto
             if (genericProcess)
             {
                 GenericAnalysis();
+            }
+            else if(displayByMonth)
+            {
+                DisplayByMonth();
             }
             else
             {
@@ -98,18 +104,20 @@ namespace HelloKusto
 
         public static void TestHook()
         {
+
+        }
+
+        public static void DisplayByMonth()
+        {
+            ProcessClientRequestIds();
+            WriteToFileMonthView();
         }
 
         public static void SpecificAnalysis()
         {
             ProcessClientRequestIds();
 
-            using (StreamWriter file = File.CreateText(inMarketResultsFilePath))
-            {
-                PrintErrorDetailsForClientRequestIds(file);
-                PrintClientRequestIdsBySubscription(file);
-                PrintClientRequestIdsByIssues(file);
-            }
+            WriteToFileDetailedView();
         }
 
         public static void GenericAnalysis()
@@ -139,6 +147,25 @@ namespace HelloKusto
             }
         }
 
+        private static void WriteToFileDetailedView()
+        {
+            using (StreamWriter file = File.CreateText(inMarketResultsFilePath))
+            {
+                PrintErrorDetailsForClientRequestIds(file);
+                PrintClientRequestIdsBySubscription(file);
+                PrintClientRequestIdsByIssues(file);
+            }
+        }
+
+        private static void WriteToFileMonthView()
+        {
+            using (StreamWriter file = File.CreateText(inMarketResultsFilePath))
+            {
+                PrintClientRequestIdsByMonth(file);
+                PrintClientRequestIdsByIssuesPerMonth(file);
+            }
+        }
+
         private static void ProcessClientRequestIds()
         {
             var clientRequestIdTotalCount = ClientRequestIdHelper.clientRequestInfoList.Count;
@@ -146,7 +173,6 @@ namespace HelloKusto
 
             if (useSyncCalls)
             {
-
                 foreach (var clientRequestInfo in ClientRequestIdHelper.clientRequestInfoList)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkBlue;
@@ -320,6 +346,130 @@ namespace HelloKusto
                     file.WriteLine();
                     file.WriteLine(clientRequestInfo.GatewayErrorContent.ToString());
                     file.WriteLine();
+                }
+            }
+        }
+
+        private static void PrintClientRequestIdsByMonth(StreamWriter file)
+        {
+            DateTime currentTime = DateTime.Now;
+            DateTime currentMonthStart = new DateTime(currentTime.Year, currentTime.Month, 1);
+            DateTime oneMonthsAgo = currentMonthStart.AddMonths(-1);
+            DateTime twoMonthsAgo = currentMonthStart.AddMonths(-2);
+            DateTime threeMonthsAgo = currentMonthStart.AddMonths(-3);
+
+            file.WriteLine("---------------------------------------------------------- ClientRequestIds for last 3 months----------------------------------------------------------");
+            PrintClientRequestIdsBetweenMonths(file, currentMonthStart, currentTime);
+            PrintClientRequestIdsBetweenMonths(file, oneMonthsAgo, currentMonthStart);
+            PrintClientRequestIdsBetweenMonths(file, twoMonthsAgo, oneMonthsAgo);
+            PrintClientRequestIdsBetweenMonths(file, threeMonthsAgo, twoMonthsAgo);
+            PrintClientRequestIdsBetweenMonths(file, DateTime.MinValue, threeMonthsAgo);
+        }
+
+        private static void PrintClientRequestIdsByIssuesPerMonth(StreamWriter file)
+        {
+            DateTime currentTime = DateTime.Now;
+            DateTime currentMonthStart = new DateTime(currentTime.Year, currentTime.Month, 1);
+            DateTime oneMonthsAgo = currentMonthStart.AddMonths(-1);
+            DateTime twoMonthsAgo = currentMonthStart.AddMonths(-2);
+            DateTime threeMonthsAgo = currentMonthStart.AddMonths(-3);
+
+            file.WriteLine("---------------------------------------------------------- ClientRequestIds for issues: monthly display----------------------------------------------------------");
+            file.WriteLine();
+            foreach (var issue in IssueHelper.IssueList)
+            {
+                var affectedClientRequestIdInfos = ClientRequestIdHelper.GetAffectedClientRequestInfos(issue);
+                if (affectedClientRequestIdInfos != null && affectedClientRequestIdInfos.Count > 0)
+                {
+                    file.WriteLine("*********ClientRequestIDs affected by issue: " + issue.Type + ", Bug: " + issue.BugId + ", Count: " + affectedClientRequestIdInfos.Count);
+                    file.WriteLine();
+                }
+                else
+                {
+                    continue;
+                }
+
+                PrintClientRequestIdsByIssuesBetweenMonths(file, issue, currentMonthStart, currentTime);
+                PrintClientRequestIdsByIssuesBetweenMonths(file, issue, oneMonthsAgo, currentMonthStart);
+                PrintClientRequestIdsByIssuesBetweenMonths(file, issue, twoMonthsAgo, oneMonthsAgo);
+                PrintClientRequestIdsByIssuesBetweenMonths(file, issue, threeMonthsAgo, twoMonthsAgo);
+                PrintClientRequestIdsByIssuesBetweenMonths(file, issue, DateTime.MinValue, threeMonthsAgo);
+            }
+
+            file.WriteLine("*********Uncategorised ClientRequestIDs: ");
+            PrintUncategorizedClientRequestIdsByIssuesBetweenMonths(file, currentMonthStart, currentTime);
+            PrintUncategorizedClientRequestIdsByIssuesBetweenMonths(file, oneMonthsAgo, currentMonthStart);
+            PrintUncategorizedClientRequestIdsByIssuesBetweenMonths(file, twoMonthsAgo, oneMonthsAgo);
+            PrintUncategorizedClientRequestIdsByIssuesBetweenMonths(file, threeMonthsAgo, twoMonthsAgo);
+            PrintUncategorizedClientRequestIdsByIssuesBetweenMonths(file, DateTime.MinValue, threeMonthsAgo);
+        }
+
+        private static void PrintClientRequestIdsBetweenMonths(StreamWriter file, DateTime start, DateTime end)
+        {
+            var affectedClientRequestIdInfos = ClientRequestIdHelper.clientRequestInfoList.Where(x => x.PreciseTimeStamp >= start && x.PreciseTimeStamp < end);
+            if (affectedClientRequestIdInfos != null && affectedClientRequestIdInfos.ToList().Count > 0)
+            {
+                file.WriteLine("*********ClientRequestIDs (Count: " + affectedClientRequestIdInfos.ToList().Count + ") between Date: '" + start.ToString() + "' and '" + end.ToString() + "'");
+                file.WriteLine();
+                foreach (var clientRequestInfo in affectedClientRequestIdInfos.ToList())
+                {
+                    var machingIssues = IssueHelper.GetMachingIssues(clientRequestInfo.ErrorContent.ToString());
+                    string issueInfoStatement = "";
+                    foreach (var issue in machingIssues)
+                    {
+                        issueInfoStatement += "| Issue:" + issue.Type + ", Bug:" + issue.BugId;
+                    }
+
+                    string clientRequestInfoStatement = string.IsNullOrEmpty(clientRequestInfo.StampName) ? clientRequestInfo.Id : clientRequestInfo.StampName.Split('-').First() + "   " + clientRequestInfo.Id;
+                    file.WriteLine(clientRequestInfoStatement + issueInfoStatement);
+                }
+                file.WriteLine();
+            }
+        }
+
+        private static void PrintClientRequestIdsByIssuesBetweenMonths(StreamWriter file, Issue issue, DateTime start, DateTime end)
+        {
+            var ClientRequestIdInfosInMonth = ClientRequestIdHelper.clientRequestInfoList.Where(x => x.PreciseTimeStamp >= start && x.PreciseTimeStamp < end);
+            if(ClientRequestIdInfosInMonth == null || ClientRequestIdInfosInMonth.ToList().Count < 1)
+            {
+                return;
+            }
+
+            var affectedClientRequestIdInfos = ClientRequestIdHelper.GetAffectedClientRequestInfos(issue, ClientRequestIdInfosInMonth.ToList());
+            if (affectedClientRequestIdInfos != null && affectedClientRequestIdInfos.Count > 0)
+            {
+                file.WriteLine("ClientRequestIDs(Count: " + affectedClientRequestIdInfos.ToList().Count + ") between Date: '" + start.ToString() + "' and '" + end.ToString() + "'");
+                file.WriteLine();
+                foreach (var clientRequestInfo in affectedClientRequestIdInfos)
+                {
+                    string clientRequestInfoStatement = string.IsNullOrEmpty(clientRequestInfo.StampName) ? clientRequestInfo.Id : clientRequestInfo.StampName.Split('-').First() + "   " + clientRequestInfo.Id;
+                    file.WriteLine(clientRequestInfoStatement);
+                }
+                file.WriteLine();
+            }
+        }
+
+        private static void PrintUncategorizedClientRequestIdsByIssuesBetweenMonths(StreamWriter file, DateTime start, DateTime end)
+        {
+            var ClientRequestIdInfosInMonth = ClientRequestIdHelper.clientRequestInfoList.Where(x => x.PreciseTimeStamp >= start && x.PreciseTimeStamp < end);
+            if (ClientRequestIdInfosInMonth == null || ClientRequestIdInfosInMonth.ToList().Count < 1)
+            {
+                return;
+            }
+            bool flag = false;
+            foreach (var clientRequestId in ClientRequestIdInfosInMonth)
+            {
+                var machingIssues = IssueHelper.GetMachingIssues(clientRequestId.ErrorContent.ToString());
+
+                if (machingIssues == null || machingIssues.Count == 0)
+                {
+                    if (!flag)
+                    {
+                        file.WriteLine("Between Date: '" + start.ToString() + "' and '" + end.ToString() + "'");
+                        flag = true;
+                    }
+                    string clientRequestInfoStatement = string.IsNullOrEmpty(clientRequestId.StampName) ? clientRequestId.Id : clientRequestId.StampName.Split('-').First() + "   " + clientRequestId.Id;
+                    file.WriteLine(clientRequestInfoStatement);
                 }
             }
         }

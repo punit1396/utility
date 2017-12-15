@@ -419,6 +419,11 @@ namespace HelloKusto
                 {
                     clientRequestInfo.ResourceId = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.ResourceId)).ResourceId;
                 }
+                if (sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.PreciseTimeStamp)) != null)
+                {
+                   DateTime.TryParse(sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.PreciseTimeStamp)).PreciseTimeStamp, out clientRequestInfo.PreciseTimeStamp);
+                }
+
                 var opEventTemp = sRSOperationEventList.FirstOrDefault(x => !string.IsNullOrEmpty(x.SubscriptionId));
                 if (opEventTemp != null)
                 {
