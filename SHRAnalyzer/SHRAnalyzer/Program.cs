@@ -29,7 +29,7 @@ namespace HelloKusto
             var commandLineParsingState = CommandLine.Parser.Default.ParseArguments(args, commandLineOptions);
             if (commandLineParsingState)
             {
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.ForegroundColor = ConsoleColor.Cyan;
 
                 if (!string.IsNullOrEmpty(commandLineOptions.InputFile))
                 {
