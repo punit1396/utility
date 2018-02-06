@@ -9,6 +9,7 @@ namespace HelloKusto
     {
         public string Id;
         public StringBuilder ErrorContent = new StringBuilder();
+        public StringBuilder SRSErrorContent = new StringBuilder();
         public StringBuilder DRAContent = new StringBuilder();
         public StringBuilder GatewayErrorContent = new StringBuilder();
         public StringBuilder RCMErrorContent = new StringBuilder();
@@ -28,34 +29,34 @@ namespace HelloKusto
         public ClientRequestInfo()
         {
             this.Id = "";
-            this.ErrorContent = new StringBuilder();
+            this.SRSErrorContent = new StringBuilder();
         }
 
         public ClientRequestInfo(string id)
         {
             this.Id = id;
-            this.ErrorContent = new StringBuilder();
+            this.SRSErrorContent = new StringBuilder();
         }
 
         public ClientRequestInfo(string id, StringBuilder errorContent)
         {
             this.Id = id;
-            this.ErrorContent = errorContent;
+            this.SRSErrorContent = errorContent;
         }
 
         public void AddErrorContent(StringBuilder errorContent)
         {
-            this.ErrorContent.Append(errorContent);
+            this.SRSErrorContent.Append(errorContent);
         }
 
         public void AddErrorContent(string errorContent)
         {
-            this.ErrorContent.Append(errorContent);
+            this.SRSErrorContent.Append(errorContent);
         }
 
         public bool IfAffectedByIssue(Issue issue)
         {
-            var temp = this.ErrorContent.ToString() + this.DRAContent.ToString() + this.GatewayErrorContent.ToString() + this.RCMErrorContent.ToString() + this.CBEngineTraceMessagesErrorContent.ToString();
+            var temp = this.SRSErrorContent.ToString() + this.DRAContent.ToString() + this.GatewayErrorContent.ToString() + this.RCMErrorContent.ToString() + this.CBEngineTraceMessagesErrorContent.ToString();
             return (this.issueList.Contains(issue) || IssueHelper.GetMachingIssues(temp).Contains(issue));
         }
     }

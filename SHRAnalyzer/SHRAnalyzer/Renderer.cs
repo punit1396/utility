@@ -67,7 +67,7 @@ namespace HelloKusto
                 file.WriteLine();
                 file.WriteLine("------- SRSDataEvents:");
                 file.WriteLine();
-                file.WriteLine(clientRequestInfo.ErrorContent.ToString());
+                file.WriteLine(clientRequestInfo.SRSErrorContent.ToString());
                 file.WriteLine();
 
                 if (clientRequestInfo.DRAContent.Length > 1)
