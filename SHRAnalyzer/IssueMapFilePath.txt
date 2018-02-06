@@ -1,19 +1,23 @@
 ########################################## General ######################################################
 SerializationException.SRSLogContext.SRSLogger|1968380|SRSLogProvider.SRSLogContext,SRSLogger,System.AppDomain,System.Runtime.Serialization.SerializationException,Configuration.ClientConfigPaths.GetEvidenceInfo
+SRSTaskCanceledException|1976227|System.Threading.Tasks.TaskCanceledException,A task was canceled
+SRSSocketException|1976229|AzureStorageHelpers.AzureStorageTransientErrorException,A connection attempt failed because the connected party did not properly respond after a period of time,Microsoft.ServiceBus.Messaging
 ########################################## E2E Cleanup Section ##########################################
 DRAVersionNotSupported|1751609|Unsupported operation,The operation isn't supported by the current version,of the Microsoft Azure Site Recovery Provider,Ensure that the on-premise server,is running the required provider version
 ########################################## A2A Onboarding Section ##########################################
-AuthorizationFailed-RegisterVMM|1755411|Hyak.Common.CloudException,AuthorizationFailed,Microsoft.Resources/subscriptions/providers/read,does not have authorization to perform action
+AuthorizationFailed-RegisterVMM|1755411|Hyak.Common.CloudException,AuthorizationFailed,Microsoft.Resources/subscriptions/providers/read
 Unhandled-UnauthorizedAccessException generating certificate|1531760|System.UnauthorizedAccessException: CertEnroll::CX509Enrollment::_CreateRequest: Access is denied. 0x80070005 (WIN32: 5 ERROR_ACCESS_DENIED)
 Unhandled-invalid token from AAD|1530282|UnAuthorized Error: Got invalid token from AAD. All required claims not present in access token for subscription
 ########################################## A2A Cleanup Section ##########################################
 AgentJobTimedOutNoHeartbeat - disable protection|1530067|RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat,SourceAgentStopFilter,DisableProtectionWorkflow
 AgentJobTimedOutNoHeartbeat - disable protection|1530067|Rcm operation failed.Error code: AgentJobTimedOutNoHeartbeat,SourceAgentStopFilter,DisableProtectionWorkflow
+AgentJobTimedOut-SourceAgent|1976303|SourceAgent,AgentJobTimedOut,SourceAgentStopFilter,The operation (SourceAgentStopFilter) was stopped,The agent on,could not complete the job in the alloted time
 GatewayJobTimedOut-GatewayCancelResyncCopy|1532737|GatewayCancelResyncCopy,RCM-GatewayJobTimedOut-GatewayService-GatewayJobTimedOut
 GatewayJobTimedOut-GatewayCancelResyncCopy|1532737|GatewayCancelResyncCopy,The service could not complete the job in the allotted time
 GatewayJobTimedOut-GatewayStopReplication|1820870|GatewayStopReplication,RCM-GatewayJobTimedOut-GatewayService-GatewayJobTimedOut
 Unhandled-GatewayJobTimedOut-StopProcessingBaselineSnapshot|1923231|Stop Processing Baseline failed for ReplicationPairId,StopProcessingBaselineSnapshot has failed,System.TimeoutException
 Unhandled-GatewayStorageForbiddenException-StopProcessingBaselineSnapshot|1923270|Hit forbidden exception while making storage call. Calling ARM to get key. StorageAccountArmId,Azure status code: Forbidden. Azure error,AzureStorageHelpers.AzureStorageException ---> Microsoft.WindowsAzure.Storage.StorageException: The remote server returned an error: (403) Forbidden,Azure error code: NotMappedAddEnumValue
+Unhandled-GatewayOperationCanceledException|1976295|GatewayStopReplication has failed,System.OperationCanceledException,The operation cannot be performed because the entity has been closed or aborted,at Microsoft.ServiceBus.Common
 RCM-LockConflict|1738894|conflicting operation CompleteResyncWorkflow,RCM-LockConflict
 ########################################## A2A Protection Section ##########################################
 AgentJobTimedOutNoHeartbeat - enable protection-start|1529249|RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat,SourceAgentNotifyResyncStart,EnableProtectionWorkflow
@@ -75,4 +79,3 @@ InvalidInput-H2A|1783780|Azure status code: BadRequest. Azure error code: Proper
 Unhandled-AfterGetProtectionRequirements-H2A|1783799|System.NullReferenceException,SrsReplicationProviders.HyperVReplicaAzureExtension.AfterGetProtectionRequirements,Failed to fetch the version of Microsoft Azure Recovery Services Agent installed,Check that WS-Management service is installed and running,older version of the VMM agent
 UnhandledException-UnregisterFabricPreflightChecksTask-H2A|1724116|System.NullReferenceException,SRSTEEImplementation.DRTaskHandlers.UnregisterFabricPreflightChecksTask,UnregisterFabricWorkflow
 UnhandledException-DisableProtection-H2A|1530995|DisableProtectionWorkflow,System.Exception: Assertion failure,ProtectionState\ProtectionStateMachine.cs,for action DisableProtectionOnPrimary in state,test failover status:  (TestFailoverFailed)) is not defined,ProtectionStateMachine.Assert
-
