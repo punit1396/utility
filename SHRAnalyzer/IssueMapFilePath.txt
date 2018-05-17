@@ -1,54 +1,81 @@
+########################################## General ######################################################
+SerializationException.SRSLogContext.SRSLogger|1968380|SRSLogProvider.SRSLogContext,SRSLogger,System.AppDomain,System.Runtime.Serialization.SerializationException,Configuration.ClientConfigPaths.GetEvidenceInfo
+SRSTaskCanceledException|1976227|System.Threading.Tasks.TaskCanceledException,A task was canceled
+SRSSocketException|1976229|AzureStorageHelpers.AzureStorageTransientErrorException,A connection attempt failed because the connected party did not properly respond after a period of time,Microsoft.ServiceBus.Messaging
 ########################################## E2E Cleanup Section ##########################################
 DRAVersionNotSupported|1751609|Unsupported operation,The operation isn't supported by the current version,of the Microsoft Azure Site Recovery Provider,Ensure that the on-premise server,is running the required provider version
 ########################################## A2A Onboarding Section ##########################################
-AuthorizationFailed-RegisterVMM|1755411|Hyak.Common.CloudException,AuthorizationFailed,Microsoft.Resources/subscriptions/providers/read,does not have authorization to perform action
+AuthorizationFailed-RegisterVMM|1755411|Hyak.Common.CloudException,AuthorizationFailed,Microsoft.Resources/subscriptions/providers/read
 Unhandled-UnauthorizedAccessException generating certificate|1531760|System.UnauthorizedAccessException: CertEnroll::CX509Enrollment::_CreateRequest: Access is denied. 0x80070005 (WIN32: 5 ERROR_ACCESS_DENIED)
 Unhandled-invalid token from AAD|1530282|UnAuthorized Error: Got invalid token from AAD. All required claims not present in access token for subscription
+VaultDeleted 500 during RegisterContainerWithIdMgmt|2186243|The remote server returned an error: (500) Internal Server Error,during RegisterContainer for container,IdManagementServiceProxy.RegisterContainerWithAad,System.Net.WebException
 ########################################## A2A Cleanup Section ##########################################
-AgentJobTimedOutNoHeartbeat - disable protection|1530067|RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat,SourceAgentStopFilter,DisableProtectionWorkflow
+AgentJobTimedOutNoHeartbeat - disable protection|2284635|RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat,SourceAgentStopFilter,DisableProtectionWorkflow
+AgentJobTimedOutNoHeartbeat - disable protection|2284635|Rcm operation failed.Error code: AgentJobTimedOutNoHeartbeat,SourceAgentStopFilter,DisableProtectionWorkflow
+AgentJobTimedOut-SourceAgent|1976303|SourceAgent,AgentJobTimedOut,SourceAgentStopFilter,The operation (SourceAgentStopFilter) was stopped,The agent on,could not complete the job in the alloted time
 GatewayJobTimedOut-GatewayCancelResyncCopy|1532737|GatewayCancelResyncCopy,RCM-GatewayJobTimedOut-GatewayService-GatewayJobTimedOut
+GatewayJobTimedOut-GatewayCancelResyncCopy|1532737|GatewayCancelResyncCopy,The service could not complete the job in the allotted time
 GatewayJobTimedOut-GatewayStopReplication|1820870|GatewayStopReplication,RCM-GatewayJobTimedOut-GatewayService-GatewayJobTimedOut
+Unhandled-GatewayJobTimedOut-StopProcessingBaselineSnapshot|1923231|Stop Processing Baseline failed for ReplicationPairId,StopProcessingBaselineSnapshot has failed,System.TimeoutException
+Unhandled-GatewayStorageForbiddenException-StopProcessingBaselineSnapshot|1923270|Hit forbidden exception while making storage call. Calling ARM to get key. StorageAccountArmId,Azure status code: Forbidden. Azure error,AzureStorageHelpers.AzureStorageException ---> Microsoft.WindowsAzure.Storage.StorageException: The remote server returned an error: (403) Forbidden,Azure error code: NotMappedAddEnumValue
+Unhandled-GatewayOperationCanceledException|1976295|GatewayStopReplication has failed,System.OperationCanceledException,The operation cannot be performed because the entity has been closed or aborted,at Microsoft.ServiceBus.Common
 RCM-LockConflict|1738894|conflicting operation CompleteResyncWorkflow,RCM-LockConflict
+ManagedDiskCleanupStorageFailure|2442135|Failed to delete managed disk with vhd name,Arm error message: Error accessing storage,Error accessing storage,An Azure Resource Manager operation failed
 ########################################## A2A Protection Section ##########################################
 AgentJobTimedOutNoHeartbeat - enable protection-start|1529249|RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat,SourceAgentNotifyResyncStart,EnableProtectionWorkflow
 AgentJobTimedOutNoHeartbeat - enable protection-end|1529249|RCM-AgentJobTimedOutNoHeartbeat-SourceAgent-AgentJobTimedOutNoHeartbeat,SourceAgentNotifyResyncEnd,EnableProtectionWorkflow
-RCM-JobsFailed-SourceAgent-20748|1738909|RCM-JobsFailed-SourceAgent-20748
+RCM-JobsFailed-SourceAgent-20748|1738909|20748,Failed to issue stop data change tracking on device,The data change tracking module failed to stop tracking
 RCM-JobsFailed-SourceAgent-20743|1747601|RCM-JobsFailed-SourceAgent-20743
 GetSuitableTargetVmSize failure|1528938|Sequence contains no matching element,GetSuitableTargetVmSize,EnableProtectionWorkflow
 FailedToSetExtension EB-45|1650879|EB-45,EnableProtectionWorkflow
 FailedToSetExtension EB-62|1751038|EB-62,EnableProtectionWorkflow
-FailedToSetExtension EC-14|1529181|EC-14,EnableProtectionWorkflow
+FailedToSetExtension EB-150|1821064|EB-150,EnableProtectionWorkflow
+FailedToSetExtension EB-151|1821066|EB-151,EnableProtectionWorkflow
+FailedToSetExtension EB--532462766|1856073|EB--532462766,EnableProtectionWorkflow
+FailedToSetExtension EC-14|1529181|'EC-14',EnableProtectionWorkflow
 FailedToSetExtension EC-44|1529586|EC-44,EnableProtectionWorkflow
 FailedToSetExtension EC-142|1750433|EC-142,EnableProtectionWorkflow
 FailedToSetExtension EC-145|1653468|EC-145,EnableProtectionWorkflow
 FailedToSetExtension EC-148|1650893|EC-148,EnableProtectionWorkflow
+A2AMobilityServiceInstallerInternalError EB-1|1747645|EB-1,Failed to install Site recovery mobility service,EnableProtectionWorkflow
+A2AMobilityServiceInstallerInvalidInstallLocation EB-10|1679114|EB-10,Invalid installation location specified for mobility service installer
+A2AMobilityServiceInstallerRoleChangeNotAllowed EB-75|1650879|A2AInstallMobilityServiceWorkflow,EB-75,Site recovery mobility service role change is not allowed. 
+A2ASiteRecoveryExtensionConfiguratorTimedOut EA-3008|1529511|A2AInstallMobilityServiceWorkflow,EA-3008,Extension installation got into an error with code,Site recovery extension configuration timed out as the configuration did not complete
+A2AMobilityServiceConfiguratorInvalidCommandLineParameter|1750945|Site recovery configuration failed with internal server error
+A2AMobilityServiceConfiguratorUnknownException EC-141|1923246|Extension installation got into an error with code: EC-141.
 AzureActiveDirectoryOperationFailed|1747574|Azure Active Directory error message,AADSTS70001
 VmExtensionOperationNotStarted|1528672|Extension operation is not started by Azure VM agent,EnableProtectionWorkflow
 TrackExtensionTimedOut|1530257|Site recovery extension operation is started but is taking more time than expected,EnableProtectionWorkflow
 TrackPreviousExtensionTimedOut|1528672|Previous site recovery extension operation is taking more time than expected
-A2AMobilityServiceInstallerInternalError|1747645|EB-1,Failed to install Site recovery mobility service,EnableProtectionWorkflow
 AzureDraTaskTimedOutVmmResponsive|1528871|Task execution has timed out while waiting for job to complete in Azure
 ReplicationBlocked|1750829|Replication pair is in ReplicationBlocked state
-A2AMobilityServiceInstallerInvalidInstallLocation|1679114|EB-10,Invalid installation location specified for mobility service installer
-A2AMobilityServiceInstallerRoleChangeNotAllowed|1650879|A2AInstallMobilityServiceWorkflow,EB-75,Site recovery mobility service role change is not allowed. 
+A2AInstallMobilityServiceWorkflow-ConfigIssue|1803207|SrsReplicationProviders.MobilityServiceInstallationExtensions,System.FormatException: Input string was not in a correct format
 ProtectionRecoveryUnexpectedError|1750396|ProtectionRecoveryUnexpectedError-403,RCM-ProtectionServiceFaultException-ProtSvc-ProtectionRecoveryUnexpectedError
-A2AMobilityServiceConfiguratorInvalidCommandLineParameter|1750945|Site recovery configuration failed with internal server error
 ProtectionServiceUnexpectedSigCalculationState|1750420|Protection for the virtual machine couldn't be enabled because the initial replication failed,ErrorCode: 520,Message: Failed to complete signature calculation for resync session
+ProtectionServiceCloudServiceRetryableError-0|1532260|(CloudServiceRetryableError-0),(RCM-ProtectionServiceFaultException-ProtSvc-CloudServiceRetryableError) 
+ProtectionServiceFaultException-CloudInvalidInputError-0|1529489|(CloudInvalidInputError-0),(RCM-ProtectionServiceFaultException-ProtSvc-CloudInvalidInputError) 
+ProtectionService-HvrUserErrorSubcriptionDisabledOrSANotFound|1528693|HvrUserErrorSubcriptionDisabledOrSANotFound-403
+ProtectionService-ProtectionServiceUnknownException|1922746|ErrorCode: 513,Unexpected failure: The HTTP service located at, HvrProtectionService.svc is unavailable
+ProtectionService-ServiceActivationException-CommonProtectionCatalogService|1922730|CommonProtectionCatalogService.svc, could not be activated
+ProtectionService-ServiceActivationException-RegistrationProviderService|1922730|RegistrationProviderService.svc, could not be activated
 VirVMAsyncTaskError-DRA|1735712|VMM cannot complete the host operation on the,server because of the error,Resolve the host issue and then try the operation again
 InitialReplicationFailed|<Bug id to be filled>|31216,Initial replication for the virtual machine,or it was canceled outside the Microsoft Azure console
 EndTestFailoverDRAError-SRS|1756296|26018,RecoveryPlanOperationsParentWorkflow,System.InvalidOperationException,Sequence contains more than one element
 RCM-JobsFailed-GatewayService-UnhandledException-disable|1532218|150060,DisableProtectionWorkflow,DisableProtectionOnPrimary,RCM-JobsFailed-GatewayService-UnhandledException
 RCM-JobsFailed-GatewayService-UnhandledException-enable|1717342 1750880 1767485|150060,A2AStartInitialReplicationWorkflow,RCM-JobsFailed-GatewayService-UnhandledException
+RCM-AzureStorageOperationFailed|1856092|RCM-AzureStorageOperationFailed, The operation did not complete within the allotted timeout of
 ResyncSnapShotDoesNotExists|1767625|ErrorCode: 508,Message: The resync snapshot for source,does not exist
 HvrStorageAccountNotFound-0|1528693|Internal Service Error (HvrStorageAccountNotFound-0),(RCM-ProtectionServiceFaultException-ProtSvc-HvrStorageAccountNotFound) 
 HvrStorageResourceNotFound-404|1528693|ErrorInfo = ErrorCode: 512,Message: Internal Service Error (HvrStorageResourceNotFound-404),CompleteInitialReplicationWorkflow
 UserErrorResourceGroupNotFound-0|1528693|ErrorInfo = ErrorCode: 512,Message: Internal Service Error (UserErrorResourceGroupNotFound-0),CompleteInitialReplicationWorkflow
 StorageAccountNotfound|1528693|ErrorInfo = ErrorCode: 542,Message: The operation cannot be completed because the storage account,is not available,CompleteInitialReplicationWorkflow
-Unhandled-ResourceGroupDeprovisioningState|1747790|A2AInstallMobilityServiceWorkflow,BeginCreateOrUpdateWithHttpMessagesAsync,The resource group,is in deprovisioning state and cannot perform this operation
+Unhandled-BeginCreateOrUpdateVmExtension-ResourceGroupDeprovisioningState|1747790|A2AInstallMobilityServiceWorkflow,BeginCreateOrUpdateWithHttpMessagesAsync,The resource group,is in deprovisioning state and cannot perform this operation
+Unhandled-BeginCreateOrUpdateVmExtension-ResourceGroupBeingUpdate|1588261|A2AInstallMobilityServiceWorkflow,BeginCreateOrUpdateVmExtension,Cannot modify extensions in the VM when the VM is not running
+Unhandled-BeginCreateOrUpdateVmExtension-VMNotRunning|1650804|A2AInstallMobilityServiceWorkflow,BeginCreateOrUpdateVmExtension,Cannot modify extensions in the VM when the VM is not running
 Unhandled-AzureVmConnectedToNetworkShouldReportPrimaryNic|1750911|Assertion,Azure VM,connected to network,should report one primary NIC,Currently reporting,NICs
 Unhandled-JsonSerializationException-rawCertData|1767550|Newtonsoft.Json.JsonSerializationException: Required property 'rawCertData' not found in JSON,Path 'properties'
 SocketException||An error occurred while sending the request,System.Net.WebException: Unable to connect to the remote server,System.Net.Sockets.SocketException: A connection attempt failed because the connected party did not properly respond after a period of time,or established connection failed because connected host has failed to respond
-A2AInstallMobilityServiceWorkflow-ConfigIssue|1803207|SrsReplicationProviders.MobilityServiceInstallationExtensions,System.FormatException: Input string was not in a correct format
+ManagedDiskCreationFailure ||Disks or snapshot cannot be resized down, Failed to create managed disk
 ########################################## H2A Section ##########################################
 CatalogUnauthorizedError-H2A|13599732|Exception during EnableProtection in Protection service,ErrorCode = CatalogUnauthorizedError,Internal Service Error (Fault Detail is equal to ErrorCode = CatalogUnauthorizedError,EnableProtectionWorkflow
 InvalidInput-H2A|1783780|Azure status code: BadRequest. Azure error code: PropertyValueTooLarge,EnableProtectionWorkflow,Microsoft.WindowsAzure.Storage.StorageException,PropertyValueTooLarge-The property value exceeds the maximum allowed size,AfterGetProtectionRequirements,SrsReplicationProviders.HyperVReplicaAzureExtension.PostReplicationAction
