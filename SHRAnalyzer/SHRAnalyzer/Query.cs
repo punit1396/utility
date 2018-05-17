@@ -331,11 +331,11 @@ namespace HelloKusto
 
                 foreach (var item in sRSDataEventList)
                 {
-                    clientRequestInfo.ErrorContent.AppendLine(item.Message);
-                    clientRequestInfo.ErrorContent.AppendLine();
+                    clientRequestInfo.SRSErrorContent.AppendLine(item.Message);
+                    clientRequestInfo.SRSErrorContent.AppendLine();
                 }
 
-                if (Program.needDRALogs && clientRequestInfo.ErrorContent.ToString().ToLower().Contains("Microsoft.Carmine.WSManWrappers.WSManException".ToLower()))
+                if (Program.needDRALogs && clientRequestInfo.SRSErrorContent.ToString().ToLower().Contains("Microsoft.Carmine.WSManWrappers.WSManException".ToLower()))
                 {
                     var draEventList = new List<SRSDataEvent>();
                     string draEventQuery = TableName.SRSDataEvent + string.Format(QueryString.ClientRequestIdPredicate, clientRequestInfo.Id) + string.Format(QueryString.MessagePredicate, "DRA job logs are available") + QueryString.ProjectionStatement + QueryString.OrderStatement;
@@ -353,25 +353,9 @@ namespace HelloKusto
                     }
                 }
 
-                if (clientRequestInfo.ErrorContent.ToString().ToLower().Contains("GatewayService-".ToLower()))
-                {
-                    var gatewayDiagnosticEventList = new List<GatewayDiagnosticEvent>();
-                    string gatewayDiagnosticEventQuery = string.Format(QueryString.ErrorQuery, TableName.GatewayDiagnosticEvent, clientRequestInfo.Id);
-
-                    Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
-                    {
-                        var query = new Query(queryProvider);
-                        gatewayDiagnosticEventList.AddRange(query.ExecuteGatewayQuery(gatewayDiagnosticEventQuery));
-                    });
-
-                    foreach (var item in gatewayDiagnosticEventList)
-                    {
-                        clientRequestInfo.GatewayErrorContent.AppendLine(item.Message);
-                        clientRequestInfo.GatewayErrorContent.AppendLine();
-                    }
-                }
-
-                if (clientRequestInfo.ErrorContent.ToString().ToLower().Contains("RCM-".ToLower()))
+                if (clientRequestInfo.SRSErrorContent.ToString().ToLower().Contains("RCM".ToLower()) ||
+                    clientRequestInfo.SRSErrorContent.ToString().ToLower().Contains("Component Id: GatewayService".ToLower()) ||
+                    clientRequestInfo.SRSErrorContent.ToString().ToLower().Contains("Component Id: RCMService".ToLower()))
                 {
                     var rcmDiagnosticEventList = new List<RcmDiagnosticEvent>();
                     string rcmDiagnosticEventQuery = string.Format(QueryString.ErrorQuery, TableName.RcmDiagnosticEvent, clientRequestInfo.Id);
@@ -386,6 +370,25 @@ namespace HelloKusto
                     {
                         clientRequestInfo.RCMErrorContent.AppendLine(item.Message);
                         clientRequestInfo.RCMErrorContent.AppendLine();
+                    }
+                }
+
+                if (clientRequestInfo.SRSErrorContent.ToString().ToLower().Contains("GatewayService".ToLower()) ||
+                    clientRequestInfo.SRSErrorContent.ToString().ToLower().Contains("Component Id: GatewayService".ToLower()))
+                {
+                    var gatewayDiagnosticEventList = new List<GatewayDiagnosticEvent>();
+                    string gatewayDiagnosticEventQuery = string.Format(QueryString.ErrorQuery, TableName.GatewayDiagnosticEvent, clientRequestInfo.Id);
+
+                    Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
+                    {
+                        var query = new Query(queryProvider);
+                        gatewayDiagnosticEventList.AddRange(query.ExecuteGatewayQuery(gatewayDiagnosticEventQuery));
+                    });
+
+                    foreach (var item in gatewayDiagnosticEventList)
+                    {
+                        clientRequestInfo.GatewayErrorContent.AppendLine(item.Message);
+                        clientRequestInfo.GatewayErrorContent.AppendLine();
                     }
                 }
 
@@ -464,6 +467,12 @@ namespace HelloKusto
                     var query = new Query(queryProviderDictionary["US"]);
                     clientRequestInfo.SubscriptionInfo = query.ExecuteSubscriptionQuery(subscriptionQuery);
                 }
+
+                clientRequestInfo.ErrorContent = clientRequestInfo.ErrorContent.Append(clientRequestInfo.SRSErrorContent);
+                clientRequestInfo.ErrorContent = clientRequestInfo.ErrorContent.Append(clientRequestInfo.DRAContent);
+                clientRequestInfo.ErrorContent = clientRequestInfo.ErrorContent.Append(clientRequestInfo.RCMErrorContent);
+                clientRequestInfo.ErrorContent = clientRequestInfo.ErrorContent.Append(clientRequestInfo.GatewayErrorContent);
+                clientRequestInfo.ErrorContent = clientRequestInfo.ErrorContent.Append(clientRequestInfo.CBEngineTraceMessagesErrorContent);
             }
             catch (Exception e)
             {
@@ -540,12 +549,12 @@ namespace HelloKusto
                 {
                     foreach (var item in Query.ExecuteErrorQuery(task.Result))
                     {
-                        clientRequestInfo.ErrorContent.AppendLine(item.Message);
-                        clientRequestInfo.ErrorContent.AppendLine();
+                        clientRequestInfo.SRSErrorContent.AppendLine(item.Message);
+                        clientRequestInfo.SRSErrorContent.AppendLine();
                     }
                 }
 
-                if (Program.needDRALogs && clientRequestInfo.ErrorContent.ToString().ToLower().Contains("Microsoft.Carmine.WSManWrappers.WSManException".ToLower()))
+                if (Program.needDRALogs && clientRequestInfo.SRSErrorContent.ToString().ToLower().Contains("Microsoft.Carmine.WSManWrappers.WSManException".ToLower()))
                 {
                     string draEventQuery = TableName.SRSDataEvent + string.Format(QueryString.ClientRequestIdPredicate, clientRequestInfo.Id) + string.Format(QueryString.MessagePredicate, "DRA job logs are available") + QueryString.ProjectionStatement + QueryString.OrderStatement;
                     Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
@@ -555,7 +564,9 @@ namespace HelloKusto
                     });
                 }
 
-                if (clientRequestInfo.ErrorContent.ToString().ToLower().Contains("RCM-".ToLower()))
+                if (clientRequestInfo.SRSErrorContent.ToString().ToLower().Contains("RCM-".ToLower()) ||
+                    clientRequestInfo.SRSErrorContent.ToString().ToLower().Contains("Component Id: GatewayService".ToLower()) ||
+                    clientRequestInfo.SRSErrorContent.ToString().ToLower().Contains("Component Id: RCMService".ToLower()))
                 {
                     string rcmDiagnosticEventQuery = string.Format(QueryString.ErrorQuery, TableName.RcmDiagnosticEvent, clientRequestInfo.Id);
                     Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
@@ -565,7 +576,8 @@ namespace HelloKusto
                     });
                 }
 
-                if (clientRequestInfo.ErrorContent.ToString().ToLower().Contains("GatewayService-".ToLower()))
+                if (clientRequestInfo.SRSErrorContent.ToString().ToLower().Contains("GatewayService-".ToLower()) ||
+                    clientRequestInfo.SRSErrorContent.ToString().ToLower().Contains("Component Id: GatewayService".ToLower()))
                 {
                     string gatewayDiagnosticEventQuery = string.Format(QueryString.ErrorQuery, TableName.GatewayDiagnosticEvent, clientRequestInfo.Id);
                     Parallel.ForEach(queryProviderDictionary.Values, (queryProvider) =>
